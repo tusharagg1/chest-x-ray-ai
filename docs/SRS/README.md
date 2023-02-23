@@ -7,4 +7,5 @@ The folders and files for this folder are as follows:
 
 Describe ...
 
-Only one of the CA or SRS document should be completed
+Only one of the CA or SRS document should be completed.  You can delete the
+other one.
