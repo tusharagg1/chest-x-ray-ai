@@ -1,11 +1,12 @@
-# Software Requirements Specification (SRS) and Commonality Analysis (CA)
+# Software Requirements Specification (SRS)
 
-<The SRS is for a single product.  The CA is for a family of related 
-products>
+<The SRS is for a single product, not a family of products. A Commonality Analysis is
+more appropriate for a family of products.>
+
+<The template in this folder is suited to Scientific Computing (also known as 
+Research Software) projects>
 
 The folders and files for this folder are as follows:
 
 Describe ...
 
-Only one of the CA or SRS document should be completed.  You can delete the
-other one.
