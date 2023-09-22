@@ -1,0 +1,49 @@
+name: PR Checks
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - edited
+      - reopened
+      - labeled
+      - unlabeled
+
+jobs:
+  check_pr:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+    - name: Check if the PR has at least one label
+      id: step_check_label
+      env:
+        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      run: |
+        labels=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}" | jq -r '.labels')
+        if [ -z "$labels" ] || [ "$labels" == "[]" ]; then
+          echo "PR doesn't have any labels. Please add a label."
+          echo "no_label=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Add comment in PR UI if there's no label
+      if: steps.step_check_label.outputs.no_label == 'true'
+      # From https://github.com/marketplace/actions/add-pr-comment
+      # This action will add a PR comment
+      uses: mshick/add-pr-comment@v2
+      with:
+        allow-repeats: true
+        message: |
+          PR doesn't have any labels. Please add a label :)
+
+    - name: Exit workflow if no labels
+      if: steps.step_check_label.outputs.no_label == 'true'
+      run: exit 1
+
+    # From https://github.com/marketplace/actions/verify-linked-issue
+    # This action will verify if an issue is linked or referenced in the PR
+    - name: Verify Linked Issue
+      uses: hattan/verify-linked-issue-action@v1.1.5
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
