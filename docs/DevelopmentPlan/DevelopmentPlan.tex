@@ -2,10 +2,11 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{hyperref}
 
-\title{Development Plan\\\progname}
+\title{Development Plan\\Software Engineering}
 
-\author{\authname}
+\author{Team 17, Team RAdiAIdance\\Allison Cook\\Ibrahim Issa\\Mohaansh Pranjal\\Nathaniel Hu\\Tushar Aggarwal}
 
 \date{}
 
@@ -22,54 +23,431 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
+09/23/2023 & Nathaniel Hu & Updated project header information, began initial drafting of various sections and subsections \\
+09/25/2023  & Tushar Aggarwal & Updated project header information, added to/updated Team Meeting Plan, Team Member Roles, Workflow Plan, Technology and Coding Standard sections \\
+09/25/2023 & Tushar Aggarwal & Final review of entire document, corrected spelling errors, formatting \\
+09/25/2023 & Mohaansh Pranjal & Modified/Added to Team Communication Plan and Proof of Concept Demonstration Plan subsections \\
+09/25/2023 & Allison Cook & Second review of entire document \\
+09/25/2023 & Nathaniel Hu & Transferred Development Plan document text from collaborative document into this LaTeX document; Did some finishing touches \\
 ... & ... & ...\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\wss{Put your introductory blurb here.}
+\noindent In this development plan document, the team meeting plan will be outlined in detail. The team communication plan will also be discussed, considering the methods of communication, and defining expected communication etiquette (e.g., responding within 24 hours). The team member roles will also be defined here with specific responsibilities outlined for each role. The workflow plan will describe how git will be used to manage project workflows, and how issues will be managed. \\
+
+\noindent The proof-of-concept demonstration plan will also be outlined to discuss the main risk(s) for the project’s success and the plan to demonstrate that we will be able to overcome these risk(s). The technology that is planned to be used for this project will also be described in more detail. The coding standard(s) for this project will also be included in detail. The project schedule will outline the expected project milestone completion dates and include details describing what is expected to be completed by when.
 
 \section{Team Meeting Plan}
 
+The team's meeting plan is outlined in detail in each of the relevant subsections below.
+
+\subsection{Meeting Schedule}
+
+The team's meeting schedule is outlined in detail below:
+
+\begin{itemize}
+\begin{item}
+Monday at 2:30 pm – 4:20 pm (weekly, during tutorial time slot)
+\begin{itemize}
+\item Work on project deliverables, and discuss concerns.
+\item Meet in person at a prearranged meeting place (TBD), or online.
+\end{itemize}
+\end{item}
+\begin{item}
+Tuesday, Wednesday at 12:30 pm – 1:20 pm (weekly, during lecture time slots)
+\begin{itemize}
+\item Attend lectures, and get instruction/feedback from professors and TAs on project work.
+\item Meet in person at ITB AB102 (during live lectures), or in person elsewhere or online.
+\end{itemize}
+\end{item}
+\begin{item}
+Friday at 12:30 pm – 1:20 pm (weekly, during lecture time slot)
+\begin{itemize}
+\item Attend lectures, and get instruction/feedback from professors, and TAs on project work.
+\item Meet in person at ITB 137 (during live lectures), or in person elsewhere or online.
+\end{itemize}
+\end{item}
+\begin{item}
+Friday at 2:30 pm – 3:30 pm (weekly, outside of scheduled classes)
+\begin{itemize}
+\item Meet in person with supervisor, Dr. Mehdi Moradi, to discuss project progress, ask clarifying questions, seek feedback on existing work completed and plan next steps.
+\end{itemize}
+\end{item}
+\end{itemize}
+
+\subsection{Meeting Rules}
+
+The team's meeting rules are outlined in detail below:
+
+\begin{itemize}
+\begin{item}
+The above meeting plan is subject to change based on the availability of all team members.
+\end{item}
+\begin{item}
+Unless otherwise notified ahead of time or in case of emergency, all team members are expected to attend all planned meetings in full.
+\end{item}
+\begin{item}  
+Before each meeting, an agenda will be created, to which team members may add discussion topics to cover during the meeting.
+\end{item}
+\begin{item}
+During each meeting, the meeting chair will:
+\begin{itemize}
+\item Manage the meetings to ensure that all discussions stay on topic.  
+\item Refer to the agenda to guide the meeting and may include or exclude discussion topics at their discretion.  
+\item Be responsible for creating, updating, and managing the GitHub issues created to document the details of each meeting.
+\end{itemize}
+\end{item}
+\end{itemize}
+
+\subsection{Meeting Roles}
+
+The following meeting roles have been defined by the team with the associated meeting role responsibilities, as outlined in detail below:
+
+\begin{itemize}
+\begin{item}
+\textbf{Chair}: This individual will change every meeting.
+\begin{itemize}
+\item They ensure that the meeting stays on track and that all agenda items are addressed.
+\item They are also responsible for ensuring that the meeting progresses at a decent pace and starts and finishes on time.
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{Scribe}: This individual will change every meeting.
+\begin{itemize}
+\item This role is to record all decisions made by the team, any problems that may occur in the meeting, and track the outcome of the meeting.
+\item These notes are to be posted to the meeting issue that is created for all team members to see.
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{Scrum Master}: Tushar Aggarwal
+\begin{itemize}
+\item While this role will be elaborated upon in the "Team Member Roles" section, the scrum master is responsible for updating the GitHub per (applicable) new action items as well as any new information about current GitHub issues.
+\item They will also be responsible for ensuring that all action items are assigned to a member and have a due date.
+\end{itemize}
+\end{item}
+\end{itemize}
+
 \section{Team Communication Plan}
+
+For the team communication plan, the following rules and guidelines outline the general expectations of this plan for all team members: 
+
+\begin{itemize}
+\begin{item}
+The main channels of communication will be MS Teams, with other communication channels to potentially be added later (e.g., Discord, etc.)
+\begin{itemize}
+\item Meetings should be scheduled ahead of time on MS Teams to ensure they appear on all members' MS Teams calendars.
+\item Syncs are scheduled as recurring meetings on MS Teams, but can be cancelled or rescheduled as needed.
+\item Meetings should only be used for longer updates and discussions and should not be used for quick updates or questions.
+\item The team will use the MS Teams chat for quicker updates and minor roadblocks or questions.
+\item All team members are expected to respond to all messages (or at least indicate they have read all messages, ideally through message reactions) within 12 hours.
+\end{itemize}
+\end{item}
+\end{itemize}
+
+For further details on meetings, please see the "Team Meeting Plan" section.
+
+\begin{itemize}
+\begin{item}
+Communication with any supervisors, stakeholders or instructors will be carried out by email and all team members should be added to the CC list.
+\begin{itemize}
+\item Tushar will oversee communication with the profs/supervisor.
+\item In addition, we will be communicating with Lyuyang Wang (Capstone TA) via MS Teams for assistance, and during his office hours whenever necessary.
+\end{itemize}
+\end{item}
+\begin{item}
+GitHub Issues will be the centralized for note-taking, brainstorming, and formalizing of project deliverables.
+\begin{itemize}
+\item No other word processors or project management tools will be used.
+\item Communication regarding project issues is encouraged to be done using GitHub issues so that comments are directly attached to the code they concern.
+\end{itemize}
+\end{item}
+\begin{item}
+If any team members are unable to attend any scheduled meetings, they must give notice at least 1 hour before the scheduled meeting start time, except for in emergencies.
+\end{item}
+\end{itemize}
+
+The above rules are general guidelines subject to change and will be enforced at team discretion.
+
+\subsection{Team Member Contact Information}
+
+The following table contains the names and email addresses of all team members:
+
+\begin{table}
+\centering
+\label{TblContactInfo}
+\begin{tabular}{| c | c |}
+\hline
+\textbf{Name} & \textbf{Email Address} \\
+\hline
+Allison Cook & cooka27@mcmaster.ca \\
+\hline
+Ibrahim Issa & issai2@mcmaster.ca \\
+\hline
+Mohaansh Pranjal & pranjalm@mcmaster.ca \\
+\hline
+Nathaniel Hu & hun4@mcmaster.ca \\
+\hline
+Tushar Aggarwal & aggarwt@mcmaster.ca \\
+\hline
+\end{tabular}
+\end{table}
 
 \section{Team Member Roles}
 
+The roles and responsibilities of each team member are outlined in detail as shown below: \\
+
+\noindent \textbf{Role Descriptions}
+\begin{itemize}
+\begin{item} 
+\textbf{Developer}: All \\
+The developer role is the default role for all team members. While members may be experts in a particular domain, all members are expected to be doing development work throughout the project.
+\end{item}
+\begin{item}
+\textbf{GitHub Administrator}: Tushar \\
+The lead QA for Git will be responsible for enforcing the Git-related sections of the workflow plan. They will be held accountable for ensuring that the code base is as organized as possible and that team members adhere to the workflow plan.
+\end{item}
+\begin{item}
+\textbf{Project Manager}: Tushar \\
+The project manager will be responsible for all communication between the team and all project stakeholders. The project manager sets and enforces the schedule for deadlines and due dates (with the caveat that members must reach a consensus on the schedule).
+\end{item}
+\begin{item}
+\textbf{Scrum Master}: Ibrahim, Tushar \\
+The scrum master will be responsible for updating the GitHub issues per (applicable) new action items and as well as any new information about the current GitHub issues. They will ensure that there is linkage between GitHub issues and GitHub commits. 
+\end{item}
+\begin{item} 
+\textbf{Scribe}: Any, By Assignment \\
+For more information on the scribe role, please see the "Team Meeting Plan" section.
+\end{item}
+\end{itemize}
+
+\noindent \textbf{Responsibilities}
+\begin{itemize}
+\item Allison Cook – Backend, Frontend 
+\item Ibrahim Issa – Computer Vision/AI, Backend, Frontend 
+\item Mohaansh Pranjal – Backend, Frontend 
+\item Nathaniel Hu – Backend, Frontend 
+\item Tushar Aggarwal – AI, Backend, Frontend
+\end{itemize}
+
+\noindent It should be noted that the roles and responsibilities specified above are subject to change at the discretion of the team.
+
 \section{Workflow Plan}
 
+The outline and workflow of the team's workflow plan are detailed in the subsections below.
+
+\subsection{Outline}
+
+The detailed outline of our workflow plan is as shown below:
+
 \begin{itemize}
-	\item How will you be using git, including branches, pull request, etc.?
-	\item How will you be managing issues, including template issues, issue
-	classificaiton, etc.?
+\item GitHub Issues will be used to manage and delegate tasks, track features and bugs, document meetings, research, and other miscellaneous project items.
+\item All issues must be categorized by one or more labels and assigned to one or more team members (aside from meeting issues). Issue templates will be created and used on an as-needed basis.
+\item A unique branch will be created for all features, bugs, testing, and environment setup issues.
+\item A pull request is subject to review by another team member and will be required before merging an unprotected branch to the main branch.
+\item A branch must also pass all automated test cases before merging. Code changes should be made in frequent, atomic commits while referencing the commit number for traceability.
+\item All deliverable documents may be directly edited on the main branch without the need for a pull request.
 \end{itemize}
+
+\subsection{Workflow}
+
+For each sprint, tickets will be visible on an issue-tracking (Kanban) board with four (4) columns, in one of the following four (4) states:
+\begin{itemize}
+\item \textbf{To Do}: Tickets that have not yet been started in any capacity but are assigned to a sprint.
+\item \textbf{In Progress}: Tickets that the assignee/assigned developer has begun working on.
+\item \textbf{In Verification}: Tickets that the assignee/assigned developer has completed and is ready to be merged into the master branch.
+\item \textbf{Done}: Tickets that have been merged into the master branch. \\
+\end{itemize}
+
+\noindent The following process describes the lifecycle of an issue on GitHub:
+
+\begin{enumerate}
+\begin{item}
+Create a new issue detailing the new feature(s) to be developed (if one does not already exist). Be sure to include:
+\begin{enumerate}
+\item A general description of the feature(s) and any changes that need to be made.
+\item A rationale for this change (as is necessary)
+\item Any dependencies (as applicable)
+\item Acceptance criteria for verifying the feature(s) have been implemented according to expectations.
+\end{enumerate}
+\end{item}
+\begin{item}
+Pull any new changes from the development branch.
+\end{item}
+\begin{item}
+Create a new branch to develop the new feature(s).
+\end{item}
+\begin{item}
+When developing the new feature(s), be sure to:
+\begin{enumerate}
+\item Write new unit tests/perform unit testing on the newly created modules and functions.
+\item Push any changes to the created branch.
+\item Have the changes reviewed and approved by 1-2 other team members (ideally the relevant project area expert/main driver).
+\item Merge the changes into the development branch after the approval(s) have been made.
+\item Periodically perform regression testing on the changes merged into the development branch. Create issues for all bugs found in a similar process to that outlined in step 1.
+\item Repeat steps 2 – 8 for all bugs discovered during regression testing from step 9.
+\item Repeat regression testing to ensure all discovered bugs from step 9 have been resolved, and that no new bugs have been introduced.
+\item Changes merged into the development branch will be merged into the main branch periodically, ideally after the regression testing has been completed and all discovered bugs have been addressed and retested.
+\end{enumerate}
+\end{item}
+\end{enumerate}
+ 
+\noindent The general steps outlined above are subject to change and adaptation at the team’s discretion.
 
 \section{Proof of Concept Demonstration Plan}
 
-What is the main risk, or risks, for the success of your project?  What will you
-demonstrate during your proof of concept demonstration to convince yourself that
-you will be able to overcome this risk?
+The following points are a general outline of the team’s plan for the proof-of-concept demonstration:
+\begin{enumerate}
+\item Identify the major risks that may prevent the successful completion of this project’s proposed solution.
+\item Implement a proof of concept of the major risks to include in the proof-of-concept demonstration. \\
+\end{enumerate}
+
+\noindent For the proof-of-concept demonstration, the following risk(s) will be demonstrated to prove that they can be overcome to ensure the project’s successful completion:
+\begin{enumerate}
+\item Prove that the AI/computer vision component needed to analyze the chest X-ray images and perform diagnoses is feasible. This would be shown in the demo by implementing a simple machine learning model that is able to identify certain diseases in a chest X-ray image.
+\item Prove that the mobile/web application (with server backend) for this solution is feasible. The main risk here would be ensuring secure access of data.
+\item \textit{Extra}: Prove that the natural language component needed to produce a free-form or structured radiology report is feasible.
+\end{enumerate}
 
 \section{Technology}
 
+The following technologies will be used by the team during the software development process to implement the proposed solution:
 \begin{itemize}
-\item Specific programming language
-\item Specific linter tool (if appropriate)
-\item Specific unit testing framework
-\item Investigation of code coverage measuring tools
-\item Specific plans for Continuous Integration (CI), or an explanation that CI
-  is not being done
-\item Specific performance measuring tools (like Valgrind), if
-  appropriate
-\item Libraries you will likely be using?
-\item Tools you will likely be using?
+\item \textbf{Frontend Languages}: JavaScript, CSS
+\item \textbf{Backend Languages}: Python
+\item \textbf{Frontend Libraries}: React, Tailwind CSS
+\item \textbf{Backend Libraries}: PyTorch, OpenCV, pandas
+\item \textbf{Unit Testing}: Jest, Pytest
+\item \textbf{Code Coverage}: Istanbul, Coverage.py
+\item \textbf{Linters}: Prettier, ESLint, Flake8, Black
+\item \textbf{Continuous Integration and Branch Protection}: GitHub Actions
+\item \textbf{Other Software Tools}: git, Overleaf, VSCode
 \end{itemize}
 
 \section{Coding Standard}
 
+The following coding standard(s) will be adhered to by the team during the software development process: \\
+
+\noindent \textbf{Branch Naming Convention} \\
+Ensure that all your branches are named according to the following convention:
+\begin{itemize}
+\item \texttt{feature/<feature-name>} for new features
+\item \texttt{bugfix/<bug-name>} for bug fixes
+\item \texttt{improvement/<improvement-name>} for improvements
+\item \texttt{chore/<chore-name>} for chores
+\end{itemize}
+
+\noindent Ensure that the name of your branch is descriptive of the feature/bug/improvement/chore you are working on and is written in \texttt{kebab-case}. \\
+Examples:
+\begin{itemize}
+\item \texttt{feature/add-login-page}
+\item \texttt{bugfix/fix-login-page}
+\item \texttt{improvement/update-login-page}
+\item \texttt{chore/update-readme} \\
+\end{itemize}
+
+\noindent \textbf{Commit Message Convention} \\
+This project uses \href{https://www.conventionalcommits.org/en/v1.0.0/}{Conventional Commits} for commit messages.
+Ensure that all your commit messages are written according to the following convention: \\
+\texttt{<type>: <description>} \\ \\
+Where \texttt{type} is one of the following:
+\begin{itemize}
+\item \texttt{feat} for new features
+\item \texttt{fix} for bug fixes
+\end{itemize}
+Examples:
+\begin{itemize}
+\item \texttt{feat: add confirm password field}
+\item \texttt{fix: submit button not working} \\
+\end{itemize}
+
+\noindent \textbf{Coding/Programming Convention} \\
+Coding standards will be language specific, with all Python code being upheld to the PEP 8 style guide and all JavaScript code being upheld to Airbnb’s style guide.
+
 \section{Project Scheduling}
 
-\wss{How will the project be scheduled?}
+The following schedule provides a general idea of the project timeline that the team will follow for the various deliverables:
+
+\begin{itemize}
+\begin{item}
+\textbf{Problem Statement and Goals} – Due: September 25th, 2023
+\end{item}
+\begin{item}
+\textbf{Development Plan} – Due: September 25th, 2023
+\end{item}
+\begin{item}
+\textbf{Requirements Document, Revision 0} – Due: October 4th, 2023
+\begin{itemize}
+\item Start By: September 27th, 2023
+\item Complete By: October 2nd – 3rd, 2023
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{Hazard Analysis, Revision 0} – Due: October 20th, 2023
+\begin{itemize}
+\item Start By: October 6th, 2023
+\item Complete By: October 17th – 18th, 2023
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{V\&V Plan, Revision 0} – Due: November 3rd, 2023
+\begin{itemize}
+\item Start By: October 22nd, 2023
+\item Complete By: October 31st – November 1st, 2023
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{Proof of Concept Demonstration} – Due: November 13th – 24th, 2023
+\begin{itemize}
+\item Start By: September 27th, 2023
+\item Complete By: November 10th – 11th, 2023
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{Design Document, Revision 0} – Due: January 17th, 2024
+\begin{itemize}
+\item Start By: September 27th, 2023
+\item Complete By: January 14th, 2024
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{Revision 0 Demonstration} – Due: February 5th – 16th, 2024
+\begin{itemize}
+\item Start By: September 27th, 2023
+\item Complete By: February 1st, 2024
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{V\&V Report, Revision 0} – Due: March 6th, 2024
+\begin{itemize}
+\item Start By: November 13th, 2023
+\item Complete By: March 2nd, 2024
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{Final Demonstration, Revision 1} – Due: March 18th – 29th, 2024
+\begin{itemize}
+\item Start By: February 18th, 2024
+\item Complete By: March 14th, 2024
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{EXPO Demonstration} – Due: April TBD
+\begin{itemize}
+\item Start By: February 18th, 2023
+\item Complete By: March 31st, 2023
+\end{itemize}
+\end{item}
+\begin{item}
+\textbf{Final Documentation, Revision 1} – Due: April 4th, 2023
+\begin{itemize}
+\item Start By: February 3rd, 2023
+\item Complete By: March 31st, 2023
+\end{itemize}
+\end{item}
+\end{itemize}
+
+\noindent This schedule is intended to ensure that all milestones are met and that all project deliverables are completed ahead of schedule.
+This is to allow for extra time for the team members to review, edit and revise these documents with the supervisor and TA before they are signed off on and submitted.
 
 \end{document}
