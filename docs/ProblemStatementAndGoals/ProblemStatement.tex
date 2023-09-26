@@ -3,9 +3,9 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 
-\title{Problem Statement and Goals\\\progname}
+\title{Problem Statement and Goals\\Software Engineering}
 
-\author{\authname}
+\author{Team 17, Team RAdiAIdance\\Allison Cook\\Ibrahim Issa\\Mohaansh Pranjal\\Nathaniel Hu\\Tushar Aggarwal}
 
 \date{}
 
@@ -22,8 +22,12 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
+09/23/2023 & Nathaniel Hu & Updated project header information, began initial drafting of various sections and subsections \\
+09/24/2023 & Ibrahim Issa & Revised Problem Statement, expanded on Environment and Goals subsections \\
+09/24/2023 & Mohaansh Pranjal & Added to Stakeholders subsection, revised Environment subsection \\
+09/24/2023 & Tushar Aggarwal & Final review of entire document, corrected spelling errors, formatting \\
+09/25/2023 & Mohaansh Pranjal & Revised Outputs and Environment subsections \\
+09/25/2023 & Nathaniel Hu & Transferred Problem Statement and Goals document text from collaborative document into this LaTeX document; Did some finishing touches \\
 ... & ... & ...\\
 \bottomrule
 \end{tabularx}
@@ -31,26 +35,110 @@ Date2 & Name(s) & Description of changes\\
 
 \section{Problem Statement}
 
-\wss{You should check your problem statement with the
-\href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/ProbState-Checklist.pdf}
-{problem statement checklist}.}
-\wss{You can change the section headings, as long as you include the required information.}
+In this section, the \textbf{problem} that this project's proposed solution aims to solve will be introduced and discussed in more detail.
+In particular, the problem will be \textbf{abstracted and characterized} in terms of its \textbf{high-level inputs and outputs}.
+The \textbf{stakeholders} of the proposed solution who are impacted by this problem (either \textbf{directly or indirectly}) are also identified and described in more detail.
+The \textbf{environment} that this problem exists in, and that the proposed solution is expected to work in, will also be described in further detail here.
+Environmental \textbf{constraints} will also be identified and discussed in relation to the problem and potential solution.
 
 \subsection{Problem}
 
+Chest X-rays are the most common medical imaging modality, and they constitute \textbf{40\%} of the \textbf{3.6 billion} medical imaging procedures performed worldwide every year.
+Chest X-rays are taken for a wide variety of reasons, \textbf{including} (but not limited to) the following:
+
+\begin{itemize}
+\begin{item}
+For the discovery of a wide range of \textbf{cardiac and lung conditions}
+\end{item}
+\begin{item}
+To verify the \textbf{position of lines and tubes} in patients in the ICU or during/after interventions
+\end{item}
+\begin{item}
+For ruling out diseases for \textbf{regulatory reasons} such as immigration and occupational health assessments
+\end{item}
+\end{itemize}
+
+\noindent This huge traffic of data becomes very tedious and time-consuming for \textbf{radiologists} and \textbf{healthcare professionals} to review and analyze.
+They need to manually examine each chest X-ray \textbf{carefully} to diagnose a patient’s symptoms or even check for normality.
+This arduous process can cause delays for patients who are waiting on their test results.
+This is especially problematic for patients in \textbf{time-sensitive situations}, such as those with serious conditions whose symptoms could become worse over time.
+
 \subsection{Inputs and Outputs}
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+The high-level \textbf{inputs and outputs} of this problem are described as follows:\\
+Inputs:
+\begin{itemize}
+\item Chest X-ray \textbf{image samples}
+\end{itemize}
+
+\noindent Outputs:
+\begin{itemize}
+\item \textbf{Diagnosis and identification of detected diseases} in the image samples
+\end{itemize} 
 
 \subsection{Stakeholders}
 
+The various \textbf{stakeholders} of this problem and this project's proposed solution are described in detail below:
+
+\begin{itemize}
+\begin{item}
+The \textbf{primary stakeholders} for this problem and potential solution are the \textbf{medical professionals} responsible for analyzing medical imaging and performing diagnoses for the patients.
+These \textbf{medical professionals} must review many medical images in detail to accurately perform diagnoses, and then document their findings into a \textbf{radiology report}.
+\end{item}
+\begin{item}
+The \textbf{patients} themselves are the \textbf{secondary stakeholders}, as it will be their \textbf{chest X-rays} that will be analyzed.
+They are the \textbf{main beneficiaries} of the diagnoses performed on the x-ray images and subsequently produce radiology reports detailing any problems they might have.
+These will allow them to get the treatment they need, hopefully within an ideal timeframe.
+\end{item}
+\begin{item}
+Additionally, the \textbf{data/IT departments} of the \textbf{hospitals/medical institutions} using the software are also \textbf{(tertiary) stakeholders}, as \textbf{secure access} to X-ray samples is of importance in such institutions.
+The software using medical data is concerned with the department that documents and provides such data.
+\end{item}
+\end{itemize}
+
 \subsection{Environment}
 
-\wss{Hardware and software}
+The \textbf{environment} of this problem and project's proposed solution are described below:
+
+\begin{itemize}
+\begin{item}
+\noindent \textbf{Software}: The web application would have a \textbf{user-friendly} interface, that can also \textbf{interface with} the hospital’s/medical institution's system using \textbf{secure APIs} as needed.
+\end{item}
+\begin{item}
+\noindent \textbf{Hardware}: The web application would be running on a device that has access to the \textbf{web and the hospital’s/medical institution's server(s)}, as it would need to pull patient's chest X-ray images \textbf{securely}.
+\end{item}
+\end{itemize}
 
 \section{Goals}
 
+The \textbf{goals} of this project's proposed solution are described in detail below:
+
+\begin{itemize}
+\begin{item}
+\textbf{Accurate image detection}: Given an X-ray image, the application should \textbf{accurately detect} normality or abnormality with a \textbf{certain range of precision}.
+\end{item}
+\begin{item}
+\textbf{Intuitive user interface}: The user interface should \textbf{facilitate interaction} with the user and should allow the user to \textbf{easily input} an x-ray image and \textbf{output} the diagnostic report.
+\end{item}
+\begin{item}
+\textbf{Diagnostic report generation}: Generate a report \textbf{outlining} any abnormalities in the given X-ray if any. 
+\end{item}
+\begin{item}
+\textbf{Remote access}: The user should be able to \textbf{access} the application through a web browser regardless of location.
+\end{item}
+\begin{item}
+\textbf{Security}: The application should \textbf{protect} user-sensitive user information and be only accessible by \textbf{authorized parties}.
+\end{item}
+\end{itemize}
+
 \section{Stretch Goals}
+
+The \textbf{stretch goals} of this project's proposed solution are described in detail below:
+
+\begin{itemize}
+\begin{item}
+\textbf{NLP Report}: Given an X-ray image, generate a \textbf{structured or free-form} radiology report of the diagnostic findings using \textbf{NLP}.
+\end{item}
+\end{itemize}
 
 \end{document}
