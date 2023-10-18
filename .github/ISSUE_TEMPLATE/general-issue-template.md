@@ -11,7 +11,7 @@ assignees: ''
 - This issue is about ..
 
 ## Deadline
-- dd/mm/2023
+- 2023/mm/dd
 
 ## Estimated Work Time (in hrs)
 - 0.5 hrs
