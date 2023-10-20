@@ -1,15 +1,15 @@
 ---
 name: Custom meeting issue template
 about: Custom meeting issue template
-title: T17 Meeting 01 - Sep 15, 2023
-labels: documentation, Meeting
-assignees: Tusharagg1
+title: T17 Meeting <number> - Sep 15, 2023
+labels: meeting
+assignees: 
 
 ---
 
-## T17 Meeting 01 Info
-- **Date**: 2023/09/15
-- **Time**: 13:30 - 14:00
+## T17 Meeting <number> Info
+- **Date**: 2023/mm/dd
+- **Time**: hh:mm - hh:mm
 -  **Location**: Virtual, via Teams
 - **Attendees**: 
 
@@ -28,10 +28,8 @@ assignees: Tusharagg1
 - ...
 
 ## Actions
-
 * @github_name to address issue #1
 
 ## Meeting Notes
-
 - Note 1
 - Note 2
