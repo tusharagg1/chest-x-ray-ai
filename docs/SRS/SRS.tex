@@ -58,12 +58,12 @@
 \begin{tabularx}{\textwidth}{p{4cm}p{4cm}X}
 \toprule {\textbf{Date}} & {\textbf{Developer(s)}} & {\textbf{Notes}}\\
 \midrule
-October 1st, 2023 & Allison Cook, Ibrahim Issa, Mohaansh Pranjal, Nathaniel Hu,
-Tushar Aggarwal & Initial Draft of SRS document \\
+October 1st, 2023 & Allison Cook, Ibrahim, Mohaansh, Nathaniel,
+Tushar & Initial Draft of SRS document \\
 October 4th 2023 & Name & Notes\\
-October 6th, 2023 & Allison Cook, Ibrahim Issa, Mohaansh Pranjal, Nathaniel Hu,
-Tushar Aggarwal  & Edits to SRS document (NFRs) \\
-October 6th, 2023 & Mohaansh Pranjal & added Functional Requirements \\
+October 6th, 2023 & Allison, Ibrahim, Mohaansh, Nathaniel, Tushar & Edits to SRS document (NFRs) \\
+October 6th, 2023 & Mohaansh & added Functional Requirements \\
+October 20th, 2023 & Mohaansh, Tushar & Further improvements \\
 
 \bottomrule
 \end{tabularx}
@@ -544,9 +544,6 @@ The following are the functional requirements defined for this project's propose
     \begin{item}
         \begin{description}
             \item[Description:] The system shall generate and display a structured set of findings and demographic information about the patient.
-            % (replace: report
-            % correction: structured set of findings and demographic information about the patient. 
-            % )
             \item[Rationale:] Displaying a report would help understand the findings of the chest x-ray.
             \item[Fit Criterion:] The system can successfully label the x-rays with the correct diseases normalcy 90\% of the time.
             \item[Use Case(s):] PUC3, PUC4
@@ -564,13 +561,9 @@ The following are the functional requirements defined for this project's propose
     \end{item}
     \begin{item}
         \begin{description}
-            \item[Description:] \hypertarget{FR5}{The system shall accurately detect and classify abnormalities or normality in a given X-ray image.}
+            \item[Description:] \hypertarget{FR5}{The system shall detect and classify the following diseases/infections to a certain accuracy: Pneumonia, Atelectasis, Cardiomegaly, Pleural Effusion}
             \item[Rationale:] Users need information on whether a chest x-ray image depicts any diseases or not.
-            % Be specific about what diseases we will be detecting
-            % 3, 5, 10 diseases - 5 is ideal
-            % We need to specify diseases in SRS
-            \item[Fit Criterion:] The diseases are correctly identified 90\% of the time.
-            % 90% - not a good idea. area under the ROc curve.
+            \item[Fit Criterion:] The area under the ROC curve for each disease after testing the model is greater than the recommended threshold for accurate results (Refer to Table 6). 
             \item[Use Case(s):] PUC1, PUC2
         \end{description}
     \end{item}
@@ -613,7 +606,6 @@ The following are the functional requirements defined for this project's propose
     \end{item}
     \begin{item}
         \begin{description}
-            
             \item[Description:] The system shall have a search function to search for diagnoses specific to a patient's details (name, ID, etc)
             \item[Rationale:] Allows fast retrieval of information.
             \item[Fit Criterion:] User is able to search for a patient using their personal information or identifier.
@@ -623,6 +615,24 @@ The following are the functional requirements defined for this project's propose
     % backend models missing
     % add ML model that we will be using - type of model
 \end{enumerate}
+
+\begin{table}[H]
+    \caption{ROC Threshold Table}
+    \label{table:rocTable}
+    \begin{tabularx}{\textwidth}{|>{\hsize=1.4\hsize\linewidth=\hsize}X|>{\hsize=.6\hsize\linewidth=\hsize}X|}
+    \hline
+    Disease/Infection & Expected Area Under ROC Curve\\
+    \hline
+    Pneumonia & 0.8 \\
+    \hline
+    Atelectasis & 0.8 \\
+    \hline
+    Cardiomegaly & 0.85 \\
+    \hline
+    Pleural Effusion & 0.9 \\
+    \hline
+    \end{tabularx}
+\end{table}
 
 \subsection{Formal Specification for the ML Algorithm}
 This subsection details the formal specification for the machine learning algorithm.
@@ -948,9 +958,11 @@ new problems, tasks, migration to the new product, costs, waiting room and ideas
     \item \textbf{User Interface Libraries:} Utilizing established user interface libraries like React or Angular to expedite the development of the user interface component.
 \end{itemize}
 \subsubsection{Reusable Components}
-\lips
+N/A
 \subsubsection{Products That Can Be Copied}
-\lips
+\begin{itemize}
+    \item \textbf{Web Application Frameworks:} Identifying web application frameworks (i.e. Django, Ruby, ExpressJS) that align with the project's requirements to serve as a foundation for the system.
+\end{itemize}
 
 \subsection{New Problems}
 
@@ -1067,12 +1079,12 @@ Inhibit the New Product}
 \subsection{Migration to the New Product}
 
 \subsubsection{Requirements for Migration to the New Product}
-\lips
+N/A
 \subsubsection{Data That Has to be Modified or Translated for the New System}
-\lips
+N/A
 
 \subsection{Costs}
-There are no costs anticipated with this project, however should any purchases be necessary the total will not exceed \$750.
+There are no costs anticipated with this project, however, should any purchases be necessary the total will not exceed \$750.
 
 \subsection{User Documentation and Training}
 This subsection contains the details of all needed user documentation and training for this project's proposed solution.
@@ -1090,10 +1102,10 @@ There will be no training requirements.
 
 
 \subsection{Waiting Room}
-\lips
+N/A
 
 \subsection{Ideas for Solution}
-\lips
+N/A
 
 \bibliographystyle{plainnat}
 \bibliography{SRS, PHIPA, OLA}
@@ -1118,5 +1130,9 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
   mastering the skill?  Of the identified approaches, which will each team
   member pursue, and why did they make this choice?
 \end{enumerate}
+
+The main skills that the team shall collectively aim to learn through this project are documentation, version control and management of group work using GitHub, and project specific knowledge such as computer vision/machine learning. The team aims to learn about machine learning by reading various research papers about chest x-ray disease detection. There are also skills that different team members aim to learn individually through this project.
+
+Mohaansh Pranjal - A new skill I aim to learn while working on this project is data security. I also aim to learn more about documentation and project management. Using GitHub tools like workflows/actions gives useful practical experience, as these are used frequently in industry. These tools are also helpful in project management, as they help keep track of work done by each team member. Security is also a significant requirement for this project and working on it for this project will be worthwhile in learning more about information security.
 
 \end{document}
