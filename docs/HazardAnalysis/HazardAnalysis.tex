@@ -3,6 +3,11 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{pdflscape}
+\usepackage[margin=1.75in]{geometry}
+\usepackage{multirow}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -16,7 +21,7 @@
 
 \author{\authname}
 
-\date{}
+\date{\today}
 
 \input{../Comments}
 \input{../Common}
@@ -32,13 +37,13 @@
 
 \begin{table}[hp]
 \caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{llX}
+\begin{tabularx}{\textwidth}{p{3cm}p{4cm}X}
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+October 16th, 2023 & Allison, Tushar & Added Introduction, Scope \& Purpose of HA, System Boundaries \& Components, Critical Assumptions\\
+October 18th, 2023 & Allison, Ibrahim, Mohaansh, Nathaniel, Tushar & Switch to Overleaf LateX, Added FMEA Table, Safety \& Security requirements, updated Critical Assumptions\\
+October 20th, 2023 & Ibrahim, Mohaansh, Tushar & Added Safety \& Security Requirements, Out-of-Scope Hazards and descriptions, Roadmap\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -51,35 +56,210 @@ Date2 & Name(s) & Description of changes\\
 
 \pagenumbering{arabic}
 
-\wss{You are free to modify this template.}
-
 \section{Introduction}
+This document aims to outline the possible hazards and the associated hazard controls for the "AI for Chest X-Ray" project. In the context of the project, a hazard is any condition, event, or circumstance that could jeopardize the safety, reliability, or effectiveness of the system for diagnosing chest X-ray images. Hazard analysis is an essential step in the project's development lifecycle, focusing on the identification, assessment, and mitigation of potential hazards \& risks and safeguarding the quality \& reliability of the proposed solution.
 
-\wss{You can include your definition of what a hazard is here.}
+    \subsubsection{List of Acronyms}
+    \begin{table}[hbt!]
+        \centering
+        \caption{List of Acronyms}
+        \label{ListofAcronyms}
+        \begin{tabular}{|c|c|}
+        \hline
+            Acronym & Description\\
+            \hline
+            AI  & Artificial Intelligence\\
+            FMEA & Failure Modes and Effects Analysis \\
+            HA & Hazard Analysis\\
+            IT  & Information Systems\\
+            ROC & Receiver Operating Characteristic\\
+            \hline
+        \end{tabular}
+    \end{table}
 
 \section{Scope and Purpose of Hazard Analysis}
+The purpose of the hazard analysis is to identify the possible hazards associated with the system, the potential effects, and how to reduce the risk within the system through preventative design and actions. In our project, hazards can be linked to patient information being collected incorrectly, data leaks in patient records, issues with authorization, false positives or false negatives outputs in disease detection, and more as outlined below.
+
+The scope of hazard analysis in the project focuses on ensuring the safety, effectiveness, and reliability of the AI-based diagnostic system for chest X-ray images. It extends to the entire ecosystem of the AI system, including the machine learning algorithms, user interface, data management, and the interaction between healthcare professionals, patients, and the AI system.
 
 \section{System Boundaries and Components}
+The system will involve the following components/functions: 
+\begin{itemize}
+    \item \textbf{Frontend}
+    \begin{itemize}
+        \item A web interface for user interaction and user authentication
+        \item Image upload, retrieval and access
+        \item Display diagnostic notes \& findings
+    \end{itemize}
+    \item \textbf{Backend}
+    \begin{itemize}
+        \item An AI Model for identifying the anomalies related to the selected diseases
+        \item Databases that will hold X-ray images and store patients' records
+        \item The host support system (i.e., Medical Institution/Diagnostic Centre IT Systems)
+    \end{itemize}
+\end{itemize}
+
+\noindent The system boundary includes the application, AI model, database, and physical host system. The host system and load times of the database are not controlled by the system. The host system is managed by the institution, hospital, or office. However, all components are to be considered in the hazard analysis as they can impact the system.
 
 \section{Critical Assumptions}
-
-\wss{These assumptions that are made about the software or system.  You should
-minimize the number of assumptions that remove potential hazards.  For instance,
-you could assume a part will never fail, but it is generally better to include
-this potential failure mode.}
+The following are the critical assumptions for the project:
+\begin{enumerate}
+    \item The hospital/work location will have a secure database where the generated diagnostic notes document will be stored after generation, a copy of the document will not be stored within the system, only the final diagnoses of the AI.
+    \item Data stored by the AI model to continue training during operation will have minimum identifying demographic information of the patient, to limit unnecessary data stored within the system.
+    \item The chest X-ray images provided will be of sufficient quality for the AI system to accurately detect abnormalities.
+    \item  The system is assumed to be available for use at all times, with minimal downtime.
+    \item  The system will be accessed by trained healthcare professionals and will have a certain level of competency in interpreting the diagnostic findings.
+\end{enumerate}
 
 \section{Failure Mode and Effect Analysis}
+The following is a detailed breakdown of the possible failure modes and effects analysis, or FMEA table. For each component, the possible failure modes, effects, causes, detection, controls, risk, recommended action, associated safety/security requirements and references are described.
 
-\wss{Include your FMEA table here}
+\newgeometry{left=0.25in,right=0.25in,top=0.25in,bottom=0.25in}
+\begin{landscape}
+\begin{table}[hp]
+    \caption{FMEA Worksheet} \label{FMEA}
+    \centering
+    \begin{footnotesize}
+    \begin{tabular}{|p{1in}|p{1in}|p{1in}|p{1.5in}|p{0.6in}|p{0.5in}|p{0.3in}|p{2.5in}|p{0.2in}|p{0.2in}|}
+        \toprule
+        \textbf{Component} & \textbf{Failure Modes} & \textbf{Effects of Failure} &\textbf{Causes of Failure} & \textbf{Detection} &\textbf{Controls} &\textbf{Risk} &\textbf{Recommended Action} &\textbf{Req.} &\textbf{Ref.} \\
+        \bottomrule
+        \multirow{2}{1in}{Web Interface - User Access Authentication} & \multirow{2}{1in}{Fails to authenticate user} & medical professional unable to login & \multirow{2}{1.5in}{Authentication error in web application} & \multirow{2}{0.6in}{Manual testing} & & \multirow{2}{0.3in}{Low} & Include alternative methods to authenticate user & PR0 & H1.1 \\
+        \cline{3-3}\cline{8-10}
+        & & unauthorized third party able to login & & & & & Include safeguards to prevent unauthorized parties from logging in & AR0, AR1, PR0, PR1 & H1.2 \\
+        \hline
+        Web Interface - Image Upload & Fails to upload chest x-ray image & user cannot upload chest x-ray image to web app & image upload error in web application & Manual testing & & Low & Include alternative methods to upload chest x-ray images & & H2 \\
+        \hline
+        \multirow{2}{1in}{Web Interface - Display Diagnostic Findings} & Fails to show diagnostic findings & user cannot view diagnostic findings of chest x-ray analysis & \multirow{2}{1.5in}{data access error in web application} & \multirow{2}{0.6in}{Manual testing} & & \multirow{2}{0.3in}{Low} & Include alternate methods for users to view diagnostic findings & AR1 & H3.1 \\
+        \cline{2-3}\cline{8-10}
+        & Shows diagnostic findings by mistake & unauthorized user can view diagnostic findings of chest x-ray analysis & & & & & Include alternative methods to authenticate user & AR1 & H3.2 \\
+        \hline
+        \multirow{2}{1in}{Detect disease in chest x-ray image} & Generates false positive & Healthy patient could be diagnosed, resulting in unnecessary treatment & Model mistakenly detects disease absent in a normal chest x-ray & \multirow{2}{0.6in}{Manual testing} & & \multirow{2}{0.3in}{High} & Optimize chest x-ray analysis AI to minimize false positives & SR0, SR1 & H4.1 \\
+        \cline{2-4}\cline{8-10}
+        & Generates false negative & Diseased patient undiagnosed, could escalate symptoms & Model fails to detect disease in an x-ray with the diseases & & & & Optimize chest x-ray analysis AI to minimize false negatives & SR0, SR1 & H4.2 \\
+        \hline
+        AI Algorithm Training & Model Overfitting During Training & Model performs well on training data but poorly on new, unseen data, leading to inaccurate diagnoses & Overfitting due to complex model architecture & Monitoring validation data during training & Implement dropout and regularization techniques, fine-tune hyperparameters & High & Implement techniques to detect and prevent overfitting & SR0, SR1 & H5 \\
+        \hline
+        \multirow{2}{1in}{Data Storage} & Data loss & Loss of patient data & Database server malfunction & Regular data backups & Database redundancy & Data loss risk & Implement robust data backup & \multirow{2}{0.2in}{IR0, SR2} & H6.1 \\
+        \cline{2-8}\cline{10-10}
+        & Data corruption & Loss of patient images and records & Database server corruption & Data integrity checks & Regular data backups & Data loss leak & Implement data integrity checks & & H6.2 \\
+        \hline
+        Data Access & & & & & & & & & \\
+        \hline
+        Data Security & & & & & & & & & \\
+        \hline
+        \multirow{2}{1in}{Backend Server} & Network failure & Disruption of connection to database & Network connectivity issues & \multirow{2}{0.6in}{Real-time monitoring} & Redundant network connections & \multirow{2}{0.2in}{Operational disruption} & Implement network redundancy & & \\
+        \cline{2-4}\cline{6-6}\cline{8-8}
+        & Server downtime & Unable to access to patient data & Server hardware failure & & Redundant server systems & & Implement server redundancy & & \\
+        \bottomrule
+    \end{tabular}
+    \end{footnotesize}
+\end{table}
+\end{landscape}
+\restoregeometry
+
+\subsection{Hazards Out of Scope}
+The following hazards are considered to be out of scope for this project's proposed solution:
+\begin{itemize}
+    \item \textbf{Compromised Host System:} If the host system used to run the application is compromised. Authorized access to the web application helps mitigate this hazard but most of the risk is beyond our control.
+    \item \textbf{Malicious Cyberattacks:} The project acknowledges the importance of cybersecurity and implements security measures to protect user data. However, specific hazards related to highly sophisticated and malicious cyberattacks are considered out of scope due to their unpredictable and evolving nature.
+    \item \textbf{Power Outages:} The project relies on access to power and certain technologies to fully function. Power outages are external events that are beyond the scope of the system.
+\end{itemize} 
+
 
 \section{Safety and Security Requirements}
+\subsection{Access Requirements}
+\begin{description}
+\hypertarget{AR0}{}
+    \item[AR0] The x-ray images should only be accessible to authorized users. Authorized users include doctors and IT staff responsible for storing medical data for the medical institution. 
+    \begin{description}
+        \item[Rationale:] This is to keep health records confidential and accessible to only those who have permission to view them, such as a doctor or nurse. 
+        \item[Fit Criterion:] Users with an authorized username and password will be able to access the X-ray image.
+    \end{description}
+    \item[AR1] The system should allow access to generated reports only by medical professionals and the patient to whom the report belongs. 
+    \begin{description}
+        \item[Rationale:] Similarly to \hyperlink{AR0}{NF-AR0} this is to keep health records confidential and accessible to only those who have permission to view them, such as a doctor or nurse. 
+        \item[Fit Criterion:] Users with an authorized username and password will be able to access the generated report.
+    \end{description}
+\end{description}
 
-\wss{Newly discovered requirements.  These should also be added to the SRS.  (A
-rationale design process how and why to fake it.)}
+\subsection{Integrity Requirements}
+\begin{description}
+    \item[IR0] The system will encrypt all stored data 
+    \begin{description}
+        \item[Rationale:] This is to help ensure that if the system is attacked any data is not easily collected. 
+        \item[Fit Criterion:] All data is not stored in plain language. 
+    \end{description}
+\end{description}
+
+\subsection{Privacy Requirements}
+\begin{description}
+    \item[PR0] Only authorized users, doctors, will have access to patients information. 
+    \begin{description}
+        \item[Rationale:] Similarly to \hyperlink{AR0}{Access requirements} this is to keep records confidential and accessible to only those that have permission to view.
+        \item[Fit Criterion:] 
+    \end{description}
+    \item[PR1] The system should maintain the privacy of the patient’s personal and medical information.
+    \begin{description}
+        \item[Rationale:] This is to follow the medical practices of keeping patient privacy. 
+        \item[Fit Criterion:] Patient information is not openly accessible. 
+    \end{description}
+\end{description}
+
+\subsection{Safety Requirements}
+\begin{description}
+    \item[SR0] Accuracy of the algorithm
+    \begin{description}
+        \item[Description:] The system will show accurate findings based on the area under the ROC curve threshold for all the diseases identified.
+        \item[Rationale:] False negatives need to be eliminated and inaccurate findings can result in poor health of the patient.
+        \item[Fit Criterion:] The area under the ROC curve for each disease after testing the model is greater than the recommended threshold for getting accurate results.
+    \end{description}
+\end{description}
+
+\begin{description}
+    \item[SR1] Algorithm Testing and Validation
+    \begin{description}
+        \item[Description:] Continuous testing and validation of the machine learning algorithm to ensure it meets safety and accuracy standards. 
+        \item[Rationale:] Testing is an efficient way to discover faults and improve performance.
+        \item[Fit Criterion:] The system passes industry-standard tests for the algorithm's accuracy.
+    \end{description}
+\end{description}
+
+\begin{description}
+    \item[SR2] Data Encryption
+    \begin{description}
+        \item[Description:] Ensure data encryption during data transfers to prevent unauthorized access.
+        \item[Rationale:] Encryption is important for the security and privacy of data, and hence the security of patients. 
+        \item[Fit Criterion:] The system uses a secure encryption algorithm like SHA-2 or better. 
+    \end{description}
+\end{description}
+
+\begin{description}
+    \item[SR3] User Authentication and Access Control
+    \begin{description}
+        \item[Description:] Ensure that only authorized users, such as healthcare professionals, can access the system and patient data.
+        \item[Rationale:] Unauthorized use could expose confidential personal information and threaten the safety of patients.
+        \item[Fit Criterion:] Users cannot access the system without logging in with their credentials.
+    \end{description}
+\end{description}
+
 
 \section{Roadmap}
+After careful consideration and reassessment, the team realized there were many new requirements for us to take into consideration that were not initially apparent when writing the Software Requirement Specification. Ideally, we will aim to implement every safety requirement, but realistically when taking into account time and resource constraints, those requirements that are strictly necessary for system functionality may be the only ones that get implemented.
 
-\wss{Which safety requirements will be implemented as part of the capstone timeline?
-Which requirements will be implemented in the future?}
+To be implemented during the capstone timeline: 
+\begin{itemize}
+    \item SR0, SR1, SR2, SR3
+\end{itemize}
+
+To be implemented in the future: 
+\begin{itemize}
+%    \item Safety Requirements SR0, SR1, SR2, SR3
+    \item \textbf{Algorithm Optimization:} Continuous efforts to enhance the efficiency \& accuracy of chest X-ray analysis through algorithm optimization.
+    \item \textbf{Audit Log Maintenance:} Maintain an audit log of all application activities.
+    Incorporate an activity logger within the application framework.
+    \item \textbf{Security Audits and Vulnerability Assessments:} Regular audits and assessments to maintain a secure environment and protect patient data.
+    \item \textbf{Security Patches and Updates:} Regularly roll out security patches and updates to fix known vulnerabilities. Form a dedicated security updates team to monitor, identify, and rectify vulnerabilities.
+\end{itemize}
 
 \end{document}
