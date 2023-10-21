@@ -144,13 +144,15 @@ The following is a detailed breakdown of the possible failure modes and effects 
         \cline{2-8}\cline{10-10}
         & Data corruption & Loss of patient images and records & Database server corruption & Data integrity checks & Regular data backups & Data loss leak & Implement data integrity checks & & H6.2 \\
         \hline
-        Data Access & & & & & & & & & \\
+        Data Access & Data transfer failure & Inability to retrieve patient data & Network communication issues & Automated data transfer checks & Redundant data transfer paths & Data retrieval risk & Implement data transfer redundancy & & H7 \\
         \hline
-        Data Security & & & & & & & & & \\
+        \multirow{2}{1in}{Data Security} & Cyberattacks & Unauthorized access to patient data & Weak security measures & \multirow{2}{0.6in}{Intrusion detection} & Enhanced cybersecurity measures & \multirow{2}{0.2in}{Data breach risk} & Enhance cybersecurity & \multirow{2}{0.2in}{AR0, IR0, PR0, PR1, SR2} & H8.1 \\
+        \cline{2-4}\cline{6-6}\cline{8-8}\cline{10-10}
+        & Unauthorized access & Data breach and patient privacy & Weak access control measures & & Enhanced access controls & & Enhanced access control & & H8.2 \\
         \hline
-        \multirow{2}{1in}{Backend Server} & Network failure & Disruption of connection to database & Network connectivity issues & \multirow{2}{0.6in}{Real-time monitoring} & Redundant network connections & \multirow{2}{0.2in}{Operational disruption} & Implement network redundancy & & \\
-        \cline{2-4}\cline{6-6}\cline{8-8}
-        & Server downtime & Unable to access to patient data & Server hardware failure & & Redundant server systems & & Implement server redundancy & & \\
+        \multirow{2}{1in}{Backend Server} & Network failure & Disruption of connection to database & Network connectivity issues & \multirow{2}{0.6in}{Real-time monitoring} & Redundant network connections & \multirow{2}{0.2in}{Operational disruption} & Implement network redundancy & & H9.1 \\
+        \cline{2-4}\cline{6-6}\cline{8-8}\cline{10-10}
+        & Server downtime & Unable to access to patient data & Server hardware failure & & Redundant server systems & & Implement server redundancy & & H9.2 \\
         \bottomrule
     \end{tabular}
     \end{footnotesize}
