@@ -60,9 +60,9 @@
 \midrule
 October 1st, 2023 & Allison Cook, Ibrahim, Mohaansh, Nathaniel,
 Tushar & Initial Draft of SRS document \\
-October 4th 2023 & Name & Notes\\
 October 6th, 2023 & Allison, Ibrahim, Mohaansh, Nathaniel, Tushar & Edits to SRS document (NFRs) \\
-October 6th, 2023 & Mohaansh & added Functional Requirements \\
+October 6th, 2023 & Ibrahim & added functional requirements \\
+October 6th, 2023 & Mohaansh & improved Functional Requirements \\
 October 20th, 2023 & Mohaansh, Tushar & Further improvements \\
 
 \bottomrule
@@ -515,6 +515,8 @@ The following Table \ref{tab:traceabilityMatrix} shows the traceability of each 
         \hline
         FR7 & X & & & \\
         \hline
+        FR8 & X & & & \\
+        \hline
     \end{tabular}
 \end{table}
 
@@ -527,17 +529,25 @@ The following are the functional requirements defined for this project's propose
 \begin{enumerate}[label=FR\arabic*., series=frs]
     \begin{item}
         \begin{description}
-            \item[Description:] The system shall accept and read jpeg images as input.
-            \item[Rationale:] The model shall use jpeg as the format is easy to process.
-            \item[Fit Criterion:] The model can successfully process jpeg files.
+            \item[Description:] The system shall accept and read DICOM images as input.
+            \item[Rationale:] The model shall use DICOM as the format is easy to process.
+            \item[Fit Criterion:] The model can successfully process DICOM files.
             \item[Use Case(s):] PUC1
         \end{description}
     \end{item}
     \begin{item}
         \begin{description}
-            \item[Description:] The system shall display jpeg images in the findings.
-            \item[Rationale:] Since the system uses jpeg as input for the model, it is also used to display results.
-            \item[Fit Criterion:] The interface is able to map the findings on a jpeg image of the x-ray.
+            \item[Description:] The system shall reject images given in a non-DICOM format.
+            \item[Rationale:] The system will process images in a DICOM format and will have no image conversion functionality.
+            \item[Fit Criterion:] The system successfully rejects non-DICOM images.
+            \item[Use Case(s):] PUC1
+        \end{description}
+    \end{item}
+    \begin{item}
+        \begin{description}
+            \item[Description:] The system shall display JPEG images in the findings.
+            \item[Rationale:] Since the system uses JPEG as input for the model, it is also used to display results.
+            \item[Fit Criterion:] The interface is able to map the findings on a JPEG image of the x-ray.
             \item[Use Case(s):] PUC2
         \end{description}
     \end{item}
@@ -551,8 +561,6 @@ The following are the functional requirements defined for this project's propose
     \end{item}
     \begin{item}
         \begin{description}
-            
-            
             \item[Description:] The system shall be able to fetch patients’ records on retrieval request by the user.
             \item[Rationale:] Generated reports and findings need to be accessed in the future when required.
             \item[Fit Criterion:] The system can display the past findings stored in the database.
@@ -575,16 +583,17 @@ The following are the functional requirements defined for this project's propose
             \item[Use Case(s):] PUC4
         \end{description}
     \end{item}
-    \begin{item}
-        \begin{description}
-            \item[Description:] The system shall convert images from a DICOM file to a jpeg, jpg or other suitable image format to be processed by the ML algorithm.
-            \item[Rationale:] Chest x-ray data is stored in DICOM format, and the model uses jpeg images to identify diseases as it is more feasible.
-            \item[Fit Criterion:] The system can successfully convert a DICOM x-ray image to a jpeg.
-            \item[Use Case(s):] PUC1
-            % login page. when login, then browse the list of patients pick one or search using one of the identifiers - name, id and select
-            % what landing page should look like
-        \end{description}
-    \end{item}
+     \begin{item}
+         \begin{description}
+             %\item[DELETE?]
+             \item[Description:] The system shall convert images from a DICOM file to a jpeg, jpg or other suitable image format to be processed by the ML algorithm.
+             \item[Rationale:] Chest x-ray data is stored in DICOM format, and the model uses jpeg images to identify diseases as it is more feasible.
+             \item[Fit Criterion:] The system can successfully convert a DICOM x-ray image to a jpeg.
+             \item[Use Case(s):] PUC1
+             % login page. when login, then browse the list of patients pick one or search using one of the identifiers - name, id and select
+             % what landing page should look like
+         \end{description}
+     \end{item}
     \begin{item}
         \begin{description}
             % build a database - link records to individuals to images
@@ -597,8 +606,7 @@ The following are the functional requirements defined for this project's propose
     \end{item}
     \begin{item}
         \begin{description}
-            
-            \item[Description:] The system shall have a login page for users.
+            \item[Description:] The system shall allow users to create an account and login.
             \item[Rationale:] Sensitive data needs authorization to be accessed.
             \item[Fit Criterion:] User is able to login through their credentials and access the functions of the system.
             \item[Use Case(s):] PUC2
@@ -752,7 +760,7 @@ This subsection details the performance requirements of the project's proposed s
     \item[NF-SCR0]The system will not collect identifying data not necessary for diagnosis.
     \begin{description}
         \item[Rationale:] Managing all relevant health data for patients requires extra safety measures and puts their data at risk, to minimize the risk all nonessential data will not be collected by the system
-        \item[Fit Criterion:] Only data pertaining to diagnosis are collected (X-ray images, age, previous conditions, \lips)
+        \item[Fit Criterion:] Only data pertaining to diagnosis are collected (X-ray images, age, previous conditions.)
     \end{description}
 \end{description}
 
@@ -1133,6 +1141,8 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
 
 The main skills that the team shall collectively aim to learn through this project are documentation, version control and management of group work using GitHub, and project specific knowledge such as computer vision/machine learning. The team aims to learn about machine learning by reading various research papers about chest x-ray disease detection. There are also skills that different team members aim to learn individually through this project.
 
-Mohaansh Pranjal - A new skill I aim to learn while working on this project is data security. I also aim to learn more about documentation and project management. Using GitHub tools like workflows/actions gives useful practical experience, as these are used frequently in industry. These tools are also helpful in project management, as they help keep track of work done by each team member. Security is also a significant requirement for this project and working on it for this project will be worthwhile in learning more about information security.
+For documentation, version control, and GitHub management, the team plans to adopt a hands-on approach by actively engaging in a collaborative projects, leveraging GitHub for version control, and documenting their progress consistently. To delve into computer vision and machine learning, the team aims to combine theoretical understanding with practical implementation. They will explore online courses, tutorials, and community forums to grasp foundational concepts, while simultaneously working on the chest X-ray disease detection project to apply this knowledge in a real-world context. Each team member will choose the approach that aligns with their preferred learning style, some might favor structured courses while others opt for self-directed exploration. This diversity in learning approaches ensures a comprehensive understanding of the subjects. 
+
+
 
 \end{document}
