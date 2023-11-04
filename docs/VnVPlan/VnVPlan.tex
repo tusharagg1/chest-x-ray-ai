@@ -11,13 +11,34 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage[none]{hyphenat}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[many]{tcolorbox}
+\usepackage{mdframed}
+\usepackage{parskip}
+\usepackage{longtable}
 
 \input{../Comments}
 \input{../Common}
 
+
+\tcbset{
+    sharp corners,
+    colback = white,
+    before skip = 0.2cm,    % add extra space before the box
+    after skip = 0.5cm      % add extra space after the box
+}  
+
+\newtcolorbox{boxA}{
+    %fontupper = \bf,
+    boxrule = 1.5pt,
+    colframe = black % frame color
+}
+
 \begin{document}
 
-\title{Project Title: System Verification and Validation Plan for \progname{}} 
+\title{AI for Chest X-Ray Read: System Verification and Validation Plan for \progname{}} 
 \author{\authname}
 \date{\today}
 	
@@ -30,290 +51,625 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+10/30/2023 & 0.0 & Initial Draft of VnV Plan\\
+10/31/2023 & 0.1 & Various Sections filled out with bullet points of content\\
+11/01/2023 & 0.2 & Symbols, Abbreviations, and Acronyms Section table and description completed; Introductory blurb and general roadmap for VnV Plan completed\\
+11/01/2023 & 0.3 & General Information Section completed\\
+11/02/2023 & 0.4 & Plan and System Test Description Sections mostly completed\\
+11/03/2023 & 0.5 & Plan and System Test Description Sections completed, reviewed entire document\\
+
 \bottomrule
 \end{tabularx}
 
 ~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
-
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
 
 \newpage
 
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
 
 \listoffigures
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
 \section{Symbols, Abbreviations, and Acronyms}
+The following table, Table \ref{tab:symbsAbbrevsAcros}, includes the definitions and descriptions of all relevant symbols, abbreviations and acronyms used throughout this VnV Plan document.
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  T & Test\\
-  \bottomrule
-\end{tabular}\\
-
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
-
-\wss{Remove this section if it isn't needed}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.25in}p{3.75in}}
+        \toprule
+        \textbf{Symbol, Abbreviation or Acronym} & \textbf{Definition or Description} \\
+        \midrule
+        AI/ML & Artificial Intelligence/Machine Learning \\
+        AUC & Area Under (ROC) Curve \\
+        BUC & Business Use Case \\
+        DICOM & Digital Imaging and Communications in Medicine, the standard for medical images to ensure data and quality necessary for clinical use.\\
+        FR & Functional Requirement \\
+        ICU & Intensive Care Unit \\
+        IT & Information Technology \\
+        MC & Mandated Constraints \\
+        MG & Module Guide \\
+        MIS & Module Interface Specification \\
+        NFR & Non-functional Requirement \\
+        PoC & Proof of Concept\\
+        ROC curve & Receiver Operating Characteristic curve, a graph to show the performance of a model, plots true positive rate and false positive rate \\
+        SRS & Software Requirements Specification \\
+        T & Test \\
+        VnV & Verification and Validation \\
+        \bottomrule
+    \end{tabular}\\
+    \caption{Symbols, Abbreviations and Acronyms}
+    \label{tab:symbsAbbrevsAcros}
+\end{table}
 
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+\noindent This document intends to discuss the verification and validation plan for the project's proposed solution in more detail. The General Information section summarizes the software being tested and gives a brief overview of its general functions. Also stated are the objectives of this VnV Plan, including both those in and out of the scope of this project and which ones will be prioritized. The relevant documentation that will be referenced in this plan will also be noted and described in detail.
+
+In the Plan section, the VnV Team members are noted, with the plans for verifying the SRS, design, VnV plan and implementation. The automated testing and verification tools that will be used are also noted. The plan for validating the software will also be detailed. The general roadmap of this Verification and Validation plan starts with the first milestone of verifying the SRS. Then, the next milestones are to verify the design, the VnV plan itself and the implementation, likely in that order. These milestones will be reached using a combination of automated testing and verification tools noted in this document, as well as from meeting with this project's supervisor. After these milestones are completed, the software will be validated.
+
+In the System Test Description section, the test cases for verifying and validating the functional and nonfunctional requirements will be described in more detail. A traceability table will also be provided to show the traceability between the various aforementioned test cases and the requirements for this project, as described in the SRS. The Unit Test Description section will be filled in later once the design and software implementation details are specified. The Appendix will be filled in as needed, and any tables or figures in this document will be listed in the table of contents as well.
 
 \section{General Information}
 
 \subsection{Summary}
-
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+The software being tested, [Insert Name], is a web-based application for performing AI-driven readings of chest x-ray images. The application will perform user authentication, retrieve patient information, read chest X-ray images using an AI model and generate radiology reports (elements) of its findings. This application will interface with a medical institution or diagnostic centre's IT systems to retrieve, analyze and save patient data, information, and chest X-ray read results.
 
 \subsection{Objectives}
+The main objective of this VnV Plan that is intended to be accomplished is to build confidence in the software correctness of the AI model being trained to read chest x-ray images and generate radiology report components of its disease/condition findings and ensure the results are accurate. This objective can be broken down into the following points:
+\begin{itemize}
+    \item Check the correctness of reading and identifying areas/labelling of diseases.
+    \item Minimize false negatives/positives of possible diseases/conditions that are identified or missed.
+    \item Check the correctness of the interpretation and display of the chest X-ray analysis.
+\end{itemize}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+\noindent Another major objective of this VnV Plan that is intended to be accomplished is to build confidence in the security and authentication capabilities of this software. This objective can also be broken down into points:
+\begin{itemize}
+    \item Check the security of patient data, ensuring its secure storage and access
+    \item Check the software correctly. authenticates authorized users and grants them access to patient data, information, and chest x-ray read results.
+    \item Check the software correctly blocks unauthorized users and prevents them from accessing patient data, information, and chest x-ray read results.
+\end{itemize}
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
+\noindent A third final major objective of this VnV Plan that is intended to be accomplished is to build confidence in the software to effectively deliver on the first two aforementioned major objectives. This can be broken down into the following points:
+\begin{itemize}
+    \item Check the software provides a usable interface for users to log in, be authenticated and then access patient data, information, and chest x-ray read results. (i.e. frontend functions)
+    \item Check the software is able to interface with supporting IT systems (i.e. of a medical institution or diagnostic centre) and retrieve, display and save patient data, information, and chest x-ray read results across systems. (i.e. backend functions)
+\end{itemize}
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+\noindent In short, the three main objectives of this VnV Plan that are intended to be accomplished are to build confidence in the software's:
+\begin{itemize}
+    \item AI model to accurately read chest x-ray images and produce correct radiology results
+    \item Security and authentication capabilities to ensure patient data privacy is protected, and
+    \item Ability to deliver on the above two objectives by interfacing with users and supporting IT systems
+\end{itemize}
+
+\noindent Some objectives that are out of scope for this project are described as follows:
+\begin{itemize}
+    \item Meeting exact industry standards for every element of the system: this is due to lack of time and lower priority of the UI compared to the AI model's correctness
+    \item Verifying the correctness of data sets used in training and testing the AI model/ system: we are not re-verifying them as they were verified by their respective authors
+    \item Verifying the usability of the system: usability testing is currently of a lower priority, and this can be re-prioritized should we complete our higher priority verification and validation ahead of schedule
+    \item Verifying the external libraries used for the AI model and the system frontend and backend: e.g. graphical user interface libraries, database interfacing/communication libraries; we will assume that these external libraries have been verified by their respective implementation teams
+\end{itemize}
 
 \subsection{Relevant Documentation}
-
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.}
-
-\citet{SRS}
-
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
+The relevant documentation that will be referenced in this document (i.e. the other project documents) are listed below. Explanations are also given of why they are relevant and how they relate to our VnV efforts as described in this document:
+\begin{itemize}
+    \item \href{https://github.com/Tusharagg1/chest-x-ray-ai/blob/main/docs/SRS/SRS.pdf}{SRS}: This document contains the descriptions, rationales and fit criteria on all the requirements (functional and non-functional) that will be verified and tested as outlined in this document. In essence, it serves as the basis for the system testing plans.
+    \item \href{https://github.com/Tusharagg1/chest-x-ray-ai/blob/main/docs/Design/SoftArchitecture/MG.pdf}{MG}: This document outlines the various modules that the software is composed of, giving a detailed overview of the software architecture. The MG details the module decomposition and uses hierarchy \& traceability of requirements to their implementing module(s). The MG provides the basis for guiding the system's functional and nonfunctional testing plans in grouping the tests to each module and tracing them to the requirements they are intended to meet.
+    \item \href{https://github.com/Tusharagg1/chest-x-ray-ai/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}: This document describes the more specific design details of the various module interfaces that the unit testing shall use and cover. The MIS influences the unit testing scope and affects how functional and nonfunctional unit tests will be written to test specific functions and properties of the software.
+\end{itemize}
 
 \section{Plan}
+This section will outline the verification and validation roles of each team member and the team supervisor in the context of the VnV plan. The verification plans for the SRS, the design (i.e. MIS, MG and System Design documents), the VnV plan itself, and the implementation are also outlined in detail here. The automated testing and verification tools the VnV plan will use are also listed. The software validation plan will also be discussed.
 
-\wss{Introduce this section.   You can provide a roadmap of the sections to
-  come.}
+The tentative plans for verifying the SRS, the design (i.e. MIS, MG and System Design documents), the VnV plan itself and the implementation will be executed by the VnV team members in the order they are presented, as the relevant work for each is done (e.g. demo, design documents, software and unit tests, etc.). The verification of the SRS document is an ongoing process, while the design documents will be verified as the source code is written. The VnV plan and implementation will be verified next in an ongoing process leading up to the proof-of-concept and final demonstrations. The software validation will also be taking place concurrently, alongside other VnV plans leading up to the proof-of-concept and final demonstrations.
 
 \subsection{Verification and Validation Team}
-
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
+In this section, Table \ref{tab:VnVTeam} details the members of the Validation and Verification team responsible for performing the tasks outlined and described in this VnV Plan document. For each member, their role(s) in the project's verification are summarized with key details noting their responsibilities.
+\begin{table}[h]
+    \centering
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash\hsize=.25\hsize\linewidth=\hsize}X|>{\centering\arraybackslash\hsize=.75\hsize\linewidth=\hsize}X|}
+        \hline
+        \textbf{VnV Team Member Name} & \textbf{Summary of Role(s)} \\
+        \hline
+        Dr. Mehdi Moradi (Supervisor) & Advisor, primary reviewer of documentation, a contributor to validation of documentation and code, provide suggestions and corrections of the software and its functionality \\
+        \hline
+        Other Design Teams & Peer reviewers, raise issues and provide feedback/ suggestions for documentation improvements \\
+        \hline
+        Allison Cook & Review other team members' work to maintain high standards, provide suggestions for improvements, maintain feedback checklists for each work item \\
+        \hline
+        Ibrahim Issa & Review other team members' work to maintain high standards, provide suggestions for improvements and maintain feedback checklists for each work item \\
+        \hline
+        Mohaansh Pranjal & Review other team members' work to maintain high standards, provide suggestions for improvements and maintain feedback checklists for each work item \\
+        \hline
+        Nathaniel Hu & Review other team members' work to maintain high standards, provide suggestions for improvements and maintain feedback checklists for each work item \\
+        \hline
+        Tushar Aggarwal & Review other team members' work to maintain high standards, provide suggestions for improvements and maintain feedback checklists for each work item \\
+        \hline
+    \end{tabularx}
+    \caption{Verification and Validation Team}
+    \label{tab:VnVTeam}
+\end{table}
 
 \subsection{SRS Verification Plan}
+The following points outline the approaches we intend to use (and have already begun using) for SRS verification. This includes both formal and ad-hoc feedback from our various reviewers:
+\begin{itemize}
+    \item Formal reviews, creating new checklists using existing checklists and feedback from grading to update documentation as a group, reviewing our requirements through use cases and other personas.
+    \item Formal and ad-hoc review meeting(s) with the supervisor, where they go over the document and point out mistakes or suggestions for improvements.
+    \item Ad-hoc peer reviews by other teams in the course shall provide suggestions and corrections.
+    \item For the SRS, the following needs to be checked:
+    \begin{itemize}
+        \item The fit criterion for all requirements is adequate, feasible and verifiable.
+        \item The functional requirements are traceable to all the use cases for the application.
+    \end{itemize}
+\end{itemize}
 
-\wss{List any approaches you intend to use for SRS verification.  This may include
-  ad hoc feedback from reviewers, like your classmates, or you may plan for 
-  something more rigorous/systematic.}
-
-\wss{Maybe create an SRS checklist?}
+\noindent The following is an initial SRS verification plan checklist that will be updated with items being added/removed as reviews to verify the SRS are completed over time:
+\begin{enumerate}[label=$\square$]
+    \item Does each functional requirement contain a detailed and accurate description, rationale and fit criteria?
+    \item Is each requirement (functional and non-functional) relevant and necessary?
+    \item Do the functional requirements capture the intended software functionality?
+    \item Are all functional requirements traceable to at least one use case?
+    \item Are all fit criteria for requirements unambiguous and verifiable?
+    \item Is the project plan timeline feasible given the time constraints?
+    \item Have all issues opened by the reviewers been closed?
+\end{enumerate}
 
 \subsection{Design Verification Plan}
+% Plans for design verification; The review will include reviews by your classmates
+The following points outline the plan for verifying the design of the software, as is captured in the various design documents (i.e. the MG, MIS and System Design documents):
+\begin{itemize}
+    \item Shall conduct a review meeting with the supervisor after the design documents have been completed. 
+    \item Peer review from classmates shall provide critical suggestions.
+    \item Shall verify the conformity of the code with SOLID design principles.
+    \item Conduct ad-hoc review(s) with other teams.
+    \item Conduct a formal review with teammates sometime after the initial creation, which allows us to reflect on the document prior to review, using checklists and comparison to the SRS (after verification)
+\end{itemize}
 
-\wss{Plans for design verification}
-
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
+\noindent The following is an initial design document verification plan checklist that will be updated with items being added/removed as reviews to verify the design documents are completed over time:
+\begin{enumerate}[label=$\square$]
+    \item Are all requirements (functional and non-functional) traceable to at least one implementing module in the MG?
+    \item Have all issues opened by the reviewers been closed?
+    \item Do all modules and other components conform to the SOLID design principles?
+    \item Do all the modules have an unambiguous task that they are created for, and input and output is well defined?
+\end{enumerate}
 
 \subsection{Verification and Validation Plan Verification Plan}
+The following points outline the plan for verifying the VnV plan itself:
+\begin{itemize}
+    \item Review(s) with the supervisor will be done to verify testing and verification plans. 
+    \item Peer reviews from other teams shall provide critical feedback on the VnV plan on areas of improvement.
+    \item Ad-hoc reviews with teammates shall also provide critical feedback on the VnV plan for areas of improvement.
+\end{itemize}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
+\noindent The following is an initial VnV plan verification plan checklist that will be updated with items being added/removed as reviews to verify the VnV plan are completed over time:
+\begin{enumerate}[label=$\square$]
+    \item Does the VnV Plan verify all requirements (functional and non-functional) are met?
+    \item Have all issues opened by the reviewers been closed?
+    \item Are all the stakeholders/supervisor included in the review processes described?
+    \item Are all the aspects of the software product being tested by the testing tools?
+    \item Do the system and unit tests cover all requirements?
+\end{enumerate}
 
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
-
+% In this section you would also give any details of any plans for static verification of the implementation.  Potential techniques include code walkthroughs, code inspection, static analyzers, etc.
 \subsection{Implementation Verification Plan}
-
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
-
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
+The following points outline the plan for verifying the implementation, using both static and dynamic techniques:
+\begin{itemize}
+    \item Walkthroughs of key components of the code with the supervisor (i.e. AI model, user authentication, display of findings, UI design).
+    \item Walkthroughs and inspections with other teammates who worked on different sections (static).
+    \item Running static analyzers (i.e. linters (e.g., Flake8), security scans,  etc.) to help discover bugs and potential problems in the code, and to make it more readable.
+    \item Running the system tests (functional and non-functional) described in this VnV plan document to verify the implementation meets requirements (functional and non-functional).
+    \item Running the unit tests (to be implemented and described in this VnV plan document) to verify the implementation matches designs specified in MG, MIS, and System Design documents (will be done automatically using GitHub Actions for each branch/pull request).
+    \item Major code commits or new features shall be reviewed by at least one other member of the team before merging to prevent bugs.
+\end{itemize}
 
 \subsection{Automated Testing and Verification Tools}
+The following are the automated testing and verification tools to be used during the validation and verification process for the software being tested in this VnV plan:
+\begin{itemize}
+    \item Linters: Prettier, ESLint, Flake8, Black
+    \item Unit testing: Jest, Pytest
+    \item Code coverage: Istanbul, Coverage.py
+    \item Continuous Integration: GitHub Actions
+\end{itemize}
+It should be noted that all of these tools listed are also mentioned in the \href{https://github.com/Tusharagg1/chest-x-ray-ai/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development Plan} document.
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
+Our plans for summarizing the code coverage metrics of our unit tests mainly revolve around our two code coverage tools, Istanbul and Coverage.py. Instanbul will check the statement, branch, function and line coverage of our unit tests and will present the percentage coverage results for each aforementioned coverage metric. Coverage.py will check the line (statement) and branch coverage and present the percentage coverage results for those coverage metrics. It should also be noted that these details are subject to change as the implementation is completed and unit tests are written and run to validate the code.
 
-\wss{If you have already done this in the development plan, you can point to
-that document.}
-
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
-
+% This section might reference back to the SRS verification section
 \subsection{Software Validation Plan}
+Our plan for validating the software revolves around using reserved subsets of the training data used to train the AI model driving the analysis of chest X-rays. The specific datasets to be used are the MIMIC-III Clinical Database and the Chest ImaGenome Dataset. A larger subset from each of these datasets will be used for training the AI model. A smaller subset from each dataset will be used during the PoC, Revision 0 and Revision 1 demos. These (more) formal demos will be done to validate the requirements themselves, the AI model and the software's ability to deliver on its objectives outlined in this VnV plan and meet all requirements, functional and nonfunctional. They will allow us to get critical feedback from the professor and TA on how the software could be improved upon.
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
+Informal demos and review sessions using the smaller subsets will also be conducted to validate our software for our supervisor. These demos and review sessions will be conducted around the more formal demos mentioned above. This will allow the supervisor to provide critical feedback so we can improve the AI model and any other part of the software. During these review sessions, we will also check with the supervisor (our main stakeholder representative) to verify our SRS document captures the right requirements using task-based inspections. This will ensure we are defining the right things in the requirements to correctly guide the software implementation. We will also be conducting regular user testing throughout the software implementation process to validate our software little by little.
 
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
-
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
+%\newpage
 
 \section{System Test Description}
-	
+This section outlines and describes the system test cases that will be used for validating the implementation, with regard to the functional and nonfunctional requirements previously outlined in the SRS. For each test case, the control (manual or automatic), initial state, input, output, derivation, and a short procedure of how the test will be performed are given.
+
 \subsection{Tests for Functional Requirements}
+In this subsection, the system test cases are categorized based on different areas of functionality to ensure a thorough verification process. The following subsets of test cases are designed to validate the handling of input data, display functionality, disease classification, data access, and user authentication and authorization. These subsets cover the key functionalities the functional requirements have described are necessary for the success of this software. For each test case, references to the relevant functional requirements from the SRS that are covered by it are included in the test case derivation part.
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+\subsubsection{Handling Input Data}
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+\begin{itemize}
+    \begin{item}
+        test-id1
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} DICOM Input Acceptance \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized and ready to receive input. \par
+            \textbf{Input:} A sample chest X-ray image in DICOM format. \par
+            \textbf{Output:} The DICOM input is accepted and converted into a JPEG successfully, with no error messages or system anomalies. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.1 and FR.7 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Manually upload a sample chest X-ray image in DICOM format through the user interface.
+                \item Observe the system's response to the input, checking for any error messages or unexpected behaviour.
+                \item Verify that the DICOM input is successfully accepted and converted into a JPEG image.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
 
-\subsubsection{Area of Testing1}
+    \begin{item}
+        test-id2
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Non-DICOM Input Rejection \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized and ready to receive input. \par
+            \textbf{Input:} A sample chest X-ray image in a format other than DICOM. \par
+            \textbf{Output:} The expected result is a rejection of the non-DICOM input, accompanied by an appropriate error message. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.1 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Manually attempt to upload a sample chest X-ray image in a format other than DICOM through the user interface.
+                \item Observe the system's response to the input, checking for any error messages or unexpected behaviour.
+                \item Verify that the non-DICOM input is rejected and flagged for further action.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+    \begin{item}
+        test-id3
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} DICOM conversion to JPEG \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized and ready to receive input. \par
+            \textbf{Input:} A sample chest X-ray image DICOM format. \par
+            \textbf{Output:} The expected result is an output of the same x-ray in JPEG format. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.8 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item This is a test for a part of the process involved in processing the DICOM file in the ML model.
+                \item A chest x-ray sample DICOM file will be submitted to the system
+                \item The system should automatically convert it to JPEG format
+                \item Manually confirm that the conversion was successful and both file formats show the same chest x-ray.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
+\end{itemize}
 
-\begin{enumerate}
+\subsubsection{Display}
+\begin{itemize}
+    \begin{item}
+        test-id4
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Image Display Correctness \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized, and relevant data has been processed. \par
+            \textbf{Input:} Processed chest X-ray images with known medical conditions. \par
+            \textbf{Output:} The expected result is the correct display of chest X-ray images on the user interface, and it reflects the processed medical conditions accurately. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.2 and FR.3 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Manually access the user interface.
+                \item Select the processed chest X-ray images with known medical conditions for display.
+                \item Observe the displayed images, checking for visual correctness in terms of identified medical conditions.
+                \item Verify that the displayed images correspond to the expected outcomes based on the processed data.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
 
-\item{test-id1\\}
+    \begin{item}
+        test-id5
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Report and Terms Correctness \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized, and relevant input data has been processed. \par
+            \textbf{Input:} Processed chest X-ray images with known medical conditions. \par
+            \textbf{Output:} The expected result is the correct display of medical reports and associated terms on the user interface and accurately reflects the processed information. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.4 and FR.5 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate} [noitemsep]
+                \item Manually access the user interface.
+                \item Select the processed chest X-ray images with known medical conditions to generate an associated list of findings.
+                \item Observe the displayed reports/terms, checking for correctness in terms of identified medical conditions and terminology.
+                \item Verify that the displayed list of findings corresponds to the expected outcomes based on the processed data.
+            \end{enumerate}
+        \end{mdframed} 
+    \end{item}
+\end{itemize}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+\subsubsection{Classification of Diseases}
+\label{sec4.1.3}
+\begin{itemize}
+    \begin{item}
+        test-id6
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Disease Classification Correctness Performance \par
+            \textbf{Control:} Automatic (offline experiment) \par
+            \textbf{Initial State:} The system used in the experiment is only the AI model so no state is needed \par
+            \textbf{Input:} DICOM chest X-ray images, approximately 20\% of the dataset DATASET\_NAME will be reserved and used to run this test/experiment, with known medical conditions representing various diseases. \par
+            \textbf{Output:} The expected result is an AUC for the ROC curves for the classification of diseases based on the expected area under the ROC curves as given in Table 6 in the SRS. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.6 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test/experiment will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Submit all the test data of the DICOM chest X-ray images with known medical conditions.
+                \item Collect all findings and determine the area under the ROC curve for the respective findings, based on how much the responses match the expected result of the test data.
+                %(AUC IS NOT SAME AS ACCURACY. TECHNICAL TERM NEED TO BE USED PRICESLY. ROC CURVE. AUC IS NOT SOMETHING YOU CAN POPULAR ON SCAN. IT IS BASED ON A POPULATION. IT WILL B AN OFFLINE TEST, NOT AN ONLINE TEST. USED FOR VERIFICATION OF MODEL. PLOTTING ROC CURVE AND AREA UNDER ROC CURVE. THAT IS WHAT WE NEED TO REPORT)
+                %(ADD OFFLINE TEST FOR ML MODEL, ADD A NEW FUNC REQ TEST)
+                \item Verify the system's classification results, and the AUC for the ROC curve, and determine whether this parameter passes the required threshold for the different diseases.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
+\end{itemize}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+\subsubsection{Access of Database}
+\begin{itemize}
+    \begin{item}
+        test-id7
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Database Search Functionality \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized, and relevant patient records have been processed and stored in the database. \par
+            \textbf{Input:} User-initiated search queries for patient records based on specified criteria such as patient ID (unique), name, date of X-ray, or medical condition(s). \par
+            \textbf{Output:} The expected result is the accurate retrieval of patient records matching the specified search criteria, displayed on the user interface. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.6, FR.9, and FR.11 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Manually initiate search queries through the user interface, specifying different criteria such as patient ID, date, or medical conditions.
+                \item Observe the system's response, checking for the accuracy and completeness of the retrieved patient records.
+                \item Verify that the displayed patient records correspond to the specified search criteria.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
+\end{itemize}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+\subsubsection{Authorization}
+\hypertarget{Auth}{}
+\begin{itemize}
+    \begin{item}
+        test-id8
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Correct User Login \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized, and user accounts set up. \par
+            \textbf{Input:} User-initiated login attempts with valid credentials. \par
+            \textbf{Output:} The expected result is the successful login of authorized users, granting them access to the system. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.10 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Manually attempt to log in with valid user credentials through the user interface.
+                \item Observe the system's response, checking for successful user authentication and system access granted to the user.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+    \begin{item}
+        test-id9
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Incorrect User Login \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized, and user accounts have been set up. \par
+            \textbf{Input:} User-initiated login attempts with invalid credentials. \par
+            \textbf{Output:} The expected result is the rejection of login attempts with invalid credentials, accompanied by the appropriate error message. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on FR.10 in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Manually attempt to log in with invalid user credentials through the user interface.
+                \item Observe the system's response, checking for successful rejection of the login attempt and display of the error message.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
 
-How test will be performed: 
+    \begin{item}
+        test-id10
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Creation of New Authorized User \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized. \par
+            \textbf{Input:} User-initiated creation of a new authorized user account through the user interface. \par
+            \textbf{Output:} The expected result is the successful creation of a new authorized user account recorded and saved in the system. \par
+            \textbf{Test Case Derivation:} The expected value is justified based on FR.10, in section 2.4.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Manually initiate the creation of a new user account through the user interface.
+                \item Observe the system's response, checking for successful account creation.
+                \item Verify that the system records and saves the created user.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
+\end{itemize}
 
-\end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
-
+\pagebreak
 \subsection{Tests for Nonfunctional Requirements}
+In this subsection, the system test cases are categorized into two major areas to cover the two key properties mandated by the nonfunctional requirements. The subsets of test cases are designed to validate the security and performance of the software. The non-functional requirements for accuracy reference the appropriate functional tests from the above section. Tests related to usability are currently of a lower priority are will be generically defined. It should also be noted that static tests, reviews, inspections, and walkthroughs will not follow the format for the tests below.
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy}
+\subsubsection{Security}
+\begin{itemize}
+    \begin{item}
+        test-id11
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Data Encryption \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a stable state with all components initialized, and patient records have been processed and stored in the database. \par
+            \textbf{Input:} N/A (Unauthorized access to database granted not through the system) \par
+            \textbf{Output:} The expected result is encrypted data (not plain text data) \par
+            \textbf{Test Case Derivation:} The expected output is justified based on NF.IR0 and NF.PR1 in section 3.6.2 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate} [noitemsep]
+                \item Manually attempt to log in with valid user credentials through the user interface.
+                \item Observe the system's response, checking for successful user authentication and access to the system.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
+\end{itemize}
+See \hyperlink{Auth}{Authorization} in the functional requirements for NF.AR0, NF.AR1, NF.PR0, NF.PR1 as they all relate to limiting access to records for authorized individuals.
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
+\subsubsection{Performance}
+%(FAST VS RESPONSE TIME?)
+%(ADD FOR ML MODEL. ON A LARGE DATASET. METRIC - AREA UNDER ROC CURVE)
+\begin{itemize}
+    \begin{item}
+        test-id12
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} System Response Time \par
+            \textbf{Control:} Automated \par
+            \textbf{Initial State:} The system is in a normal operational state with an average user load. \par
+            \textbf{Input:} Initiate automated requests for all the various system functionalities, including image processing and database searches. \par
+            \textbf{Output:} The expected output is that the system provides responses within the defined acceptable time thresholds for each functionality as specified in section 3.3.1 of the SRS. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on NF.SLR0 in section 3.3.1 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Automatically simulate user interactions through testing scripts, covering various functionalities.
+                \item Monitor and record the system's response times for each of the simulated interactions.
+                \item Verify that the recorded response times align with the defined acceptable thresholds.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
 
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
+    \begin{item}
+        test-id13
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Accuracy of the ML model \par
+            \textbf{Reference:} Refer to test-id6 in section \ref{sec4.1.3} above, included in the tests for the Functional Requirements which covers NF.PAR0 in section 3.3.3 in the SRS document.
+        \end{mdframed}
+    \end{item}
 
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
+    \begin{item}
+        test-id14
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Patient Data Collection \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a normal operational state with all components initialized and ready to receive input. \par
+            \textbf{Input:} A New patient is added to the system. \par
+            \textbf{Output:} The expected output is that the system will retain the patient name, past diagnoses, assigned physician, past visit dates and other relevant data, while not retaining any unnecessary data. \par
+            \textbf{Test Case Derivation:} The expected output is justified based on NF.SCR0 in section 3.3.2 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Manually upload new patient data for a patient file/X-ray?.
+                \item Record the data held by the system.
+                \item Verify that the recorded data kept by the system is minimal.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
 
-\begin{enumerate}
+    \begin{item}
+        test-id15
+        \begin{mdframed}[linewidth=0.5mm]
+            \textbf{Title:} Capacity \par
+            \textbf{Control:} Manual \par
+            \textbf{Initial State:} The system is in a normal operational state with all components initialized and ready to receive input. \par
+            \textbf{Input:} Three sample chest X-ray images in DICOM format divided between three computers using the system. \par
+            \textbf{Output:} The expected result is the correct display of chest X-ray images on the user interface, reflecting all the processed medical conditions accurately for each individual upload.  \par
+            \textbf{Test Case Derivation:} The expected output is justified based on NF.CR0 in section 3.3.5 in the SRS document. \par
+            \textbf{How the test will be performed:}
+            \begin{enumerate}[noitemsep]
+                \item Each user will manually upload a sample chest X-ray image in DICOM format through the user interface.
+                \item Monitor the system's response to the input, checking for any error messages or unexpected behaviour.
+                \item Verify that the displayed results correspond to the expected outcomes for each independent upload.
+            \end{enumerate}
+        \end{mdframed}
+    \end{item}
+\end{itemize}
 
-\item{test-id1\\}
+\subsubsection{Usability}
+\noindent Usability testing, \textbf{test-id16} as mentioned in our objectives, is of a lower priority but will be generically defined in this section should we complete our higher priority testing. This will completed by surveying a group of individuals who have never used the system before and would be regular users of the system such as doctors and nurses. This group will be given access to the system and asked to complete a survey, which at this point in time, due to low priority, has not been designed, after they have used the system to complete given tasks, such as uploading X-rays or viewing data, for a determined amount of time.
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+This test will satisfy the following nonfunctional requirements and the expected output is based on their defined fit criteria. NF.A0 in section 3.1, NF.EUR0, NF.LR0 and NF.UPR0 in section 3.2, and NF.C0 in section 3.7 in the SRS document.
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+\subsubsection{Operation and Support}
+\noindent The nonfunctional requirements NF.PR0, the system is accessible through a web application, and NF.SR0, the system is self-supporting, is both required in the set-up of all tests that use the complete system and is therefore tested in almost all listed test cases. Similarly with NF.RIAS0, the system will require access to the host for image upload, is necessary in all cases of image input into the system and therefore tested in all these instances. 
 
-\end{enumerate}
+\subsection{Not Tested Nonfunctional Requirements}
+The following listed nonfunctional requirements will not be tested as they fall under the out-of-scope objectives or are not feasible to test within the timeline of this project:
+\begin{itemize}
+    \item NF.SR0
+    \item NF.PIR0
+    \item NF.RFTR0
+    \item NF.SER0
+    \item NF.EPE0
+    \item NF.MR0
+    \item NF.AR0
+    \item Compliance Requirements (NF.LR0, NF.SCR0)
+\end{itemize}
 
-\subsubsection{Area of Testing2}
-
-...
+\newpage
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+\begin{longtable}[h] {|c|c|}
+\hline
+\textbf{Requirement} & \textbf{Test} \\
+\hline
+\endfirsthead
+
+\hline
+\multicolumn{2}{|c|}{Continuation of Table}\\
+\hline
+\textbf{Requirement} & \textbf{Test} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\hline
+\multicolumn{2}{| c |}{End of Table}\\
+\hline
+\caption{Requirements Traceability}
+\label{tab:Traceability}
+\endlastfoot
+
+
+FR.1 & T.1, T.2\\
+FR.2 & T.4\\
+FR.3 & T.4\\
+FR.4 & T.5\\
+FR.5 & T.5\\
+FR.6 & T.7\\
+FR.7 & T.1\\
+FR.8 & T.3\\
+FR.9 & T.8, T.9, T.10\\
+FR.10 & T.7\\
+FR.11 & T.7\\
+
+\pagebreak
+NF.A0 & T.16 \\
+NF.EUR0 & T.16 \\
+NF.LR0 & T.16 \\
+NF.UPR0 & T.16 \\
+NF.SLR0 & T.12 \\ 
+NF.SCR0 & T.14 \\
+NF.PAR0 & T.13/T.6 \\
+NF.CR0 & T.15 \\
+NF.RIAS0 & T.1, T.2, T.3, T.4, T.5\\
+NF.PR0 & All (minus T.6) \\
+NF.SR0 & All (minus T.6) \\ 
+NF.AR0 & T.8, T.9, T.10 \\
+NF.AR1 & T.8, T.9, T.10 \\
+NF.IR0 & T.11 \\
+NF.PR0 & T.8, T.9, T.10 \\
+NF.PR1 & T.11, T.8, T.9, T.10 \\
+NF.C0 & T.16 \\
+
+\end{longtable}
+
+\newpage
 
 \section{Unit Test Description}
 
@@ -324,25 +680,25 @@ How test will be performed:
 philosophy for test case selection.}  
 
 \wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
+For the unit tests, you can potentially lay out your testing strategy here. That is, you 
+can explain how tests will be selected for each module.  For instance, your test-building 
 approach could be test cases for each access program, including one test for normal behaviour 
 and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
+and output here, you could point to the unit testing code.  For this to work, your code 
 needs to be well-documented, with meaningful names for all of the tests.}
 
 \subsection{Unit Testing Scope}
 
-\wss{What modules are outside of the scope.  If there are modules that are
+\wss{What modules are outside of the scope?  If there are modules that are
   developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
+  verifying them.  There may also be modules that are part of your software but
   have a lower priority for verification than others.  If this is the case,
   explain your rationale for the ranking of module importance.}
 
 \subsection{Tests for Functional Requirements}
 
 \wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
+  appropriate specific modules can be verified by a non-testing-based
   technique.  That can also be documented in this section.}
 
 \subsubsection{Module 1}
@@ -367,7 +723,7 @@ Output: \wss{The expected result for the given inputs}
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+How the test will be performed: 
 					
 \item{test-id2\\}
 
@@ -382,7 +738,7 @@ Output: \wss{The expected result for the given inputs}
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+How the test will be performed: 
 
 \item{...\\}
     
@@ -416,7 +772,7 @@ Input/Condition:
 					
 Output/Result: 
 					
-How test will be performed: 
+How the test will be performed: 
 					
 \item{test-id2\\}
 
@@ -428,7 +784,7 @@ Input:
 					
 Output: 
 					
-How test will be performed: 
+How the test will be performed: 
 
 \end{enumerate}
 
@@ -447,42 +803,121 @@ How test will be performed:
 \newpage
 
 \section{Appendix}
-
-This is where you can place additional information.
+In this section, all of the additional information to complement this VnV Plan are placed here.
 
 \subsection{Symbolic Parameters}
-
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.
+See the following Table \ref{tab:symbolicConstants} for reference:
 
-\subsection{Usability Survey Questions?}
+\renewcommand{\arraystretch}{1.2}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.25in}p{3.75in}}
+        \toprule
+        \textbf{Symbolic Constant} & \textbf{Definition or Description} \\
+        \midrule
+        DATASET\_NAME & The name of the chest x-ray imaging dataset to be used during the development and testing of the software's AI model; i.e. Chest ImaGenome Dataset or MIMIC-III Clinical Database \\
+        \bottomrule
+    \end{tabular}\\
+    \caption{Symbolic Constants}
+    \label{tab:symbolicConstants}
+\end{table}
 
-\wss{This is a section that would be appropriate for some projects.}
+\subsection{Usability Survey Questions}
+\noindent As mentioned above a usability survey will only be constructed if the project is progressing quicker than expected and we can move on to lower-priority testing. 
 
 \newpage{}
 \section*{Appendix --- Reflection}
 
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-\wss{This section is not required for CAS 741}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
-
-\begin{enumerate}
+The information in this section will be used to evaluate the team members on the graduate attribute of Lifelong Learning. Please answer the following questions:
+\begin{enumerate}[label=\arabic*., series=ar]
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
   Examples of possible knowledge and skills include dynamic testing knowledge,
-  static testing knowledge, specific tool usage etc.  You should look to
-  identify at least one item for each team member.
+  static testing knowledge, specific tool usage etc. You should look to
+  identify at least one item for each team member. \\
+\end{enumerate}
+
+For the verification and validation of the project, the skills that are required and play an important role are the following:
+\begin{enumerate}
+  \item SOLID Design Principles: The code needs to be verified such that the system is designed keeping in mind these design principles to make an efficient and easy-to-maintain system.
+  \item Testing Knowledge: Knowledge related to the usage of testing approaches, like unit testing and regression testing that play a big role in debugging software, is crucial.
+  \item Knowledge of Testing tools: Knowledge of using testing tools like pytest and linter is also very helpful.
+  \item Knowledge of AI/ML Development: Knowledge related to the development and training of AI/ML models, as it will be the driving force behind this software's main functionality.
+\end{enumerate}
+Each team member will aim the acquire the following knowledge and skills needed to successfully complete the verification and validation of the project. The specific knowledge and skills each team member will aim to acquire are listed below: \\
+\begin{enumerate}
+    \begin{item}
+        Allison Cook: Shall develop skills related to verifying if code is based on SOLID principles
+    \end{item}
+    \begin{item}
+        Ibrahim Issa: Learn about different types of software testing such as unit testing
+    \end{item}
+    \begin{item}
+        Mohaansh Pranjal: Shall learn about implementing and verifying code according to SOLID design principles to make code efficient, readable and easy to maintain.
+    \end{item}
+    \begin{item}
+        Nathaniel Hu: Gain skills in using testing tools like pytest, gain further knowledge in AI/ML development and training (needed for software validation)
+    \end{item}
+    \begin{item}
+        Tushar Aggarwal: Gain skills in AI/ML testing
+    \end{item}
+\end{enumerate}
+
+\begin{enumerate}[label=\arabic*., resume*=ar]
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+  member pursue, and why did they make this choice? \\
+\end{enumerate}
+
+For each of the knowledge areas and skills identified above, at least two approaches to acquiring the knowledge or mastering the skill are shown below:
+\begin{enumerate}
+    \begin{item}
+        SOLID Design Principles:
+        \begin{enumerate}
+            \item online coding courses (e.g. freeCodeCamp, LinkedIn Learning)
+            \item personal projects
+        \end{enumerate}
+    \end{item}
+    \begin{item}
+        Testing Knowledge:
+        \begin{enumerate}
+            \item External resources (websites) to learn about different testing approaches
+            \item Implementation of test cases for simple standalone programs or structured software systems
+        \end{enumerate}
+    \end{item}
+    \begin{item}
+        Knowledge of Testing Tools:
+        \begin{enumerate}
+            \item Running tools like pytest for test cases to observe parameters such as runtime
+            \item learning about and using linters like flake8 to write code in a standardized format
+        \end{enumerate}
+    \end{item}
+    \begin{item}
+        Knowledge of AI/ML:
+        
+    \end{item}
+\end{enumerate}
+
+Of the identified approaches, the ones each team member will pursue are shown below, with the justifications for why those choices were made:
+\begin{enumerate}
+    \begin{item}
+        Allison Cook: Learning about design principles by writing neat code and making personal projects as implementation is an efficient way to learn.
+    \end{item}
+    \begin{item}
+        Ibrahim Issa: Using websites and online resources to learn about diferrent types of testing approaches as different situations require different types of testing.
+    \end{item}
+    \begin{item}
+        Mohaansh Pranjal: Shall use online resources (e.g. freeCodeCamp, LinkedIn Learning) to learn about the design principles as they are also useful in overall implementation and an important part of writing readable code.
+    \end{item}
+    \begin{item}
+        Nathaniel Hu: Running pytest on test cases for programs which allows analysis of runtime and efficiency.
+    \end{item}
+    \begin{item}
+        Tushar Aggarwal: Use research papers in AI/ML to select parameters to test accuracy of the model
+    \end{item}
 \end{enumerate}
 
 \end{document}
