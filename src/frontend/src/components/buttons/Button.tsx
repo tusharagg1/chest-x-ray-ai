@@ -92,7 +92,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             ],
           ],
           //#endregion  //*======== Variants ===========
-          'disabled: cursor-not-allowed',
+          disabled && 'disabled: cursor-not-allowed',
           isLoading &&
             'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
           className
