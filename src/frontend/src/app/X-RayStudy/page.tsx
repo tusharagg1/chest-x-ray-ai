@@ -1,6 +1,6 @@
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
-import React, { useMemo, useState } from 'react';
+import React, { use, useMemo, useState } from 'react';
 
 import Button from '@/components/buttons/Button';
 import NextImage from '@/components/NextImage';
@@ -13,10 +13,22 @@ type Item = {
  }
 
 export default function NewStudyPage() {
-  const [disabled] = useState(false);
-  const image_name = 'emermed-2016-April-33-4-259-F1 1 (1).png'; 
-  function changeImage() {
-    return 1;
+  const [Button_disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(false);
+  const [image_name, setImageName] = useState(' '); 
+  const [pnRisk, setpnRisk] = useState(0);
+  const [atRisk, setatRisk] = useState(0);
+  const [caRisk, setcaRisk] = useState(0);
+  const [peRisk, setpeRisk] = useState(0);
+
+
+  function upload() {
+    //get the data after passing data to model
+    //setLoading(true);
+    setImageName("/images/emermed-2016-April-33-4-259-F1 1 (1).png");
+    setImage(true);
+    //setLoading(false);
   }
 
   const cols = useMemo<ColumnDef<Item>[]>(
@@ -40,22 +52,22 @@ export default function NewStudyPage() {
     items.push({
       id: 0,
       name: 'Pneumonia',
-      risk: 10,
+      risk: pnRisk,
     });
     items.push({
       id: 1,
       name: 'Atelectasis',
-      risk: 10,
+      risk: atRisk,
     });
     items.push({
       id: 2,
       name: 'Cardiomegaly',
-      risk: 10,
+      risk: caRisk,
     });
     items.push({
       id: 3,
       name: 'Pleural effusion',
-      risk: 10,
+      risk: peRisk,
     });
     for (let i = 4; i < 14; i++) {
       items.push({
@@ -80,27 +92,29 @@ export default function NewStudyPage() {
               <h2 className='text-m md:text-xl text-indigo-500'>Upload DICOM:</h2>
               <div className='flex gap-3'>
               <form className='bg-white'>
-                <input type='file' accept='.jpeg' placeholder='Choose File...' />
+                <input type='file' accept='.dcm' placeholder='Choose File...' />
               </form>
               <Button 
-                onClick={changeImage}
+                onClick={upload}
                 variant='primary'
                 size='sm'
-                disabled={disabled}
-                //isLoading
+                disabled={Button_disabled}
+                isLoading={loading}
               >
               Upload
               </Button>
               </div>
             </div>
             <div className='flex'>
+              { image &&
               <NextImage 
                 className='flex'
-                src={'/images/' + image_name}
+                src={image_name}
                 width="500"
                 height='500' //the model output sizes
                 alt='x-ray results' 
-              />
+                key={Date.now()}
+              /> }
             </div>
           </ol>
           </div>
