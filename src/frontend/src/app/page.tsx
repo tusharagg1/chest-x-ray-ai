@@ -17,11 +17,9 @@ import UnstyledLink from '@/components/links/UnstyledLink';
  */
 import Logo from '~/svg/Logo.svg';
 
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+// Before you begin editing, follow all comments with `STARTERCONF`
 
-export default function HomePage() {
+export default function Homepage() {
   return (
     <main>
       <Head>
