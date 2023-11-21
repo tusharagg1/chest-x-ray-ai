@@ -26,7 +26,7 @@ export default function NewStudyPage() {
   function upload() {
     //get the data after passing data to model
     //setLoading(true);
-    setImageName("/images/emermed-2016-April-33-4-259-F1 1 (1).png");
+    setImageName("/images/case1_008.jpg");
     setImage(true);
     //setLoading(false);
   }
