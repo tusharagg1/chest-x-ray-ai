@@ -28,13 +28,17 @@ jobs:
           useRollingCache: true
 
       - name: 🔬 Lint
+        working-directory: ./src/frontend
         run: yarn lint:strict
 
       - name: 🔎 Type check
+        working-directory: ./src/frontend
         run: yarn typecheck
 
       - name: 💅 Prettier check
+        working-directory: ./src/frontend
         run: yarn format:check
 
       - name: 🃏 Run jest
+        working-directory: ./src/frontend
         run: yarn test
