@@ -14,7 +14,12 @@ jobs:
   lint:
     name: ⬣ ESLint
     runs-on: ubuntu-latest
+    
     steps:
+      - uses: action@v2
+        with:
+          working-dir: src/frontend
+
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v2
 
@@ -28,7 +33,7 @@ jobs:
 
       - name: 🔬 Lint
         run: yarn lint:strict
-        working-directory: src/frontend/node_modules
+        # working-directory: src/frontend
 
   typecheck:
     name: ʦ TypeScript
@@ -47,7 +52,7 @@ jobs:
 
       - name: 🔎 Type check
         run: yarn typecheck
-        working-directory: ./src/frontend
+        # working-directory: ./src/frontend
 
   prettier:
     name: 💅 Prettier
@@ -66,7 +71,7 @@ jobs:
 
       - name: 💅 Prettier check
         run: yarn format:check
-        working-directory: chest-x-ray-ai/src/frontend
+        # working-directory: ./src/frontend
 
   test:
     name: 🃏 Test
@@ -85,4 +90,4 @@ jobs:
 
       - name: 🃏 Run jest
         run: yarn test
-        working-directory: ./src
+        # working-directory: ./src/frontend
