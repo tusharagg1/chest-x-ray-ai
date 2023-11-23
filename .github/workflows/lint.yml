@@ -28,7 +28,7 @@ jobs:
 
       - name: 🔬 Lint
         run: yarn lint:strict
-        working-directory: src/frontend
+        working-directory: /home/runner/work/chest-x-ray-ai/src/frontend/
 
   typecheck:
     name: ʦ TypeScript
