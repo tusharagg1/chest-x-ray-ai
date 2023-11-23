@@ -28,7 +28,7 @@ jobs:
 
       - name: 🔬 Lint
         run: yarn lint:strict
-        # working-directory: ./src/frontend
+        working-directory: src/frontend
 
   typecheck:
     name: ʦ TypeScript
