@@ -26,6 +26,10 @@ Please mention the verification/testing used for this PR, which helps others to 
 - [ ] I have written reasonable tests and the updated version all passed
 - [ ] There should be no potential errors after the changes get merged into main
 
+## Screenshots
+
+Provide screenshots or videos of the changes made if any.
+
 # Action Required
 
 Please mention the further steps needed to do if necessary  (**please remove this**).
