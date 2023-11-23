@@ -4,7 +4,7 @@ Please include a summary of the changes and attach the related issue link (**ple
 
 **Summary**: 
 
-**Issue Link**: 
+**Issue Link**: #<issue_number>
 
 ## Testing
 
