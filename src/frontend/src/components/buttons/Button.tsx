@@ -63,7 +63,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'border-primary-600 border',
               'hover:bg-primary-600 hover:text-white',
               'active:bg-primary-700',
-              'disabled:bg-primary-700',
+              'disabled:bg-primary-500',
             ],
             variant === 'outline' && [
               'text-primary-500',
@@ -92,7 +92,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             ],
           ],
           //#endregion  //*======== Variants ===========
-          'disabled:cursor-not-allowed',
+          disabled && 'disabled: cursor-not-allowed',
           isLoading &&
             'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
           className
