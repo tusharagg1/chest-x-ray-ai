@@ -28,8 +28,9 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: 🔬 Lint
+        working-directory: ${{ github.workspace }}/src/frontend
         run: yarn lint:strict
-        # working-directory: src/frontend
+        
 
   typecheck:
     name: ʦ TypeScript
