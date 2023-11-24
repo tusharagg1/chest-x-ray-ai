@@ -16,10 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: action@v2
-        with:
-          working-dir: src/frontend
-
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v2
 
