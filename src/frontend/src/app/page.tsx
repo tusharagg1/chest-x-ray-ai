@@ -1,69 +1,96 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import Head from 'next/head';
-import * as React from 'react';
+import React, { useState } from 'react';
 
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
+import Button from '@/components/buttons/Button';
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-import Logo from '~/svg/Logo.svg';
+import {getUserData} from './backend/apis';
 
-// Before you begin editing, follow all comments with `STARTERCONF`
 
-export default function Homepage() {
-  return (
-    <main>
-      <Head>
-        <title>Hi</title>
-      </Head>
-      <section className='bg-white'>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-          <Logo className='w-16' />
-          <h1 className='mt-4'>Next.js + Tailwind CSS + TypeScript Starter</h1>
-          <p className='mt-2 text-sm text-gray-800'>
-            A starter for Next.js, Tailwind CSS, and TypeScript with Absolute
-            Import, Seo, Link component, pre-configured with Husky{' '}
-          </p>
-          <p className='mt-2 text-sm text-gray-700'>
-            <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-              See the repository
-            </ArrowLink>
-          </p>
+export default function loginPage() {
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
-          <ButtonLink className='mt-6' href='/components' variant='light'>
-            See all components
-          </ButtonLink>
 
-          <UnstyledLink
-            href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-            className='mt-4'
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              width='92'
-              height='32'
-              src='https://vercel.com/button'
-              alt='Deploy with Vercel'
-            />
-          </UnstyledLink>
+    //testing
+    //const [test, settestText] = useState('');
 
-          <footer className='absolute bottom-2 text-gray-700'>
-            © {new Date().getFullYear()} By{' '}
-            <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
-              Theodorus Clarence
-            </UnderlineLink>
-          </footer>
-        </div>
-      </section>
-    </main>
-  );
+    /**
+    * @description Validates the email and password, calls the apis
+    */
+    function handleSubmit() {
+
+        // email validation
+        if (email == '') {
+            setEmailError(true);
+            setEmailErrorMessage('Please enter your email');
+
+        } else {
+            setEmailError(false);
+        }
+
+        //password validation
+        if (password == '') {
+            setPasswordError(true);
+            setPasswordErrorMessage('Please enter your password');
+
+        } else if (password.length < 8) {
+            setPasswordError(true);
+            setPasswordErrorMessage('Password must be at least 8 characters');
+
+        } else {
+            setPasswordError(false);
+        }
+
+
+        //settestText("email: " + email + " Password: " + password);
+        
+        
+        //TO-DO: call login api
+        
+    }
+
+    return (
+        <main className='bg-indigo-100'>
+            <section className='py-2'>
+                <div className='layout relative flex min-h-screen flex-col py-12 items-center justify-center text-center gap-2'>
+                    <h2 className='text-indigo-500'>Login</h2>
+
+                    <form method='post' onSubmit={handleSubmit} className='mt-10'>
+                        <ol className='space-y-2'>
+                            <div className='bg-white '>
+                            <input type='email' value={email} onChange={e => setEmail(e.target.value)} placeholder='Email'/>
+                            </div>
+                            <div className='bg-white '>
+                            <input type='text' value={password} onChange={e => setPassword(e.target.value)} placeholder='Password'/>
+                            </div>
+
+                            <div className='flex text-center justify-center'>
+                            <Button
+                            size='base'
+                            variant='primary'
+                            isLoading={loading}
+                            type='submit'
+                            >
+                            Sign In
+                            </Button>
+                            </div>
+                        </ol>
+                    </form>
+
+                    {emailError && <p className='text-red-500'>{emailErrorMessage}</p>}
+                    {passwordError && <p className='text-red-500'>{passwordErrorMessage}</p>}
+
+                </div>
+            </section>
+        </main>
+
+    )
+
 }
