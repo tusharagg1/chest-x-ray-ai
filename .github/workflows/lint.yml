@@ -27,6 +27,12 @@ jobs:
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
 
+      
+      - name: Installing eslint
+        run: |
+          npm install eslint
+        # eslint
+
       - name: 🔬 Lint
         run: |
           cd ${{ github.workspace }}/src/frontend
