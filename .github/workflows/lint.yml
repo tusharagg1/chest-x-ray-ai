@@ -36,6 +36,7 @@ jobs:
       - name: 🔬 Lint
         run: |
           cd ${{ github.workspace }}/src/frontend
+          pwd
           yarn lint:strict
 
         # working-directory: src/frontend
@@ -57,7 +58,9 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: 🔎 Type check
-        run: yarn typecheck
+        run: |
+          pwd
+          yarn typecheck
         # working-directory: ./src/frontend
 
   prettier:
@@ -76,7 +79,9 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: 💅 Prettier check
-        run: yarn format:check
+        run: |
+          pwd
+          yarn format:check
         # working-directory: ./src/frontend
 
   test:
@@ -95,5 +100,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: 🃏 Run jest
-        run: yarn test
+        run: |
+          pwd  
+          yarn test
         # working-directory: ./src/frontend
