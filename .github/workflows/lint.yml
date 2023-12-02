@@ -26,6 +26,8 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
+        with:
+          working-directory: src/frontend
 
       
       - name: Installing eslint
@@ -56,6 +58,8 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
+        with:
+          working-directory: src/frontend
 
       - name: 🔎 Type check
         run: |
@@ -78,6 +82,8 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
+        with:
+          working-directory: src/frontend
 
       - name: 💅 Prettier check
         run: |
@@ -100,6 +106,8 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
+        with:
+          working-directory: src/frontend
 
       - name: 🃏 Run jest
         run: |
