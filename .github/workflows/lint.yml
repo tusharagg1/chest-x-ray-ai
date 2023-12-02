@@ -59,6 +59,7 @@ jobs:
 
       - name: 🔎 Type check
         run: |
+          cd ${{ github.workspace }}/src/frontend
           pwd
           yarn typecheck
         # working-directory: ./src/frontend
@@ -80,6 +81,7 @@ jobs:
 
       - name: 💅 Prettier check
         run: |
+          cd ${{ github.workspace }}/src/frontend
           pwd
           yarn format:check
         # working-directory: ./src/frontend
@@ -101,6 +103,7 @@ jobs:
 
       - name: 🃏 Run jest
         run: |
+          cd ${{ github.workspace }}/src/frontend
           pwd  
           yarn test
         # working-directory: ./src/frontend
