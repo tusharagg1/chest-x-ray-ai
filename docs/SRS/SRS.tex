@@ -372,6 +372,8 @@ expect in the Introduction section.}
   on the ``big picture'' assumptions.  The assumptions section lists, and
   describes, all of the assumptions.}
 
+\plt{The scope section is relevant for later determining typical values of inputs. The scope should make it clear what inputs are reasonable to expect. This is a distinction between scope and context (context is a later section).  Scope affects the inputs while context affects how the software will be used.}
+
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
 \plt{This section summarizes the skills and knowledge of the readers of the
@@ -440,7 +442,7 @@ characteristics and lists the system constraints.  \plt{This text can likely be
 \plt{For each of the entities in the system context diagram its responsibilities
   should be listed.  Whenever possible the system should check for data quality,
   but for some cases the user will need to assume that responsibility.  The list
-  of responsibilites should be about the inputs and outputs only, and they
+  of responsibilities should be about the inputs and outputs only, and they
   should be abstract.  Details should not be presented here.  However, the
   information should not be so abstract as to just say ``inputs'' and
   ``outputs''.  A summarizing phrase can be used to characterize the inputs.
@@ -460,6 +462,16 @@ characteristics and lists the system constraints.  \plt{This text can likely be
 \end{itemize}
 \end{itemize}
 
+\plt{Identify in what context the software will typically be used.  Is it for
+exploration? education? engineering work? scientific work?. Identify whether it
+will be used for mission-critical or safety-critical applications.} \plt{This
+additional context information is needed to determine how much effort should be
+devoted to the rationale section.  If the application is safety-critical, the
+bar is higher.  This is currently less structured, but analogous to, the idea to
+the Automotive Safety Integrity Levels (ASILs) that McSCert uses in their
+automotive hazard analyses.}
+
+\wss{The }
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
 \plt{This section summarizes the knowledge/skills expected of the user.
