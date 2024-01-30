@@ -12,7 +12,7 @@ jobs:
     runs-on: unbuntu-latest
     defaults:
       run:
-        working-directory: .src/backend
+        working-directory: .src/backend/database
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
