@@ -1,4 +1,4 @@
-name: Run Jest Unit Tests on PR
+name: PR Unit Tests
 
 on:
   pull_request:
@@ -8,13 +8,19 @@ on:
 
 jobs:
   unit_test:
-    name: Run Tests
-    runs-on: unbuntu-latest
-    defaults:
-      run:
-        working-directory: .src/backend/database
+    name: PR Unit Tests
+    runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+
+      - name: Setup Node
+      - uses: actions/setup-node@v3
+
+      - name: Download Dependencies
       - run: npm ci
-      - run: npm run test
+
+      - name: Run Jest Unit Tests
+      - run: |
+          cd ${{ github.workspace }}/src/backend/database
+          npm run test
