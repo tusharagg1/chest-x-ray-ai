@@ -1,0 +1,20 @@
+name: Run Jest Unit Tests on PR
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  unit_test:
+    name: Run Tests
+    runs-on: unbuntu-latest
+    defaults:
+      run:
+        working-directory: .src/backend
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm ci
+      - run: npm run test
