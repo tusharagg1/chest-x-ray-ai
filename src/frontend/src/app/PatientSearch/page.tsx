@@ -2,8 +2,13 @@
 
 //import Button from "@/components/buttons/Button";
 import React, { useState} from 'react';
-import Table from "@/app/Main/table";
+
 import Button from '@/components/buttons/Button';
+
+import Table from "@/app/components/table";
+
+// import { Patient } from '../components/patientColumns';
+import cols from '@/app/components/patientColumns'; 
 
 export default function SearchPage() { 
     const [searchKey, setSearchKey] = useState('');
@@ -13,60 +18,6 @@ export default function SearchPage() {
     const [Name] = useState('Name');
     const [lastVist] = useState('Last Vist');
     const [checkBox, setCheckBox] = useState('Patient ID');
-
-    type Patient = {
-        PatientID : number|null
-        MRN: number|null
-        Name: string
-        DOB: string
-        Gender: string
-        Contact: string
-        ReferringP: string
-        LastVisit: string
-    }
-
-    type ColumnDefinitionType<T, K extends keyof T> = {
-        key: K;
-        header: string;
-        width?: number|string;
-    }
-    
-    const cols: ColumnDefinitionType<Patient, keyof Patient>[] = [
-        {
-            key: 'PatientID',
-            header: 'Patient ID',
-        },
-        {
-            key: 'MRN',
-            header: 'MRN'
-        },
-        {
-            key: 'Name',
-            header: 'Name'
-        },
-        {
-            key: 'DOB',
-            header: 'D.O.B'
-        },
-        {
-            key: 'Gender',
-            header: 'Gender'
-        },
-        {
-            key: 'Contact',
-            header: 'Contact'
-        }, 
-        {
-            key: 'ReferringP',
-            header: 'Referring Physician',
-            width: '15%'
-
-        },
-        {
-            key: 'LastVisit',
-            header: 'Last Visit'
-        }
-    ]
 
     function handleSubmit(){
         //go to the detailed page

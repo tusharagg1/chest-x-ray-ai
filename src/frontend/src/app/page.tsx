@@ -1,7 +1,8 @@
-frontend/feature/add-login-page
+
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
+import Image from 'next/image';
 import React, { useState} from 'react';
 import { createStyleRegistry,StyleRegistry } from 'styled-jsx';
 
@@ -9,7 +10,6 @@ import { createStyleRegistry,StyleRegistry } from 'styled-jsx';
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import NextImage from '@/components/NextImage';
-import Image from 'next/image';
 
 //import {getUserData} from './backend/apis';
 
@@ -27,28 +27,30 @@ export default function loginPage() {
     function handleSubmit() {
 
         // email validation
-        if (email == '') {
-            setEmailError(true);
-            setEmailErrorMessage('Please enter your email');
+        // if (email == '') {
+        //     setEmailError(true);
+        //     setEmailErrorMessage('Please enter your email');
 
-        } else {
-            setEmailError(false);
-        }
+        // } else {
+        //     setEmailError(false);
+        // }
 
-        //password validation
-        if (password == '') {
-            setPasswordError(true);
-            setPasswordErrorMessage('Please enter your password');
+        // //password validation
+        // if (password == '') {
+        //     setPasswordError(true);
+        //     setPasswordErrorMessage('Please enter your password');
 
-        } else if (password.length < 8) {
-            setPasswordError(true);
-            setPasswordErrorMessage('Password must be at least 8 characters');
+        // } else if (password.length < 8) {
+        //     setPasswordError(true);
+        //     setPasswordErrorMessage('Password must be at least 8 characters');
 
-        } else {
-            setPasswordError(false);
-        }
+        // } else {
+        //     setPasswordError(false);
+        // }
 
         //TO-DO: call login api
+
+        window.location.href = "/Main"
         
     }
 
@@ -69,7 +71,7 @@ export default function loginPage() {
                         height={500}
                     />
                 </div>
-                <div className='bg-white py-5 gap-2' style={{"width" : "40%", "height" : "50%", zIndex: '5'}} >
+                <div className='bg-white py-5 gap-2' style={{width : "40%", "height" : "50%", zIndex: '5'}} >
                     <h2 className='text-indigo-500'>Login</h2>
                     <p className='text-gray-500'>Sign in to your account</p>
                     <form method='post' onSubmit={handleSubmit} className='mt-3'>
