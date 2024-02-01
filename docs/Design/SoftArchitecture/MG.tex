@@ -3,6 +3,7 @@
 \usepackage{fullpage}
 \usepackage[round]{natbib}
 \usepackage{multirow}
+\usepackage{multicol}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{graphicx}
@@ -46,8 +47,16 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+01/11/2024 & 0.0 & Initial Document \\
+01/12/2024 & 0.1 & Initial Draft of Anticipated and Unlikely Changes and
+  Module Hierarchy sections; Added some terms to Abbreviations and Acronyms
+  section \\
+01/13/2024 & 0.2 & Added Uses Hierarchy among modules diagram \\
+01/14/2024 & 0.3 & Filled out Traceability Matrices for Traceability Matrix
+  section \\
+01/15/2024 & 0.4 & Made small edits to Table 1 in Module Hierarchy section and
+  Table 4 in Traceability Matrix section; Initial Draft of Module
+  Decomposition section completed \\
 \bottomrule
 \end{tabularx}
 
@@ -62,19 +71,29 @@ This section records information for easy reference.
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{symbol} & \textbf{description} \\
   \midrule 
-  AC & Anticipated Change\\
+  AC & Anticipated Change \\
+  AI/ML & Artificial Intelligence/Machine Learning \\
   DAG & Directed Acyclic Graph \\
+  \multirow{3}{*}{DICOM} & Digital Imaging and Communications in Medicine; \\
+  & technical standard for digital storage/transmission \\
+  & of medical images and related information \\
+  GUI & Graphical User Interface \\
+  \multirow{2}{*}{JPEG/JPG} & Joint Photographic Experts Group; digital image \\
+  & compression standard, image format \\
   M & Module \\
   MG & Module Guide \\
+  MVC & Model-View-Controller Software Architecture \\
+  NLP & Natural Language Processing \\
   OS & Operating System \\
-  R & Requirement\\
+  R & Requirement \\
   SC & Scientific Computing \\
-  SRS & Software Requirements Specification\\
-  \progname & Explanation of program name\\
+  SRS & Software Requirements Specification \\
+  \multirow{3}{*}{\progname} & The Process of Designing and Developing Software; \\
+  & a reference to the software application described \\
+  & in this document \\
   UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
   \bottomrule
 \end{tabular}\\
 
@@ -157,11 +176,24 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+  \begin{item}[\refstepcounter{acnum} \actheacnum \label{acHardware}:]
+    The specific hardware on which the software is running.
+  \end{item}
+  \begin{item}[\refstepcounter{acnum} \actheacnum \label{acDiseases}:]
+    The specific selection of diseases that the AI/ML model will look for when
+    performing the chest x-ray scan/read.
+  \end{item}
+  \begin{item}[\refstepcounter{acnum} \actheacnum \label{acRadReport}:]
+    The output radiology report generated using NLP (progressing from report
+    components to more complete report).
+  \end{item}
+  \begin{item}[\refstepcounter{acnum} \actheacnum \label{acAppGUI}:]
+    The various application pages/GUI (page layout changes/redesign, etc.).
+  \end{item}
+  \begin{item}[\refstepcounter{acnum} \actheacnum \label{acMedInstInterf}:]
+    The module for interfacing with the IT system(s) of the medical
+    institution(s) using this application.
+  \end{item}
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -174,9 +206,27 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+  \begin{item}[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:]
+    Input/Output devices (Input: File and/or Keyboard, Output: File, Memory,
+    and/or Screen).
+  \end{item}
+  \begin{item}[\refstepcounter{ucnum} \uctheucnum \label{ucModelLib}:]
+    The same (Python) library/libraries will be used for the AI/ML model.
+  \end{item}
+  \begin{item}[\refstepcounter{ucnum} \uctheucnum \label{ucUserAuth}:]
+    The database/backend provider (Firebase) will be used for user
+    authentication/management and application security.
+  \end{item}
+  \begin{item}[\refstepcounter{ucnum} \uctheucnum \label{ucBackend}:]
+    The same backend/database provider (Firebase) will be used.
+  \end{item}
+  \begin{item}[\refstepcounter{ucnum} \uctheucnum \label{ucInputFormat}:]
+    The input format of the chest x-ray data (DICOM) into the application.
+  \end{item}
+  \begin{item}[\refstepcounter{ucnum} \uctheucnum \label{ucModelLib}:]
+    The input format of the chest x-ray image (JPG or JPEG) into the AI/ML
+    model for performing the chest x-ray scan/read.
+  \end{item}
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -186,40 +236,91 @@ in a hierarchy decomposed by secrets in Table \ref{TblMH}. The modules listed
 below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
+\begin{multicols}{2}
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+  \item [\refstepcounter{mnum} \mthemnum \label{mAIModel}:] AIModel Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mChXRR}:] ChestXRayRead Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mResGen}:] ResultsGen Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mNLPModel}:] NLPModel Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mRepCompGen}:] RepCompGen Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mBackend}:] Backend Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mDatabaseOps}:] DatabaseOps Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mUserAuthMgmt}:] UserAuthMgmt Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mMedInstInter}:] MedInstInter Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mAppController}:] AppController Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mAppGUI}:] AppGUI Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mLogin}:] Login Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mPerfScan}:] PerfScan Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mViewResults}:] ViewResults Module
 \end{description}
+\end{multicols}
 
+\begin{table}[H]
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+    \toprule
+    \textbf{Level 1} & \textbf{Level 2} \\
+    \midrule
 
-\begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
+    {Hardware-Hiding Module} & MedInstInter \\
+    \midrule
 
-{Hardware-Hiding Module} & ~ \\
-\midrule
+    \multirow{8}{0.3\textwidth}{Behaviour-Hiding Module} & ChestXRayRead \\
+    & ResultsGen \\
+    & RepCompGen \\
+    & DatabaseOps \\
+    & UserAuthMgmt \\
+    & Login \\ 
+    & PerfScan \\
+    & ViewResults \\
+    \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
-\midrule
+    \multirow{5}{0.3\textwidth}{Software Decision Module} & AIModel \\
+    & NLPModel \\
+    & Backend \\
+    & AppController \\
+    & AppGUI \\
+    \bottomrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
-\bottomrule
+  \end{tabular}
+  \caption{Module Hierarchy}
+  \label{TblMH}
+\end{table}
 
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
+The modules listed above are also organized following an overall MVC software
+architecture for this application. This MVC-oriented organization is shown
+below in Table \ref{TblMMH}.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+    \toprule
+    \textbf{Level 1} & \textbf{Level 2} \\
+    \midrule
+
+    \multirow{6}{0.3\textwidth}{Model Module} & ChestXRayRead \\
+    & ResultsGen \\
+    & RepCompGen \\
+    & DatabaseOps \\
+    & UserAuthMgmt \\
+    & MedInstInter \\
+    \midrule
+
+    \multirow{3}{0.3\textwidth}{View Module} & Login \\ 
+    & PerfScan \\
+    & ViewResults \\
+    \midrule
+
+    \multirow{5}{0.3\textwidth}{Controller Module} & AIModel \\
+    & NLPModel \\
+    & Backend \\
+    & AppController \\
+    & AppGUI \\
+    \bottomrule
+
+  \end{tabular}
+  \caption{Module MVC Hierarchy}
+  \label{TblMMH}
 \end{table}
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
@@ -244,42 +345,132 @@ Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Module}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
+\item[Secrets:] The data structure and algorithm used to implement the virtual
   hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
+\item[Services:] Serves as a virtual hardware used by the rest of the
   system. This module provides the interface between the hardware and the
   software. So, the system can use it to display outputs or to accept inputs.
 \item[Implemented By:] OS
 \end{description}
 
+\subsubsection{MedInstInter Module (\mref{mMedInstInter})}
+
+\begin{description}
+\item[Secrets:] The data structures and algorithms used to interface with
+  the IT system(s) of the medical institution(s).
+\item[Services:] Serves as an interface to transfer information between the
+  medical institution(s)' IT system(s) and the application.
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
+
 \subsection{Behaviour-Hiding Module}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
+\item[Secrets:] The contents of the required behaviours.
+\item[Services:] Includes programs that provide externally visible behaviour
+  of the system as specified in the software requirements specification (SRS)
   documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
+  hardware-hiding module and the software decision module. The programs in
+  this module will need to change if there are changes in the SRS.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{ChestXRayRead Module (\mref{mChXRR})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
+\item[Secrets:] The chest x-ray reader data structure(s) and algorithm(s)
+  used to scan a chest x-ray image and look for/detect the possible presence
+  of certain diseases/infections (after converting from DICOM to JPEG).
+\item[Services:] Reads/scans the chest x-ray image, performs some analysis and
+  returns the processed disease/infection probability data.
 \item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Type of Module:] Library
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{ResultsGen Module (\mref{mResGen})}
 
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used to further
+  process, interpret and store the results generated from scanning the chest
+  x-ray image.
+\item[Services:] Process ChestXRayRead Module output, interpret the processed
+  disease/infection probability data and return generated results for use in
+  generating the radiology report (components).
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library, Abstract Object
+\end{description}
+
+\subsubsection{RepCompGen Module (\mref{mRepCompGen})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) (including NLP) used to
+  generate the radiology report (components) using the chest x-ray read/scan
+  results.
+\item[Services:] Take the AIModel Module output and generate the radiology
+  report (components) documenting the results/predictions from analyzing the
+  chest x-ray image using natural language.
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library, Abstract Object
+\end{description}
+
+\subsubsection{DatabaseOps Module (\mref{mDatabaseOps})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used to organize, store
+  and retrieve patient data and application user data.
+\item[Services:] Organizes, stores and retrieves patient data from the 
+  database. Also manages the chest x-ray image and scan results and 
+  predictions for each patient. Does likewise for application user data.
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Record, Library, Abstract Object
+\end{description}
+
+\subsubsection{UserAuthMgmt Module (\mref{mUserAuthMgmt})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used to authenticate
+  and manage application users.
+\item[Services:] Protects patient data by only granting access to
+  authenticated application users. Also manages users (i.e. add/remove users).
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library, Abstract Object
+\end{description}
+
+\subsubsection{Login Module (\mref{mLogin})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used to show and make
+  functional the login functionality for users.
+\item[Services:] Displays login portal and authenticates user logins into this
+  application.
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library, Abstract Object
+\end{description}
+
+\subsubsection{PerfScan Module (\mref{mPerfScan})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used to show and make
+  functional the chest x-ray read/scan functionality for users.
+\item[Services:] Displays portal for users to submit chest x-ray images for
+  read/scan to get disease/infection predictions.
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library, Abstract Object
+\end{description}
+
+\subsubsection{ViewResults Module (\mref{mViewResults})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used to show and make
+  functional the view results functionality for users.
+\item[Services:] Displays the results of the (latest) chest x-ray read/scan
+  for a given patient to the user (i.e. displays the latest radiology report).
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library, Abstract Object
+\end{description}
 
 \subsection{Software Decision Module}
 
@@ -294,7 +485,74 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{AIModel Module (\mref{mAIModel})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used (including in
+  Modules \mref{mChXRR} ChestXRayRead and \mref{mResGen} ResultsGen) to
+  read/scan chest x-ray images and interpret the disease/infection probability
+  results. The ROC values used to interpret the disease/infection probability
+  results and give predictions.
+\item[Services:] Reads/scans chest x-ray images, interpret the data and return
+  disease/infection predictions.
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library, Abstract Object
+\end{description}
+
+\subsubsection{NLP Module (\mref{mNLPModel})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used (including in
+  Module \mref{mRepCompGen} RepCompGen) to generate a natural language
+  radiology report to document the results and predictions of the chest x-ray
+  read/scan.
+\item[Services:] Generates the readiology report documenting the results and
+  predictions of the chest x-ray read/scan using natural language.
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library, Abstract Object
+\end{description}
+
+\subsubsection{Backend Module (\mref{mBackend})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used (including in
+  Modules \mref{mDatabaseOps} DatabaseOps, \mref{mUserAuthMgmt} UserAuthMgmt
+  and \mref{mMedInstInter} MedInstInter) to manage and protect patient data,
+  authenticate users and interface with external IT system(s) securely.
+\item[Services:] Organize, store and retrieve patient data, protect patient
+  data integrity and privacy by authenticating application users before
+  granting access to sensitive information. Interface with IT system(s) of
+  medical institutions to transfer/retrieve patient data securely.
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Record, Library, Abstract Object
+\end{description}
+
+\subsubsection{AppController Module (\mref{mAppController})}
+
+\begin{description}
+\item[Secrets:] The interactions and inter-dependencies of all other software
+  decision modules (\mref{mAIModel} AIModel, \mref{mNLPModel} NLPModel,
+  \mref{mBackend} Backend and \mref{mAppGUI} AppGUI) of this application.
+\item[Services:] Enables the users to submit chest x-ray images, performs
+  scans/reads of those images and produces disease/infection predictions that
+  are documented in (a) natural language radiology report (components).
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{AppGUI Module (\mref{mAppGUI})}
+
+\begin{description}
+\item[Secrets:] The data structure(s) and algorithm(s) used (including in
+  Modules \mref{mLogin} Login, \mref{mPerfScan} PerfScan and
+  \mref{mViewResults}) to show application functionalities to the users,
+  accept user inputs and show outputs.
+\item[Services:] Show application functionalities to the users in a
+  GUI, accept user inputs (i.e. chest x-ray images) and show outputs (i.e.
+  predictions and radiology report/components).
+\item[Implemented By:] [Your Program Name Here]
+\item[Type of Module:] Library
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -307,19 +565,19 @@ requirements and between the modules and the anticipated changes.
 \centering
 \begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Req.} & \textbf{Modules} \\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+FR1 & \mref{mChXRR}, \mref{mPerfScan} \\
+FR2 & \mref{mChXRR}, \mref{mPerfScan} \\
+FR3 & \mref{mResGen}, \mref{mViewResults} \\
+FR4 & \mref{mResGen}, \mref{mDatabaseOps}, \mref{mViewResults} \\
+FR5 & \mref{mDatabaseOps}, \mref{mAppGUI} \\
+FR6 & \mref{mAIModel} \\
+FR7 & \mref{mMedInstInter}, \mref{mAppController}, \mref{mAppGUI} \\
+FR8 & \mref{mChXRR} \\
+FR9 & \mref{mBackend}, \mref{mDatabaseOps} \\
+FR10 & \mref{mUserAuthMgmt}, \mref{mLogin} \\
+FR11 & \mref{mAppController}, \mref{mAppGUI}, \mref{mViewResults} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -330,20 +588,16 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \centering
 \begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
 \toprule
-\textbf{AC} & \textbf{Modules}\\
+\textbf{AC} & \textbf{Modules} \\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acHardware} & \mref{mAIModel}, \mref{mChXRR}, \mref{mResGen},
+  \mref{mNLPModel}, \mref{mRepCompGen}, \mref{mBackend}, \mref{mDatabaseOps},
+  \mref{mUserAuthMgmt}, \mref{mMedInstInter}, \mref{mAppController},
+  \mref{mAppGUI}, \mref{mLogin}, \mref{mPerfScan}, \mref{mViewResults} \\
+\acref{acDiseases} & \mref{mAIModel} \\
+\acref{acRadReport} & \mref{mNLPModel} \\
+\acref{acAppGUI} & \mref{mAppGUI} \\
+\acref{acMedInstInterf} & \mref{mMedInstInter} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -365,7 +619,7 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}

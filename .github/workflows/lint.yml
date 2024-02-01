@@ -1,0 +1,117 @@
+# https://github.com/kentcdodds/kentcdodds.com/blob/main/.github/workflows/deployment.yml
+name: Code Check
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
+
+concurrency:
+  group: ${{ github.job }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: ⬣ ESLint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: src/frontend
+
+      
+      - name: Installing eslint
+        run: |
+          npm install eslint
+        # eslint
+
+      - name: 🔬 Lint
+        run: |
+          cd ${{ github.workspace }}/src/frontend
+          pwd
+          yarn lint:strict
+
+        # working-directory: src/frontend
+        
+
+  typecheck:
+    name: ʦ TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: src/frontend
+
+      - name: 🔎 Type check
+        run: |
+          cd ${{ github.workspace }}/src/frontend
+          pwd
+          yarn typecheck
+        # working-directory: ./src/frontend
+
+  prettier:
+    name: 💅 Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: src/frontend
+
+      - name: 💅 Prettier check
+        run: |
+          cd ${{ github.workspace }}/src/frontend
+          pwd
+          yarn format:check
+        # working-directory: ./src/frontend
+
+  test:
+    name: 🃏 Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: src/frontend
+
+      - name: 🃏 Run jest
+        run: |
+          cd ${{ github.workspace }}/src/frontend
+          pwd  
+          yarn test
+        # working-directory: ./src/frontend
