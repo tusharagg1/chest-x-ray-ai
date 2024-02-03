@@ -13,11 +13,11 @@ type ColumnDefinitionType<T, K extends keyof T> = {
 const cols: ColumnDefinitionType<PatientRow, keyof PatientRow>[] = [
     {
         key: 'Title',
-        header: 'Patient ID',
+        header: ' ',
     },
     {
         key: 'Value',
-        header: 'MRN'
+        header: ' '
     },
 ]
 
