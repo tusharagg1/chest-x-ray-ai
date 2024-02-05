@@ -14,10 +14,8 @@ type TableProps<T, K extends keyof T> = {
 };
 
 const Tstyle = {
-  // borderCollapse: 'collapse',
   width: '38vw',
   height: '50vh',
-  //fontsize: 10,
   fontWeight: 'bold',
 } as const;
 
@@ -43,9 +41,6 @@ const TableHeader = <T, K extends keyof T>({
   const headers = columns.map((column, index) => {
     const style = {
       width: column.width ?? '10%', // 100 is our default value if width is not defined
-      // borderBottom: '2px solid black',
-      // border: '2px solid gray',
-      // backgroundColor: 'rgb(229, 231, 235)',
       fontsize: '10',
       height: '10%',
     };
