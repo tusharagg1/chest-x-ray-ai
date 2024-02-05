@@ -3,6 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import React, { use, useMemo, useState } from 'react';
 
 import Button from '@/components/buttons/Button';
+import UnderlineLink from '@/components/links/UnderlineLink';
 import NextImage from '@/components/NextImage';
 
 import { Table } from './table';
@@ -81,8 +82,9 @@ export default function NewStudyPage() {
 
   return (
     <main className='bg-indigo-100'>
-      <header className='mb-2 justify-center text-center' >
-        <h1 className='py-2 text-m text-indigo-500 '>New Study</h1>
+      <header className='mb-2' >
+        <UnderlineLink href='/Main' className='text-indigo-500 px-8'>Main</UnderlineLink>
+        <h1 className='text-m text-indigo-500 justify-center text-center'>New Study</h1>
       </header>
       <section className='py-2 bg-indigo-100'>
         <div className='layout flex min-h-screen py-2'>
