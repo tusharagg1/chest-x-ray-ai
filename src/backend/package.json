@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "contains the basic API endpoint functions for interacting with the database backend for creating and retrieving user, patient and scan results data.",
+  "main": "apis.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nathaniel Hu",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^10.6.0"
+  }
+}
