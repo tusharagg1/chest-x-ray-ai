@@ -39,3 +39,45 @@ export async function readUserData(db, userId) {
       });
   });
 }
+
+// write patient data
+export async function writePatientData(db, patientId, mrn, firstName, lastName, email, dob, gender, phone, refPhys, lastVisit, notes) {
+  const writePatientDataRef = ref(db, `patients/${patientId}`);
+  await set(writePatientDataRef, {
+    mrn: mrn,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    dob: dob,
+    gender: gender,
+    phone: phone,
+    refPhys: refPhys,
+    lastVisit: lastVisit,
+    notes: notes
+  })
+  .then(() => {
+    return true;
+  })
+  .catch((_error) => {
+    return false;
+  });
+}
+
+// read patient data
+export async function readPatientData(db, patientId) {
+  return new Promise((resolve, reject) => {
+    const readPatientDataRef = ref(db);
+    get(child(readPatientDataRef, `patients/${patientId}`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const patientData = snapshot.val();
+          resolve(patientData);
+        } else {
+          reject(null);
+        }
+      })
+      .catch((_error) => {
+        reject(null);
+      });
+  });
+}

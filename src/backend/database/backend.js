@@ -5,7 +5,7 @@ import { getDatabase } from "firebase/database";
 
 // import needed internally defined modules
 import { createNewUser, deleteAUser, signInUser, signOutUser } from './user-auth-mgmt';
-import { readUserData, writeUserData } from './database-ops';
+import { readUserData, writeUserData, writePatientData } from './database-ops';
 import { resolve } from "path";
 
 // necessary firebase configuration setip
@@ -79,5 +79,32 @@ export function signOutAUser() {
       .catch((_error) => {
         reject(null);
       });
+  });
+}
+
+// get current user
+export function getCurrentUser() {
+  return new Promise((resolve, reject) => {
+    const userId = auth.currentUser.uid;
+    const userData = readUserData(db, userId);
+    if (userData !== null) {
+      resolve(userData);
+    }
+    else {
+      reject(null);
+    }
+  });
+}
+
+// create a new patient
+export function createANewPatient(patientId, mrn, firstName, lastName, email, dob, gender, phone, refPhys, lastVisit, notes) {
+  return new Promise((resolve, reject) => {
+    const patientDataWritten = writePatientData(db, patientId, mrn, firstName, lastName, email, dob, gender, phone, refPhys, lastVisit, notes);
+    if (patientDataWritten) {
+      resolve(patientId);
+    }
+    else {
+      reject(false);
+    }
   });
 }
