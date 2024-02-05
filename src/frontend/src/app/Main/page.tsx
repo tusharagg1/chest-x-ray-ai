@@ -8,22 +8,24 @@ import cols from "@/app/components/patientColumns";
 // import { Patient } from "@/app/components/patientColumns";
 import Table from "@/app/components/table";
 
+import { signOutAUser, getCurrentUser } from "../../../../backend/database/backend";
+
 export default function MainPage() { 
-    const [username, setUser] = useState('username');
+    const [username, setUser] = useState('User');
 
     function search() {
         //go to patient search
-        window.location.href = "http://localhost:3000/PatientSearch"
+        window.location.href = "/PatientSearch"
     }
 
     function newUpload() {
         //go to the upload patient data page
-        window.location.href = "http://localhost:3000/NewPatient"
+        window.location.href = "/NewPatient"
     }
 
-    function newXrayStudey() {
+    function newXrayStudy() {
         //go to the x-ray study page
-        window.location.href = "http://localhost:3000/X-RayStudy"
+        window.location.href = "/X-RayStudy"
     }
     
     const data = () => {
@@ -53,10 +55,26 @@ export default function MainPage() {
         return items;
     }
 
+    const onSignOut = () => {
+        const signOutBtn = document.getElementById("signOutBtn");
+        const signOutTxt = document.getElementById("signOutSuccess");
+    
+        signOutAUser()
+            .then((_userSignedOut) => {
+                signOutTxt!.innerHTML = `Sign Out Successful! Goodbye ${username}!`;
+                setTimeout(() => {}, 1000);
+                window.location.href = "/Login";
+            })
+            .catch((_error) => {
+                signOutTxt!.innerHTML = "Sign Out Failed! Error in User Sign Out!";
+                console.log("Error in User Sign Out!");
+            });
+    };
+
     return ( 
         <main className='bg-indigo-100 min-h-screen'>
             <header className='mb-2 justify-center text-center' >
-                <h1 className='py-2 text-m text-indigo-500 ' >Welcome {username}!</h1>
+                <h1 className='py-2 text-m text-indigo-500' >Welcome {username}!</h1>
             </header>
             <div className='py-2 layout relative flex min-h-screen flex-col items-center text-center gap-5'>
                     <div className='bg-gray-100 p-5 gap-2 px-5' style={{width: "85%", height : '53vh', zIndex: '5'}}>
@@ -85,13 +103,22 @@ export default function MainPage() {
                 Upload new Patient
                 </Button>
                 <Button
-                    onClick={newXrayStudey}
+                    onClick={newXrayStudy}
                     variant='primary'
                     size='base'
                     // style={{'width' : '22%'}}
                 >
                 New X-ray Study
                 </Button>
+                <br></br>
+                <Button
+                    onClick={onSignOut}
+                    variant='primary'
+                    size='base'
+                >
+                Log Out
+                </Button>
+                <label id="signOutSuccess"></label>
             </div>
 
         </main>
