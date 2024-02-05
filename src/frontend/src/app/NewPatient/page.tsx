@@ -89,7 +89,7 @@ export default function PatientRecord() {
               paddingLeft: '1%',
               paddingTop: '1%',
               position: 'absolute',
-              zIndex: '3',
+              zIndex: 3,
               width: '40%',
               height: '82%',
             }}
@@ -103,7 +103,7 @@ export default function PatientRecord() {
             style={{
               width: '40%',
               height: '30vh',
-              zIndex: '5',
+              zIndex: 5,
               position: 'absolute',
               right: 0,
               paddingRight: '4%',
@@ -132,7 +132,7 @@ export default function PatientRecord() {
               paddingRight: '3%',
               paddingTop: '1%',
               position: 'absolute',
-              zIndex: '3',
+              zIndex: 3,
               width: '39%',
               height: '32%',
               right: 0,

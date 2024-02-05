@@ -61,7 +61,7 @@ export default function loginPage() {
           </div>
           <div
             className='gap-2 bg-white py-5'
-            style={{ width: '40%', height: '50%', zIndex: '5' }}
+            style={{ width: '40%', height: '50%', zIndex: 5 }}
           >
             <h2 className='text-indigo-500'>Login</h2>
             <p className='text-gray-500'>Sign in to your account</p>
@@ -121,7 +121,7 @@ export default function loginPage() {
               paddingLeft: '2%',
               paddingTop: '17%',
               position: 'absolute',
-              zIndex: '3',
+              zIndex: 3,
               width: '42%',
               height: '72%',
             }}

@@ -69,7 +69,7 @@ export default function SearchPage() {
       <div className='layout relative flex min-h-screen flex-col items-center gap-5 py-2 text-center'>
         <div
           className='gap-2 bg-gray-100 p-5 px-5'
-          style={{ width: '85%', height: '75vh', zIndex: '5' }}
+          style={{ width: '85%', height: '75vh', zIndex: 5 }}
         >
           <h2 className='mb-5 text-indigo-500'>Recent Patients List</h2>
           <form
@@ -167,7 +167,7 @@ export default function SearchPage() {
             paddingLeft: '2%',
             paddingTop: '2%',
             position: 'absolute',
-            zIndex: '3',
+            zIndex: 3,
             width: '87%',
             height: '77%',
           }}

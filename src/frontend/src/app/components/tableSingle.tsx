@@ -18,7 +18,7 @@ const Tstyle = {
   width: '38vw',
   height: '50vh',
   //fontsize: 10,
-  fontWeight: 'Bold',
+  fontWeight: 'bold',
 } as const;
 
 const Table = <T, K extends keyof T>({

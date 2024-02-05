@@ -75,7 +75,7 @@ export default function PatientRecord() {
       <section className='bg-indigo-100 py-2'>
         <div className='layout flex min-h-screen py-2'>
           <div
-            style={{ width: '45%', height: '80vh', zIndex: '5' }}
+            style={{ width: '45%', height: '80vh', zIndex: 5 }}
             className='bg-white text-indigo-500'
           >
             <h3 className='text-center'>Patient Record</h3>
@@ -102,7 +102,7 @@ export default function PatientRecord() {
               paddingLeft: '1%',
               paddingTop: '1%',
               position: 'absolute',
-              zIndex: '3',
+              zIndex: 3,
               width: '40%',
               height: '82%',
             }}

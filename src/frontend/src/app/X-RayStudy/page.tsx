@@ -133,7 +133,7 @@ export default function NewStudyPage() {
           </div>
           <div
             className='flex justify-center'
-            style={{ width: '50%', zIndex: '5' }}
+            style={{ width: '50%', zIndex: 5 }}
           >
             <ol className='space-y-'>
               <div className='space-x-2 text-center'>
@@ -151,7 +151,7 @@ export default function NewStudyPage() {
               paddingRight: '17%',
               paddingTop: '5%',
               position: 'absolute',
-              zIndex: '3',
+              zIndex: 3,
               width: '38%',
               height: '84%',
               right: 0,
