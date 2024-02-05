@@ -1,53 +1,66 @@
 // import needed externally defined modules
-const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = require("firebase/auth");
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser } from "firebase/auth";
 
-// user-auth-mgmt module definition
-var user_auth_mgmt = (function () {
-  // list function definitions here
-
-  // create new user
-  var createNewUser = async (auth, email, password) => {
-    await createUserWithEmailAndPassword(auth, email, password)
+// create a new user
+export function createNewUser(auth, email, password) {
+  return new Promise((resolve, reject) => {
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        // Signed in 
         const user = userCredential.user;
-        return user;
+        resolve(user.uid);
       })
-      .catch((_error) => {
-        return null;
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        reject(null);
       });
+  });
+}
+
+// delete a user
+export async function deleteAUser(auth, email, password) {
+  const user = auth.currentUser;
+
+  if (user === null || user.email !== email || user.password !== password) {
+    return false;
   }
 
-  // delete user
-  var deleteTheUser = async (user) => {
-    await user.delete()
-      .then(() => {
-        return true;
-      })
-      .catch((_error) => {
-        return false;
-      });
-  };
+  await deleteUser(user).then(() => {
+    // User deleted.
+    return true;
+  }).catch((_error) => {
+    // An error happened.
+    return false;
+  });
+}
 
-  // sign in user
-  var signInUser = async (auth, email, password) => {
-    await signInWithEmailAndPassword(auth, email, password)
+// sign in a user
+export function signInUser(auth, email, password) {
+  return new Promise((resolve, reject) => {
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        // Signed in 
         const user = userCredential.user;
-        return user;
+        resolve(user.uid);
       })
-      .catch((_error) => {
-        return null;
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        reject(null);
       });
-  }
+  });
+}
 
-  // export public functions
-  return {
-    // list public functions here
-    createNewUser: createNewUser,
-    deleteTheUser: deleteTheUser,
-    signInUser: signInUser
-  }
-})();
-
-// export the module
-module.exports = user_auth_mgmt;
+// sign out a user
+export function signOutUser(auth) {
+  return new Promise((resolve, reject) => {
+    auth.signOut().then(() => {
+      // Sign-out successful.
+      resolve(true);
+    }).catch((_error) => {
+      // An error happened.
+      reject(false);
+    });
+  });
+}
