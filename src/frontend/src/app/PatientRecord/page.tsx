@@ -4,6 +4,7 @@ import { useState } from 'react';
 import React from 'react';
 
 import Button from '@/components/buttons/Button';
+import UnderlineLink from '@/components/links/UnderlineLink';
 import NextImage from '@/components/NextImage';
 
 import cols from '@/app/components/patientRows';
@@ -59,10 +60,12 @@ export default function PatientRecord() {
 
    function newStudy() {
     //go to the new study page
+    window.location.href = "http://localhost:3000/X-RayStudy"
    }
 
   return (
     <main className='bg-indigo-100'>
+    <UnderlineLink href='/Main' className='text-indigo-500 px-8'>Main</UnderlineLink>
       <header className='mb-2 justify-center text-center' >
         <h1 className='py-2 text-m text-indigo-500 '>Patient Records</h1>
       </header>

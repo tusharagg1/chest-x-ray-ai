@@ -12,15 +12,18 @@ export default function MainPage() {
     const [username, setUser] = useState('username');
 
     function search() {
-        //search for paitent
+        //go to patient search
+        window.location.href = "http://localhost:3000/PatientSearch"
     }
 
     function newUpload() {
         //go to the upload patient data page
+        window.location.href = "http://localhost:3000/NewPatient"
     }
 
     function newXrayStudey() {
         //go to the x-ray study page
+        window.location.href = "http://localhost:3000/X-RayStudy"
     }
     
     const data = () => {
@@ -70,8 +73,6 @@ export default function MainPage() {
                     variant='primary'
                     size='base'
                     className="mt-5"
-                    //style={{'width' : '22%', 'textAlign' : 'center'}}
-                    //isLoading={loading}
                 >
                 Search for Patient
                 </Button>

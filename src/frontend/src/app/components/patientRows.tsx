@@ -22,3 +22,4 @@ const cols: ColumnDefinitionType<PatientRow, keyof PatientRow>[] = [
 ]
 
 export default cols
+export type {PatientRow}
