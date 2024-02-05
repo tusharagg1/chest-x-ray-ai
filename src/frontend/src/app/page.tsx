@@ -1,7 +1,8 @@
-frontend/feature/add-login-page
+
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
+import Image from 'next/image';
 import React, { useState} from 'react';
 import { createStyleRegistry,StyleRegistry } from 'styled-jsx';
 
@@ -9,7 +10,6 @@ import { createStyleRegistry,StyleRegistry } from 'styled-jsx';
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import NextImage from '@/components/NextImage';
-import Image from 'next/image';
 
 //import {getUserData} from './backend/apis';
 
@@ -26,29 +26,22 @@ export default function loginPage() {
     */
     function handleSubmit() {
 
-        // email validation
-        if (email == '') {
-            setEmailError(true);
-            setEmailErrorMessage('Please enter your email');
+        // //password validation
+        // if (password == '') {
+        //     setPasswordError(true);
+        //     setPasswordErrorMessage('Please enter your password');
 
-        } else {
-            setEmailError(false);
-        }
+        // } else if (password.length < 8) {
+        //     setPasswordError(true);
+        //     setPasswordErrorMessage('Password must be at least 8 characters');
 
-        //password validation
-        if (password == '') {
-            setPasswordError(true);
-            setPasswordErrorMessage('Please enter your password');
-
-        } else if (password.length < 8) {
-            setPasswordError(true);
-            setPasswordErrorMessage('Password must be at least 8 characters');
-
-        } else {
-            setPasswordError(false);
-        }
+        // } else {
+        //     setPasswordError(false);
+        // }
 
         //TO-DO: call login api
+
+        window.location.href = 'http://localhost:3000/Main'
         
     }
 
@@ -69,23 +62,23 @@ export default function loginPage() {
                         height={500}
                     />
                 </div>
-                <div className='bg-white py-5 gap-2' style={{"width" : "40%", "height" : "50%", zIndex: '5'}} >
+                <div className='bg-white py-5 gap-2' style={{width : "40%", "height" : "50%", zIndex: '5'}} >
                     <h2 className='text-indigo-500'>Login</h2>
                     <p className='text-gray-500'>Sign in to your account</p>
-                    <form method='post' onSubmit={handleSubmit} className='mt-3'>
+                    <form method='post' className='mt-3'>
                         <ol className='space-y-2'>
                             <div>
                                 <input style={{background: 'url("/images/person.png") no-repeat left', paddingLeft: '10%', backgroundColor: 'rgb(229, 231, 235)', width: '65%'}} type='email' value={email} onChange={e => setEmail(e.target.value)} placeholder='Email'/>
                             </div>
                             <div>
-                                <input style={{background: 'url("/images/lock.png") no-repeat left', paddingLeft: '10%', backgroundColor: 'rgb(229, 231, 235)', width:'65%'}} type='text' value={password} onChange={e => setPassword(e.target.value)} placeholder='Password'/>
+                                <input style={{background: 'url("/images/lock.png") no-repeat left', paddingLeft: '10%', backgroundColor: 'rgb(229, 231, 235)', width:'65%'}} type='password' value={password} onChange={e => setPassword(e.target.value)} placeholder='Password'/>
                             </div>
                             <div className='flex text-center justify-center'>
                             <Button
                             size='base'
                             variant='primary'
                             isLoading={loading}
-                            type='submit'
+                            onClick={handleSubmit}
                             >
                             Login
                             </Button>

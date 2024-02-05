@@ -3,6 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import React, { use, useMemo, useState } from 'react';
 
 import Button from '@/components/buttons/Button';
+import UnderlineLink from '@/components/links/UnderlineLink';
 import NextImage from '@/components/NextImage';
 
 import { Table } from './table';
@@ -81,12 +82,13 @@ export default function NewStudyPage() {
 
   return (
     <main className='bg-indigo-100'>
-      <header className='mb-2 justify-center text-center' >
-        <h1 className='py-1 text-m text-indigo-500 ' >X-ray Study</h1>
+      <header className='mb-2' >
+        <UnderlineLink href='/Main' className='text-indigo-500 px-8'>Main</UnderlineLink>
+        <h1 className='text-m text-indigo-500 justify-center text-center'>New Study</h1>
       </header>
       <section className='py-2 bg-indigo-100'>
         <div className='layout flex min-h-screen py-2'>
-          <div className='flex'  style={{width:'50%' }}>
+          <div className='flex' style={{width:'50%' }}>
           <ol className='space-y-2'>
             <div className= 'flex flex-warp gap-5'>
               <h2 className='text-m md:text-xl text-indigo-500'>Upload DICOM:</h2>
@@ -105,29 +107,33 @@ export default function NewStudyPage() {
               </Button>
               </div>
             </div>
-            <div className='flex'>
+            <div className='flex my-2'>
               { image &&
               <NextImage 
                 className='flex'
                 src={image_name}
-                width="500"
+                width='500'
                 height='500' //the model output sizes
                 alt='x-ray results' 
                 key={Date.now()}
+                style={{width: '55vw', height: '75vh'}}
               /> }
             </div>
           </ol>
           </div>
-          <div className='flex justify-center' style={{width:'50%'}}>
+          <div className='flex justify-center' style={{width:'50%', zIndex:'5'}}>
             <ol className='space-y-'>
               <div className='text-center space-x-2'>
                 <h2 className='text-m md:text-xl text-indigo-500'>Pathology Risk</h2>
               </div>
-              <div className='flex'>
+              <div className='flex' >
                 <Table data={(data())} columns={(cols)}/>
               </div>
             </ol>
           </div>
+          <div style={{paddingRight: '17%', paddingTop: '5%', position: 'absolute', zIndex: '3', "width" : "38%", "height" : "84%", right: 0}}>
+              <div className='bg-indigo-500 ' style={{"width" : "100%", "height" : "100%"}}></div>
+          </div> 
         </div>
       </section>
     </main>

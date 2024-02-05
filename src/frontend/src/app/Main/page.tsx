@@ -1,101 +1,34 @@
 'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import Button from "@/components/buttons/Button";
 
-import Table from "@/app/Main/table";
+import cols from "@/app/components/patientColumns";
+// import { Patient } from "@/app/components/patientColumns";
+import Table from "@/app/components/table";
 
 export default function MainPage() { 
     const [username, setUser] = useState('username');
 
     function search() {
-        //search for paitent
+        //go to patient search
+        window.location.href = "http://localhost:3000/PatientSearch"
     }
 
     function newUpload() {
         //go to the upload patient data page
+        window.location.href = "http://localhost:3000/NewPatient"
     }
 
     function newXrayStudey() {
         //go to the x-ray study page
-    }
-
-    type Patient = {
-        PatientID : number|null
-        MRN: number|null
-        Name: string
-        DOB: string
-        Gender: string
-        Contact: string
-        ReferringP: string
-        LastVisit: string
-    }
-
-    type ColumnDefinitionType<T, K extends keyof T> = {
-        key: K;
-        header: string;
-        width?: number|string;
+        window.location.href = "http://localhost:3000/X-RayStudy"
     }
     
-    const cols: ColumnDefinitionType<Patient, keyof Patient>[] = [
-        {
-            key: 'PatientID',
-            header: 'Patient ID',
-        },
-        {
-            key: 'MRN',
-            header: 'MRN'
-        },
-        {
-            key: 'Name',
-            header: 'Name'
-        },
-        {
-            key: 'DOB',
-            header: 'D.O.B'
-        },
-        {
-            key: 'Gender',
-            header: 'Gender'
-        },
-        {
-            key: 'Contact',
-            header: 'Contact'
-        }, 
-        {
-            key: 'ReferringP',
-            header: 'Referring Physician',
-            width: '15%'
-
-        },
-        {
-            key: 'LastVisit',
-            header: 'Last Visit'
-        }
-    ]
-
-    
-    // const data = () => {
-    //     const patients: Patient[] = []
-    //     //example patient
-    //     patients.push({
-    //         PatientID: 1,
-    //         MRN: 123,
-    //         Name: "Jack Mean",
-    //         DOB: new Date('2000-10-30'),
-    //         Gender: "M",
-    //         Contact: "111-111-111",
-    //         ReferringP: "Spencer Smith",
-    //         LastVisit: new Date('2023-11-03')
-    //     })
-    
-    //     return patients;
-    // }
-
-    const data: Patient[] = [
-        {
+    const data = () => {
+        const items = [];
+        items.push({
             PatientID: 1,
             MRN: 123,
             Name: "Jack Mean",
@@ -103,8 +36,10 @@ export default function MainPage() {
             Gender: "M",
             Contact: "111-111-111",
             ReferringP: "Spencer Smith",
-            LastVisit: '2023-11-03'
-        }, {
+            LastVisit: '2023-11-03' 
+        })
+        for (let i = 1; i < 4; i++) {
+          items.push({
             PatientID: null,
             MRN: null,
             Name: "-",
@@ -113,40 +48,10 @@ export default function MainPage() {
             Contact: "-",
             ReferringP: "-",
             LastVisit: '-'
-        },
-        {
-            PatientID: null,
-            MRN: null,
-            Name: "-",
-            DOB: '-',
-            Gender: "-",
-            Contact: "-",
-            ReferringP: "-",
-            LastVisit: '-'
-        },
-        {
-            PatientID: null,
-            MRN: null,
-            Name: "-",
-            DOB: '-',
-            Gender: "-",
-            Contact: "-",
-            ReferringP: "-",
-            LastVisit: '-'
-        },
-        {
-            PatientID: null,
-            MRN: null,
-            Name: "-",
-            DOB: '-',
-            Gender: "-",
-            Contact: "-",
-            ReferringP: "-",
-            LastVisit: '-'
+          });
         }
-
-    ]
-    
+        return items;
+    }
 
     return ( 
         <main className='bg-indigo-100 min-h-screen'>
@@ -157,7 +62,7 @@ export default function MainPage() {
                     <div className='bg-gray-100 p-5 gap-2 px-5' style={{width: "85%", height : '53vh', zIndex: '5'}}>
                         <h2 className='text-indigo-500 mb-5'>Recent Patients</h2>
                         <div className="flex items-center text-center justify-center">
-                            <Table data={data} columns={cols} />
+                            <Table data={data()} columns={cols} />
                         </div>
                     </div>
                     <div style={{paddingLeft: '2%', paddingTop: '2%', position: 'absolute', zIndex: '3', "width" : "87%", "height" : "55%"}}>
@@ -168,8 +73,6 @@ export default function MainPage() {
                     variant='primary'
                     size='base'
                     className="mt-5"
-                    //style={{'width' : '22%', 'textAlign' : 'center'}}
-                    //isLoading={loading}
                 >
                 Search for Patient
                 </Button>

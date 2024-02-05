@@ -2,8 +2,13 @@
 
 //import Button from "@/components/buttons/Button";
 import React, { useState} from 'react';
-import Table from "@/app/Main/table";
+
 import Button from '@/components/buttons/Button';
+import UnderlineLink from '@/components/links/UnderlineLink';
+
+// import { Patient } from '../components/patientColumns';
+import cols from '@/app/components/patientColumns'; 
+import Table from "@/app/components/table";
 
 export default function SearchPage() { 
     const [searchKey, setSearchKey] = useState('');
@@ -14,63 +19,9 @@ export default function SearchPage() {
     const [lastVist] = useState('Last Vist');
     const [checkBox, setCheckBox] = useState('Patient ID');
 
-    type Patient = {
-        PatientID : number|null
-        MRN: number|null
-        Name: string
-        DOB: string
-        Gender: string
-        Contact: string
-        ReferringP: string
-        LastVisit: string
-    }
-
-    type ColumnDefinitionType<T, K extends keyof T> = {
-        key: K;
-        header: string;
-        width?: number|string;
-    }
-    
-    const cols: ColumnDefinitionType<Patient, keyof Patient>[] = [
-        {
-            key: 'PatientID',
-            header: 'Patient ID',
-        },
-        {
-            key: 'MRN',
-            header: 'MRN'
-        },
-        {
-            key: 'Name',
-            header: 'Name'
-        },
-        {
-            key: 'DOB',
-            header: 'D.O.B'
-        },
-        {
-            key: 'Gender',
-            header: 'Gender'
-        },
-        {
-            key: 'Contact',
-            header: 'Contact'
-        }, 
-        {
-            key: 'ReferringP',
-            header: 'Referring Physician',
-            width: '15%'
-
-        },
-        {
-            key: 'LastVisit',
-            header: 'Last Visit'
-        }
-    ]
-
     function handleSubmit(){
         //go to the detailed page
-
+        window.location.href = "http://localhost:3000/PatientRecord"
     }
 
     function handleInputChange(value: any){
@@ -107,8 +58,9 @@ export default function SearchPage() {
 
     return ( 
         <main className='bg-indigo-100 min-h-screen'>
-            <header className='mb-2 justify-center text-center' >
-                <h1 className='py-2 text-m text-indigo-500 '>Patients List and Information</h1>
+            <header className='mb-2' >
+                <UnderlineLink href='/Main' className='text-indigo-500 px-8'>Main</UnderlineLink>
+                <h1 className='text-m text-indigo-500 justify-center text-center'>Patients List and Information</h1>
             </header>
             <div className='py-2 layout relative flex min-h-screen flex-col items-center text-center gap-5'>
                     <div className='bg-gray-100 p-5 gap-2 px-5' style={{width: "85%", height : '75vh', zIndex: '5'}}>
@@ -137,8 +89,8 @@ export default function SearchPage() {
                         <Button
                             size='base'
                             variant='primary'
-                            type='submit'
-                            //onClick={handleSubmit}
+                            // type='submit'
+                            onClick={handleSubmit}
                         >
                         View patient record
                         </Button>
