@@ -48,6 +48,7 @@ the points can be abstracted and applied to other templates.
 
 \item Follows the template, all parts present
   \begin{todolist}
+  \item File name for the SRS matches the name in the template repo
   \item Table of contents
   \item Pages are numbered
   \item Revision history included for major revisions
@@ -108,7 +109,10 @@ the points can be abstracted and applied to other templates.
     Every item of the scope should be reflected in at least one assumption.
   \item Characteristics of the intended reader are not confused with the user
     characteristics
-  \item Characteristics of the intended reader are unambiguous
+  \item Characteristics of the intended reader are unambiguous (typically list
+  courses and their level)
+  \item The software application or library is given a name
+  \item The project is explicitly identified as either software app or library
   \end{todolist}
 
 \item General System Description
@@ -131,6 +135,7 @@ the points can be abstracted and applied to other templates.
 \item Problem Description
   \begin{todolist}
   \item Each item of the physical system is identified and labelled
+  \item Goal statements are functional
   \item Goal statements are abstract
   \item Goal statements use a minimal amount of technical language,
     understandable by non-domain experts 
@@ -140,7 +145,7 @@ the points can be abstracted and applied to other templates.
   \begin{todolist}
   \item Each assumption is ``atomic'' (no explicit or implicit ``ands'')
   \item Assumptions are a refinement of the scope
-  \item Each assumption is referenced at least once in the document
+  \item Each assumption is referenced (invoked) at least once in the document
   \item If an assumption is listed as being referenced by another chunk (T, IM
     etc), that other chunk should explicitly invoke the assumption in the
     describing text or derivation
@@ -157,6 +162,8 @@ the points can be abstracted and applied to other templates.
   \item Input data constraints are given, with a rationale where appropriate
   \item Properties of a correct solution are given (or explicitly left blank)
   \item Equations are balanced with respect to units of all terms
+  \item All ``chunks'' (theories, definitions, models) are used (invoked,
+  referred to) at least once
   \end{todolist}
   
 \item Functional Requirements
@@ -173,6 +180,7 @@ the points can be abstracted and applied to other templates.
 \item Nonfunctional Requirements
   \begin{todolist}
   \item NFRs are verifiable
+  \item Usability used for users and understandability used for programmers
   \end{todolist}
 
 \item Likely and Unlikely changes
