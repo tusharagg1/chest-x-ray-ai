@@ -67,10 +67,17 @@ with torch.no_grad():
 
     preds = model(img).cpu()
     output["preds"] = dict(zip(xrv.datasets.default_pathologies,preds[0].detach().numpy()))
-    
+
+diseases = ['Atelectasis', 'Pneumonia', 'Cardiomegaly', 'Pleural_Thickening']
+allpreds = output.get("preds")
+predictions = {}
+if allpreds:
+    for disease in diseases:
+        predictions[disease] = allpreds.get(disease)
+
 if cfg.feats:
-    print(output)
+    print(predictions)
 else:
-    pprint.pprint(output)
+    pprint.pprint(predictions)
     
    
