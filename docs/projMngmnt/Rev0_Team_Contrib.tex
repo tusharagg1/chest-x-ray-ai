@@ -1,0 +1,150 @@
+\documentclass{article}
+
+\usepackage{float}
+\restylefloat{table}
+
+\usepackage{booktabs}
+
+\title{Team Contributions: Rev 0\\\progname}
+
+\author{\authname}
+
+\date{}
+
+\input{../Comments}
+\input{../Common}
+
+\begin{document}
+
+\maketitle
+
+\section{Demo Plans}
+
+For our project software, we will be demonstrating the key features and
+functionalities. The main functionality we will demonstrate is the AI/ML model
+used to perform scans of chest X-rays make disease/condition predictions, and
+display these results on the web application. \\
+We will also be demonstrating the natural language report generation
+functionality, performed based on the x-ray scan results.
+
+\section{Meeting Attendance}
+
+The following table shows the number of team meetings attended by each team
+member since the POC Demo on November 21, 2023. A total of four team meetings
+have been held since then \textit{(according to the number of meeting issues
+in the team repo)}.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Student} & \textbf{Meetings} \\
+    \midrule
+    Total & 4 \\
+    Allison Cook & 3 \\
+    Ibrahim Issa & 2 \\
+    Mohaansh Pranjal & 4 \\
+    Nathaniel Hu & 2 \\
+    Tushar Aggarwal & 2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent \textit{Tushar Aggarwal was out of the country for the duration of
+the break till the start of the second week of classes.}
+
+\section{Lecture Attendance}
+
+The following table shows the number of lectures attended by each team member
+since the POC Demo on November 21, 2023. A total of two lectures have been held
+since then \textit{(according to the Google Calendar and the number of lecture
+issues in the team repo)}.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Student} & \textbf{Lectures} \\
+    \midrule
+    Total & 2 \\
+    Allison Cook & 2 \\
+    Ibrahim Issa & 1 \\
+    Mohaansh Pranjal & 1 \\
+    Nathaniel Hu & 2 \\
+    Tushar Aggarwal & 1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Commits}
+
+The following table shows the number of commits to the main branch that have
+been made by each team member since the POC Demo on November 21, 2023. A total
+of 16 commits were made by the entire team since then (according to the team
+repository's commit history). The proportion of commits made by each team member
+is also shown below (out of a total of 100\%). \\
+\textit{(This table does not include the commit count for this submission.)}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Student} & \textbf{Commits} & \textbf{Percent} \\
+    \midrule
+    Total & 16 & 100\% \\
+    Allison Cook & 2 & 12.5\% \\
+    Ibrahim Issa & 2 & 12.5\% \\
+    Mohaansh Pranjal & 5 & 31.3\% \\
+    Nathaniel Hu & 2 & 12.5\% \\
+    Tushar Aggarwal & 5 & 31.3\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent \textit{The team member Nathaniel Hu has at least 3 commits on an
+unmerged branch (backend/feature/database-and-user-auth-mgmt) related to changes
+for connecting the application's frontend web pages to the backend database. This
+branch also involves the backend code for user authentication, patient data
+management and interfacing the backend with external IT systems (i.e. of
+participating medical institutions). As more changes are made, the number of
+commits will very likely go up as well by the time the branch is merged into the
+main branch.}
+
+\section{Issue Tracker}
+
+The following table shows the number of issues authored and assigned to each team
+member. These numbers include open and closed authored issues, and closed assigned
+issues.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Student} & \textbf{Authored (O+C)} & \textbf{Assigned (C only)} \\
+    \midrule
+    Allison Cook & 10 & 9 \\
+    Ibrahim Issa & 9 & 7 \\
+    Mohaansh Pranjal & 15 & 13 \\
+    Nathaniel Hu & 18 & 12 \\
+    Tushar Aggarwal & 56 & 55 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{CI/CD}
+
+In our project, CI/CD is currently used to manage the following workflows
+(GitHub Actions):
+\begin{enumerate}
+  \item Create a branch from issue
+  \item Autolink the issue to the Pull Request on merge
+  \item Perform code checks: Run Linters and check formats and run some unit tests
+  \item Perform PR checks: If the template for the Pull Request is filled in
+    properly such as adding labels, adequate comments are added and at least one
+    issue is linked to a pull request.
+\end{enumerate}
+The CI/CD will be further expanded upon and used to run more unit tests for PRs,
+automatically apply labels to PRs based upon code changes (e.g. frontend vs.
+backend vs. documentation code changes) and perform other pre-PR code checks.
+
+\end{document}

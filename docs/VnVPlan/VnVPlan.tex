@@ -18,6 +18,7 @@
 \usepackage{mdframed}
 \usepackage{parskip}
 \usepackage{longtable}
+\usepackage{float}
 
 \input{../Comments}
 \input{../Common}
@@ -49,16 +50,18 @@
 \section*{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
-\midrule
-10/30/2023 & 0.0 & Initial Draft of VnV Plan\\
-10/31/2023 & 0.1 & Various Sections filled out with bullet points of content\\
-11/01/2023 & 0.2 & Symbols, Abbreviations, and Acronyms Section table and description completed; Introductory blurb and general roadmap for VnV Plan completed\\
-11/01/2023 & 0.3 & General Information Section completed\\
-11/02/2023 & 0.4 & Plan and System Test Description Sections mostly completed\\
-11/03/2023 & 0.5 & Plan and System Test Description Sections completed, reviewed entire document\\
-
-\bottomrule
+    \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+    \midrule
+    10/30/2023 & 0.0 & Initial Draft of VnV Plan\\
+    10/31/2023 & 0.1 & Various Sections filled out with bullet points of content\\
+    11/01/2023 & 0.2 & Symbols, Abbreviations, and Acronyms Section table and description completed; Introductory blurb and general roadmap for VnV Plan completed\\
+    11/01/2023 & 0.3 & General Information Section completed\\
+    11/02/2023 & 0.4 & Plan and System Test Description Sections mostly completed\\
+    11/03/2023 & 0.5 & Plan and System Test Description Sections completed, reviewed entire document\\
+    11/09/2023 & 0.6 & Updated Objectives and plan for Usability testing\\
+    03/02/2024 & 0.7 & Updated Automated Testing \\
+    03/06/2024 & 0.8 & Updated the unit testing for the modules described in the MIS \\
+    \bottomrule
 \end{tabularx}
 
 ~\\
@@ -77,8 +80,9 @@
 The following table, Table \ref{tab:symbsAbbrevsAcros}, includes the definitions and descriptions of all relevant symbols, abbreviations and acronyms used throughout this VnV Plan document.
 
 \renewcommand{\arraystretch}{1.2}
-\begin{table}[h]
+\begin{table}[H]
     \centering
+    \label{tab:symbsAbbrevsAcros}
     \begin{tabular}{p{1.25in}p{3.75in}}
         \toprule
         \textbf{Symbol, Abbreviation or Acronym} & \textbf{Definition or Description} \\
@@ -102,7 +106,6 @@ The following table, Table \ref{tab:symbsAbbrevsAcros}, includes the definitions
         \bottomrule
     \end{tabular}\\
     \caption{Symbols, Abbreviations and Acronyms}
-    \label{tab:symbsAbbrevsAcros}
 \end{table}
 
 \newpage
@@ -138,7 +141,7 @@ The main objective of this VnV Plan that is intended to be accomplished is to bu
 \noindent A third final major objective of this VnV Plan that is intended to be accomplished is to build confidence in the software to effectively deliver on the first two aforementioned major objectives. This can be broken down into the following points:
 \begin{itemize}
     \item Check the software provides a usable interface for users to log in, be authenticated and then access patient data, information, and chest x-ray read results. (i.e. frontend functions)
-    \item Check the software is able to interface with supporting IT systems (i.e. of a medical institution or diagnostic centre) and retrieve, display and save patient data, information, and chest x-ray read results across systems. (i.e. backend functions)
+    \item Check the software can interface with supporting IT systems (i.e. of a medical institution or diagnostic centre) and retrieve, display and save patient data, information, and chest x-ray read results across systems. (i.e. backend functions)
 \end{itemize}
 
 \noindent In short, the three main objectives of this VnV Plan that are intended to be accomplished are to build confidence in the software's:
@@ -148,11 +151,12 @@ The main objective of this VnV Plan that is intended to be accomplished is to bu
     \item Ability to deliver on the above two objectives by interfacing with users and supporting IT systems
 \end{itemize}
 
+\noindent Lastly, verifying the usability of the system, usability testing, though important in every system, is currently of a lower priority, there is an initial plan for simple usability testing and a more complex plan outlined in section \hyperlink{Usability}{4.2.3} should our critical verification and testing be completed ahead of schedule. 
+
 \noindent Some objectives that are out of scope for this project are described as follows:
 \begin{itemize}
     \item Meeting exact industry standards for every element of the system: this is due to lack of time and lower priority of the UI compared to the AI model's correctness
     \item Verifying the correctness of data sets used in training and testing the AI model/ system: we are not re-verifying them as they were verified by their respective authors
-    \item Verifying the usability of the system: usability testing is currently of a lower priority, and this can be re-prioritized should we complete our higher priority verification and validation ahead of schedule
     \item Verifying the external libraries used for the AI model and the system frontend and backend: e.g. graphical user interface libraries, database interfacing/communication libraries; we will assume that these external libraries have been verified by their respective implementation teams
 \end{itemize}
 
@@ -171,7 +175,7 @@ The tentative plans for verifying the SRS, the design (i.e. MIS, MG and System D
 
 \subsection{Verification and Validation Team}
 In this section, Table \ref{tab:VnVTeam} details the members of the Validation and Verification team responsible for performing the tasks outlined and described in this VnV Plan document. For each member, their role(s) in the project's verification are summarized with key details noting their responsibilities.
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash\hsize=.25\hsize\linewidth=\hsize}X|>{\centering\arraybackslash\hsize=.75\hsize\linewidth=\hsize}X|}
         \hline
@@ -236,7 +240,7 @@ The following points outline the plan for verifying the design of the software, 
     \item Are all requirements (functional and non-functional) traceable to at least one implementing module in the MG?
     \item Have all issues opened by the reviewers been closed?
     \item Do all modules and other components conform to the SOLID design principles?
-    \item Do all the modules have an unambiguous task that they are created for, and input and output is well defined?
+    \item Do all the modules have an unambiguous task that they are created for, and input and output are well defined?
 \end{enumerate}
 
 \subsection{Verification and Validation Plan Verification Plan}
@@ -247,7 +251,7 @@ The following points outline the plan for verifying the VnV plan itself:
     \item Ad-hoc reviews with teammates shall also provide critical feedback on the VnV plan for areas of improvement.
 \end{itemize}
 
-\noindent The following is an initial VnV plan verification plan checklist that will be updated with items being added/removed as reviews to verify the VnV plan are completed over time:
+\noindent The following is an initial VnV plan verification plan checklist that will be updated with items being added/removed as reviews to verify the VnV plan is completed over time:
 \begin{enumerate}[label=$\square$]
     \item Does the VnV Plan verify all requirements (functional and non-functional) are met?
     \item Have all issues opened by the reviewers been closed?
@@ -273,7 +277,7 @@ The following are the automated testing and verification tools to be used during
 \begin{itemize}
     \item Linters: Prettier, ESLint, Flake8, Black
     \item Unit testing: Jest, Pytest
-    \item Code coverage: Istanbul, Coverage.py
+    % \item Code coverage: Istanbul, Coverage.py
     \item Continuous Integration: GitHub Actions
 \end{itemize}
 It should be noted that all of these tools listed are also mentioned in the \href{https://github.com/Tusharagg1/chest-x-ray-ai/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development Plan} document.
@@ -497,7 +501,7 @@ In this subsection, the system test cases are categorized based on different are
 
 \pagebreak
 \subsection{Tests for Nonfunctional Requirements}
-In this subsection, the system test cases are categorized into two major areas to cover the two key properties mandated by the nonfunctional requirements. The subsets of test cases are designed to validate the security and performance of the software. The non-functional requirements for accuracy reference the appropriate functional tests from the above section. Tests related to usability are currently of a lower priority are will be generically defined. It should also be noted that static tests, reviews, inspections, and walkthroughs will not follow the format for the tests below.
+In this subsection, the system test cases are categorized into two major areas to cover the two key properties mandated by the nonfunctional requirements. The subsets of test cases are designed to validate the security and performance of the software. The non-functional requirements for accuracy reference the appropriate functional tests from the above section. Tests related to usability are currently of a lower priority are will be generically defined. It should also be noted that static tests, reviews, inspections, and walk throughs will not follow the format for the tests below.
 
 \subsubsection{Security}
 \begin{itemize}
@@ -575,7 +579,7 @@ See \hyperlink{Auth}{Authorization} in the functional requirements for NF.AR0, N
             \textbf{Control:} Manual \par
             \textbf{Initial State:} The system is in a normal operational state with all components initialized and ready to receive input. \par
             \textbf{Input:} Three sample chest X-ray images in DICOM format divided between three computers using the system. \par
-            \textbf{Output:} The expected result is the correct display of chest X-ray images on the user interface, reflecting all the processed medical conditions accurately for each individual upload.  \par
+            \textbf{Output:} The expected result is the correct display of chest X-ray images on the user interface, reflecting all the processed medical conditions accurately for each upload.  \par
             \textbf{Test Case Derivation:} The expected output is justified based on NF.CR0 in section 3.3.5 in the SRS document. \par
             \textbf{How the test will be performed:}
             \begin{enumerate}[noitemsep]
@@ -587,8 +591,10 @@ See \hyperlink{Auth}{Authorization} in the functional requirements for NF.AR0, N
     \end{item}
 \end{itemize}
 
-\subsubsection{Usability}
-\noindent Usability testing, \textbf{test-id16} as mentioned in our objectives, is of a lower priority but will be generically defined in this section should we complete our higher priority testing. This will completed by surveying a group of individuals who have never used the system before and would be regular users of the system such as doctors and nurses. This group will be given access to the system and asked to complete a survey, which at this point in time, due to low priority, has not been designed, after they have used the system to complete given tasks, such as uploading X-rays or viewing data, for a determined amount of time.
+\subsubsection{Usability} \hypertarget{Usability}{}
+\noindent Usability testing, \textbf{test-id16} as mentioned in our objectives, is of a lower priority but a plan will be generically defined in this section should we complete our higher priority testing. This will completed by surveying a group of individuals who have never used the system before and would be regular users of the system such as doctors and nurses. This group will be given access to the system and asked to complete a survey, which at this point, due to low priority, has not been designed, after they have used the system to complete given tasks, such as uploading X-rays or viewing data, for a determined amount of time.
+
+Should we not complete the usability survey with independent users, we will conduct our usability testing through a walk-through and demo with our supervisor and with our peers to ensure some level of usability testing is completed on the system.  
 
 This test will satisfy the following nonfunctional requirements and the expected output is based on their defined fit criteria. NF.A0 in section 3.1, NF.EUR0, NF.LR0 and NF.UPR0 in section 3.2, and NF.C0 in section 3.7 in the SRS document.
 
@@ -612,7 +618,7 @@ The following listed nonfunctional requirements will not be tested as they fall 
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-\begin{longtable}[h] {|c|c|}
+\begin{longtable}[H] {|c|c|}
 \hline
 \textbf{Requirement} & \textbf{Test} \\
 \hline
@@ -672,138 +678,139 @@ NF.C0 & T.16 \\
 \newpage
 
 \section{Unit Test Description}
-
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
-
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
-
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests, you can potentially lay out your testing strategy here. That is, you 
-can explain how tests will be selected for each module.  For instance, your test-building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, your code 
-needs to be well-documented, with meaningful names for all of the tests.}
+The purpose of this section is to test and verify the independent functionality of various constituents of the modules in the system, which are outlined in the MIS. Ensuring that each unit of code works correctly when tested independently helps recognize further errors that may arise during the integration of the various modules.
 
 \subsection{Unit Testing Scope}
-
-\wss{What modules are outside of the scope?  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
+All the modules described in the MIS will be within the scope of unit testing except for the App Controller Module. The App Controller Module is excluded as it focuses on the connection of multiple modules which is better tested through our system testing. 
 
 \subsection{Tests for Functional Requirements}
+This section details all the Unit tests relevant to the Functional requirements. The unit tests are grouped into sections by the module they are created to test.  
 
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing-based
-  technique.  That can also be documented in this section.}
+\subsubsection{ChestXRayRead}
+Test cases will verify the functionality of the module by providing sample DICOM chest X-ray images as input and validating that the module correctly reads and converts them into a usable format for further processing.
 
-\subsubsection{Module 1}
+\subsubsection{ResultsGen}
+Test cases will validate the correctness of the diagnosis reports generated by the module. Inputs will include processed chest X-ray images with known medical conditions, and the test will verify that the reports generated accurately reflect the detected conditions.
 
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
+\subsubsection{RepCompGen}
+Test cases will assess the module's ability to generate comparison reports by providing inputs of multiple diagnosis reports and validating that the comparison output accurately reflects the differences and similarities between the reports.
 
-\begin{enumerate}
+\subsubsection{DatabaseOps}
+Test cases will evaluate the module's database operations by simulating various database interactions, such as adding new patient records, querying existing data based on different criteria, and verifying the integrity and accuracy of the retrieved information.
 
-\item{test-id1\\}
+\subsubsection{UserAuthMgmt}
+Test cases will validate the module's authentication functionalities by simulating user login attempts with both valid and invalid credentials, ensuring that authorized users gain access while unauthorized attempts are appropriately rejected.
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+\subsubsection{AIModel}
+Test cases will assess the performance of the AI model by providing input images with known medical conditions and validating that the model correctly identifies and classifies the diseases present in the images.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\subsubsection{NLPModel}
+Test cases will evaluate the NLP model's performance by providing processed medical data and validating that the generated reports accurately represent the extracted information from the images.
 
-How the test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How the test will be performed: 
-
-\item{...\\}
-    
-\end{enumerate}
-
-\subsubsection{Module 2}
-
-...
+\subsubsection{Backend}
+Test cases will focus on testing the backend's APIs, data processing logic, and interaction with external services or databases to ensure seamless communication and proper functioning of the entire system.
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
+\subsubsection{PerfScan}	
+Test cases will evaluate the performance of the application by simulating different workload scenarios and measuring response times, throughput, and resource utilization to ensure that the application meets performance targets.
 
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
+\subsubsection{ViewResults}
+Test cases will focus on validating the responsiveness and user experience of the application's UI components by simulating user interactions and verifying that the interface behaves as expected, with smooth navigation and timely updates of displayed information.
 
-\subsubsection{Module ?}
-		
-\begin{enumerate}
+\subsubsection{AppGUI}
+Test cases will assess the visual presentation and layout of the GUI components by inspecting their appearance, alignment, and consistency across different screen sizes and resolutions, ensuring that the UI adheres to design guidelines and enhances user engagement.
 
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How the test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How the test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
 
 \subsection{Traceability Between Test Cases and Modules}
 
-\wss{Provide evidence that all of the modules have been considered.}
-				
-\bibliographystyle{plainnat}
+\begin{table}[H]
+    \centering
+    \label{tab:traceabilityMatrixforModulesI}
+    \hspace*{-1.25cm}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \diagbox{NFR}{TC} & TC.1 & TC.2 & TC.3 & TC.4 & TC.5 & TC.6 & TC.7 & TC.8 & TC.9 & TC.10 \\
+        \hline
+        M1 & & & & & X & X & & & & \\
+        \hline
+        M2 & & & & & X & X & & & & \\
+        \hline
+        M3 & & & & & X & X & & & & \\
+        \hline
+        M4 & & & & & X & & & & & \\
+        \hline
+        M5 & & & & & X & & & & & \\
+        \hline
+        M6 & & & & & & & & X & X & X \\
+        \hline
+        M7 & & & & & & & & & & \\
+        \hline
+        M8 & & & & & & & & X & X & X \\
+        \hline
+        M9 & & & & & & & & & & \\
+        \hline
+        M10 & X & X & X & X & X & & X & X & X & X \\
+        \hline
+        M11 & X & X & X & X & X & & X & X & X & X \\
+        \hline
+        M12 & & & & & & & & X & X & X \\
+        \hline
+        M13 & X & X & X & X & X & & & & & \\
+        \hline
+        M14 & & & & X & X & & X & & & \\
+        \hline
+    \end{tabular}
+    \caption{Traceability Matrix for Software Modules I}
+\end{table}
 
-\bibliography{../../refs/References}
+\begin{table}[H]
+    \centering
+    \label{tab:traceabilityMatrixforModulesII}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        \diagbox{NFR}{TC} & TC.11 & TC.12 & TC.13 & TC.14 & TC.15 & TC.16 \\
+        \hline
+        M1 & & X & X & & X & X \\
+        \hline
+        M2 & & X & X & & X & X \\
+        \hline
+        M3 & & X & X & & X & X \\
+        \hline
+        M4 & & X & & & X & X \\
+        \hline
+        M5 & & X & & & X & X \\
+        \hline
+        M6 & X & X & & X & & X \\
+        \hline
+        M7 & X & X & & X & & X \\
+        \hline
+        M8 & X & X & & X & & X \\
+        \hline
+        M9 & & X & & X & & X \\
+        \hline
+        M10 & X & X & & X & X & X \\
+        \hline
+        M11 & X & X & & X & X & X \\
+        \hline
+        M12 & X & X & & X & & X \\
+        \hline
+        M13 & & X & & & X & X \\
+        \hline
+        M14 & & X & & & X & X \\
+        \hline
+    \end{tabular}
+    \caption{Traceability Matrix for Software Modules II}
+\end{table}
+				
+% \bibliographystyle{plainnat}
+
+% \bibliography{../../refs/References}
 
 \newpage
 
 \section{Appendix}
-In this section, all of the additional information to complement this VnV Plan are placed here.
+In this section, all of the additional information to complement this VnV Plan is located here.
 
 \subsection{Symbolic Parameters}
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
@@ -844,7 +851,7 @@ For the verification and validation of the project, the skills that are required
   \item SOLID Design Principles: The code needs to be verified such that the system is designed keeping in mind these design principles to make an efficient and easy-to-maintain system.
   \item Testing Knowledge: Knowledge related to the usage of testing approaches, like unit testing and regression testing that play a big role in debugging software, is crucial.
   \item Knowledge of Testing tools: Knowledge of using testing tools like pytest and linter is also very helpful.
-  \item Knowledge of AI/ML Development: Knowledge related to the development and training of AI/ML models, as it will be the driving force behind this software's main functionality.
+  \item Knowledge of AI/ML Development: Knowledge related to the development, training and testing of AI/ML models, as it will be the driving force behind this software's main functionality.
 \end{enumerate}
 Each team member will aim the acquire the following knowledge and skills needed to successfully complete the verification and validation of the project. The specific knowledge and skills each team member will aim to acquire are listed below: \\
 \begin{enumerate}
@@ -864,6 +871,7 @@ Each team member will aim the acquire the following knowledge and skills needed 
         Tushar Aggarwal: Gain skills in AI/ML testing
     \end{item}
 \end{enumerate}
+It should be noted that this is not an exhaustive list, and is subject to change as the project needs and/or team member interests shift. \\
 
 \begin{enumerate}[label=\arabic*., resume*=ar]
   \item For each of the knowledge areas and skills identified in the previous
@@ -897,7 +905,10 @@ For each of the knowledge areas and skills identified above, at least two approa
     \end{item}
     \begin{item}
         Knowledge of AI/ML:
-        
+        \begin{enumerate}
+            \item online coding courses (e.g. freeCodeCamp, MLExpert)
+            \item External resources (videos, websites) to learn about AI/ML development
+        \end{enumerate}
     \end{item}
 \end{enumerate}
 
@@ -907,16 +918,16 @@ Of the identified approaches, the ones each team member will pursue are shown be
         Allison Cook: Learning about design principles by writing neat code and making personal projects as implementation is an efficient way to learn.
     \end{item}
     \begin{item}
-        Ibrahim Issa: Using websites and online resources to learn about diferrent types of testing approaches as different situations require different types of testing.
+        Ibrahim Issa: Using websites and online resources to learn about different types of testing approaches as different situations require different types of testing.
     \end{item}
     \begin{item}
         Mohaansh Pranjal: Shall use online resources (e.g. freeCodeCamp, LinkedIn Learning) to learn about the design principles as they are also useful in overall implementation and an important part of writing readable code.
     \end{item}
     \begin{item}
-        Nathaniel Hu: Running pytest on test cases for programs which allows analysis of runtime and efficiency.
+        Nathaniel Hu: Running pytest on test cases for programs which allows analysis of runtime and efficiency. Use online courses (i.e. MLExpert) to gain further knowledge in AI/ML development to contribute to the AI model that will be driving this project's main functionality.
     \end{item}
     \begin{item}
-        Tushar Aggarwal: Use research papers in AI/ML to select parameters to test accuracy of the model
+        Tushar Aggarwal: Use research papers in AI/ML to select parameters to test the accuracy of the model.
     \end{item}
 \end{enumerate}
 

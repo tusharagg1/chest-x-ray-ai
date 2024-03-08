@@ -4,7 +4,7 @@ Please include a summary of the changes and attach the related issue link (**ple
 
 **Summary**: 
 
-**Issue Link**: 
+**Issue Link**: #<issue_number>
 
 ## Testing
 
@@ -25,6 +25,10 @@ Please mention the verification/testing used for this PR, which helps others to 
 - [ ] I have updated the documentation related to the changes I made
 - [ ] I have written reasonable tests and the updated version all passed
 - [ ] There should be no potential errors after the changes get merged into main
+
+## Screenshots
+
+Provide screenshots or videos of the changes made if any.
 
 # Action Required
 
