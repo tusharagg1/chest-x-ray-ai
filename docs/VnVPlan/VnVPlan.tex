@@ -116,7 +116,8 @@ has already been verified by its implementation team.}
 \wss{Reference relevant documentation.  This will definitely include your SRS
   and your other project documents (design documents, like MG, MIS, etc).  You
   can include these even before they are written, since by the time the project
-  is done, they will be written.}
+  is done, they will be written.  You can create BibTeX entries for your
+  documents and within those entries include a hyperlink to the documents.}
 
 \citet{SRS}
 
@@ -168,6 +169,9 @@ verified.  Techniques for this include review and mutation testing.}
   verification of the implementation.  Potential techniques include code
   walkthroughs, code inspection, static analyzers, etc.}
 
+\wss{The final class presentation (in CAS 741) could be used as a code
+walkthrough.}
+
 \subsection{Automated Testing and Verification Tools}
 
 \wss{What tools are you using for automated testing.  Likely a unit testing
@@ -205,8 +209,11 @@ as a Rev 0 demo for the supervisor.}
 
 \wss{This section might reference back to the SRS verification section.}
 
-\section{System Test Description}
-	
+\section{System Tests}
+
+\wss{There should be text between all headings, even if it is just a roadmap of
+the contents of the subsections.}
+
 \subsection{Tests for Functional Requirements}
 
 \wss{Subsets of the tests may be in related, so this section is divided into
@@ -266,13 +273,23 @@ How test will be performed:
 \wss{The nonfunctional requirements for accuracy will likely just reference the
   appropriate functional tests from above.  The test cases should mention
   reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy}
+  necessarily have nonfunctional requirements related to accuracy.}
+
+\wss{For some nonfunctional tests, you won't be setting a target threshold for
+passing the test, but rather describing the experiment you will do to measure
+the quality for different inputs.  For instance, you could measure speed versus
+the problem size.  The output of the test isn't pass/fail, but rather a summary
+table or graph.}
 
 \wss{Tests related to usability could include conducting a usability test and
   survey.  The survey will be in the Appendix.}
 
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 format for the tests given below.}
+
+\wss{If you introduce static tests in your plan, you need to provide details.
+How will they be done?  In cases like code (or document) walkthroughs, who will
+be involved? Be specific.}
 
 \subsubsection{Area of Testing1}
 		
