@@ -8,7 +8,6 @@ import NextImage from '@/components/NextImage';
 import cols from '@/app/components/ItemColumn';
 import Table from '@/app/components/tableSingle';
 
-
 export default function NewStudyPage() {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(false);
@@ -26,11 +25,10 @@ export default function NewStudyPage() {
     setLoading(false);
 
     //call to backend
-    setcaRisk(5)
-    setpnRisk(1)
-    setatRisk(0)
-    setpeRisk(10)
-
+    setcaRisk(5);
+    setpnRisk(1);
+    setatRisk(0);
+    setpeRisk(10);
   }
 
   const data = () => {

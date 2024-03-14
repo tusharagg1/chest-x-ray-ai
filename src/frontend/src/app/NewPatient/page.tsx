@@ -57,7 +57,7 @@ export default function PatientRecord() {
 
   function verify() {
     //check all needed info is there
-    setMissingInfo("none")
+    setMissingInfo('none');
   }
 
   return (

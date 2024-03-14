@@ -56,12 +56,12 @@ export default function PatientRecord() {
 
   function updateTo() {
     //get any other previous data
-    setHasImage(true)
-    setImageName('/images/case1_008.jpg')
-    setNotes('')
+    setHasImage(true);
+    setImageName('/images/case1_008.jpg');
+    setNotes('');
   }
 
-  updateTo()
+  updateTo();
 
   function newStudy() {
     //go to the new study page

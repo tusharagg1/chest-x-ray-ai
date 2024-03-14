@@ -23,23 +23,21 @@ export default function loginPage() {
    * @description Validates the email and password, calls the apis
    */
   function handleSubmit() {
-    setLoading(true)
+    setLoading(true);
     //password validation
     if (password == '') {
-        setPasswordError(true);
-        setPasswordErrorMessage('Please enter your password');
-
+      setPasswordError(true);
+      setPasswordErrorMessage('Please enter your password');
     } else if (password.length < 8) {
-        setPasswordError(true);
-        setPasswordErrorMessage('Password must be at least 8 characters');
-
+      setPasswordError(true);
+      setPasswordErrorMessage('Password must be at least 8 characters');
     } else {
-        setPasswordError(false);
+      setPasswordError(false);
     }
 
-    setEmail("")
-    setEmailErrorMessage("missing")
-    setEmailError(false)
+    setEmail('');
+    setEmailErrorMessage('missing');
+    setEmailError(false);
     //TO-DO: call login api
 
     window.location.href = 'http://localhost:3000/Main';
