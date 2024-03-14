@@ -1,20 +1,15 @@
 'use client';
-import { ColumnDef } from '@tanstack/react-table';
-import React, { use, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import NextImage from '@/components/NextImage';
 
-import { Table } from './table';
+import cols from '@/app/components/ItemColumn';
+import Table from '@/app/components/tableSingle';
 
-type Item = {
-  name: string;
-  risk: number;
-};
 
 export default function NewStudyPage() {
-  const [Button_disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(false);
   const [image_name, setImageName] = useState(' ');
@@ -25,27 +20,18 @@ export default function NewStudyPage() {
 
   function upload() {
     //get the data after passing data to model
-    //setLoading(true);
+    setLoading(true);
     setImageName('/images/case1_008.jpg');
     setImage(true);
-    //setLoading(false);
-  }
+    setLoading(false);
 
-  const cols = useMemo<ColumnDef<Item>[]>(
-    () => [
-      {
-        header: 'Name',
-        cell: (row) => row.renderValue(),
-        accessorKey: 'name',
-      },
-      {
-        header: 'Risk',
-        cell: (row) => row.renderValue(),
-        accessorKey: 'risk',
-      },
-    ],
-    []
-  );
+    //call to backend
+    setcaRisk(5)
+    setpnRisk(1)
+    setatRisk(0)
+    setpeRisk(10)
+
+  }
 
   const data = () => {
     const items = [];
@@ -109,7 +95,7 @@ export default function NewStudyPage() {
                     onClick={upload}
                     variant='primary'
                     size='sm'
-                    disabled={Button_disabled}
+                    // disabled={Button_disabled}
                     isLoading={loading}
                   >
                     Upload

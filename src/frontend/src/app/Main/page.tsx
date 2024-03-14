@@ -11,6 +11,9 @@ import Table from '@/app/components/table';
 export default function MainPage() {
   const [username, setUser] = useState('username');
 
+  //get database username
+  setUser('username');
+
   function search() {
     //go to patient search
     window.location.href = 'http://localhost:3000/PatientSearch';

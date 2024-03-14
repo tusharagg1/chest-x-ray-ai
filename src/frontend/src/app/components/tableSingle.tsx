@@ -1,6 +1,6 @@
 //cite: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
 
-import { Bold } from 'lucide-react';
+// import { Bold } from 'lucide-react';
 
 type ColumnDefinitionType<T, K extends keyof T> = {
   key: K;

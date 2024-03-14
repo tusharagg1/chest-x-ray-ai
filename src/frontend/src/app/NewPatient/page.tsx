@@ -9,10 +9,10 @@ import cols from '@/app/components/patientRows';
 import Table from '@/app/components/tableSingle';
 
 export default function PatientRecord() {
-  const [notes, setNotes] = useState('\n Image observations, other notes');
-  const [imageName, setImageName] = useState('/images/case1_008.jpg');
-  const [hasImage, setHasImage] = useState(true);
-  const [date, setDate] = useState('2023-11-03');
+  // const [notes, setNotes] = useState('\n Image observations, other notes');
+  // const [imageName, setImageName] = useState('/images/case1_008.jpg');
+  // const [hasImage, setHasImage] = useState(true);
+  // const [date, setDate] = useState('2023-11-03');
   const [missingInfo, setMissingInfo] = useState('none');
 
   const data = () => {
@@ -57,6 +57,7 @@ export default function PatientRecord() {
 
   function verify() {
     //check all needed info is there
+    setMissingInfo("none")
   }
 
   return (

@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { useState } from 'react';
 import React from 'react';
 
@@ -57,7 +56,12 @@ export default function PatientRecord() {
 
   function updateTo() {
     //get any other previous data
+    setHasImage(true)
+    setImageName('/images/case1_008.jpg')
+    setNotes('')
   }
+
+  updateTo()
 
   function newStudy() {
     //go to the new study page

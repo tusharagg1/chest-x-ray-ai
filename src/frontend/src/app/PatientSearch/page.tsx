@@ -24,7 +24,7 @@ export default function SearchPage() {
     window.location.href = 'http://localhost:3000/PatientRecord';
   }
 
-  function handleInputChange(value: any) {
+  function handleInputChange(value: string) {
     setCheckBox(value);
     setSearchKeyType(value);
   }
@@ -102,7 +102,7 @@ export default function SearchPage() {
                     type='radio'
                     name='type'
                     checked={patientID == checkBox}
-                    onChange={(e) => handleInputChange(patientID)}
+                    onChange={() => handleInputChange(patientID)}
                     style={{
                       border: 'solid #6366F1',
                       backgroundColor:
@@ -114,7 +114,7 @@ export default function SearchPage() {
                     type='radio'
                     name='type'
                     checked={MRN == checkBox}
-                    onChange={(e) => handleInputChange(MRN)}
+                    onChange={() => handleInputChange(MRN)}
                     style={{
                       border: 'solid #6366F1',
                       backgroundColor: MRN == checkBox ? '#6366F1' : 'white',
@@ -125,7 +125,7 @@ export default function SearchPage() {
                     type='radio'
                     name='type'
                     checked={Name == checkBox}
-                    onChange={(e) => handleInputChange(Name)}
+                    onChange={() => handleInputChange(Name)}
                     style={{
                       border: 'solid #6366F1',
                       backgroundColor: Name == checkBox ? '#6366F1' : 'white',
@@ -136,7 +136,7 @@ export default function SearchPage() {
                     type='radio'
                     name='type'
                     checked={lastVist == checkBox}
-                    onChange={(e) => handleInputChange(lastVist)}
+                    onChange={() => handleInputChange(lastVist)}
                     style={{
                       border: 'solid #6366F1',
                       backgroundColor:
