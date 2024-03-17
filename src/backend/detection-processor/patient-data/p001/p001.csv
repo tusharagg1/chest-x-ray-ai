@@ -1,0 +1,2 @@
+PatientID,PatientName,PatientBirthDate,PatientSex,StudyDate,Modality,BodyPartExamined
+001,john doe,01-01-1990,M,01-01-2024,CR,CHEST
