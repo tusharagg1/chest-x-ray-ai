@@ -8,7 +8,9 @@ import cols from '@/app/components/patientColumns';
 // import { Patient } from "@/app/components/patientColumns";
 import Table from '@/app/components/table';
 
-export default function MainPage() {
+import { signOutAUser, getCurrentUser } from "../../../../backend/database/backend";
+
+export default function MainPage() { 
   const [username, setUser] = useState('username');
 
   //get database username
@@ -29,7 +31,23 @@ export default function MainPage() {
     window.location.href = 'http://localhost:3000/X-RayStudy';
   }
 
-  const data = () => {
+    const onSignOut = () => {
+        const signOutBtn = document.getElementById("signOutBtn");
+        const signOutTxt = document.getElementById("signOutSuccess");
+    
+        signOutAUser()
+            .then((_userSignedOut) => {
+                signOutTxt!.innerHTML = `Sign Out Successful! Goodbye ${username}!`;
+                setTimeout(() => {}, 1000);
+                window.location.href = "/Login";
+            })
+            .catch((_error) => {
+                signOutTxt!.innerHTML = "Sign Out Failed! Error in User Sign Out!";
+                console.log("Error in User Sign Out!");
+            });
+    };
+  
+    const data = () => {
     const items = [];
     items.push({
       PatientID: 1,
@@ -56,22 +74,22 @@ export default function MainPage() {
     return items;
   };
 
-  return (
-    <main className='min-h-screen bg-indigo-100'>
-      <header className='mb-2 justify-center text-center'>
-        <h1 className='text-m py-2 text-indigo-500 '>Welcome {username}!</h1>
-      </header>
-      <div className='layout relative flex min-h-screen flex-col items-center gap-5 py-2 text-center'>
-        <div
+    return ( 
+        <main className='bg-indigo-100 min-h-screen'>
+            <header className='mb-2 justify-center text-center' >
+                <h1 className='py-2 text-m text-indigo-500' >Welcome {username}!</h1>
+            </header>
+            <div className='layout relative flex min-h-screen flex-col items-center gap-5 py-2 text-center'>
+                            <div
           className='gap-2 bg-gray-100 p-5 px-5'
           style={{ width: '85%', height: '53vh', zIndex: 5 }}
-        >
-          <h2 className='mb-5 text-indigo-500'>Recent Patients</h2>
-          <div className='flex items-center justify-center text-center'>
-            <Table data={data()} columns={cols} />
-          </div>
-        </div>
-        <div
+          >
+                        <h2 className='text-indigo-500 mb-5'>Recent Patients</h2>
+                        <div className="flex items-center text-center justify-center">
+                            <Table data={data()} columns={cols} />
+                        </div>
+                    </div>
+              <div
           style={{
             paddingLeft: '2%',
             paddingTop: '2%',
@@ -85,27 +103,40 @@ export default function MainPage() {
             className='bg-indigo-500 '
             style={{ width: '100%', height: '100%' }}
           ></div>
-        </div>
-        <Button onClick={search} variant='primary' size='base' className='mt-5'>
-          Search for Patient
-        </Button>
-        <Button
-          onClick={newUpload}
-          variant='primary'
-          size='base'
-          // style={{'width' : '22%'}}
-        >
-          Upload new Patient
-        </Button>
-        <Button
-          onClick={newXrayStudey}
-          variant='primary'
-          size='base'
-          // style={{'width' : '22%'}}
-        >
-          New X-ray Study
-        </Button>
-      </div>
+                <Button
+                    onClick={search}
+                    variant='primary'
+                    size='base'
+                    className="mt-5"
+                >
+                Search for Patient
+                </Button>
+                <Button
+                    onClick={newUpload}
+                    variant='primary'
+                    size='base'
+                    // style={{'width' : '22%'}}
+                >
+                Upload new Patient
+                </Button>
+                <Button
+                    onClick={newXrayStudy}
+                    variant='primary'
+                    size='base'
+                    // style={{'width' : '22%'}}
+                >
+                New X-ray Study
+                </Button>
+                <br></br>
+                <Button
+                    onClick={onSignOut}
+                    variant='primary'
+                    size='base'
+                >
+                Log Out
+                </Button>
+                <label id="signOutSuccess"></label>
+            </div>
     </main>
   );
 }
