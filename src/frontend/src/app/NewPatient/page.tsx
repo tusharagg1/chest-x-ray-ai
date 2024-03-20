@@ -11,10 +11,10 @@ import Table from '@/app/components/tableSingle';
 import { createANewPatient } from '../../../../backend/database/backend';
 
 export default function PatientRecord() {
-  const [notes, setNotes] = useState('\n Image observations, other notes');
-  const [imageName, setImageName] = useState('/images/case1_008.jpg');
-  const [hasImage, setHasImage] = useState(true);
-  const [date, setDate] = useState('2023-11-03');
+  // const [notes, setNotes] = useState('\n Image observations, other notes');
+  // const [imageName, setImageName] = useState('/images/case1_008.jpg');
+  // const [hasImage, setHasImage] = useState(true);
+  // const [date, setDate] = useState('2023-11-03');
   const [missingInfo, setMissingInfo] = useState('none');
 
   const data = () => {
@@ -175,10 +175,14 @@ export default function PatientRecord() {
   return (
     <main className='bg-indigo-100'>
       <header className='mb-2'>
-        <UnderlineLink href='/Main' className='text-indigo-500 px-8'>Main</UnderlineLink>
-        <h1 className='text-m text-indigo-500  justify-center text-center'>New Patient Record</h1>
+        <UnderlineLink href='/Main' className='px-8 text-indigo-500'>
+          Main
+        </UnderlineLink>
+        <h1 className='text-m justify-center  text-center text-indigo-500'>
+          New Patient Record
+        </h1>
       </header>
-      <section className='py-2 bg-indigo-100'>
+      <section className='bg-indigo-100 py-2'>
         <div className='layout flex min-h-screen py-2'>
             <div style={{width: '45%', height: '100vh', zIndex: '5'}} className='text-indigo-500 bg-white'>
                 <h3 className='text-center'>Patient Record</h3>
@@ -212,12 +216,25 @@ export default function PatientRecord() {
                     </Button>
               </div>
               </ol>
-              </div>
             </div>
-            <div style={{paddingRight: '3%', paddingTop: '1%', position: 'absolute', zIndex: '3', "width" : "39%", "height" : "32%", right: 0}}>
-              <div className='bg-indigo-500 ' style={{"width" : "100%", "height" : "100%"}}></div>
-            </div> 
-        </div> 
+          </div>
+          <div
+            style={{
+              paddingRight: '3%',
+              paddingTop: '1%',
+              position: 'absolute',
+              zIndex: 3,
+              width: '39%',
+              height: '32%',
+              right: 0,
+            }}
+          >
+            <div
+              className='bg-indigo-500 '
+              style={{ width: '100%', height: '100%' }}
+            ></div>
+          </div>
+        </div>
       </section>
 
       <section className='py-2 bg-indigo-100'>
@@ -253,5 +270,5 @@ export default function PatientRecord() {
         </div>
       </section>
     </main>
-  );  
+  );
 }
