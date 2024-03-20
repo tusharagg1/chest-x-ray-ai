@@ -12,7 +12,7 @@ export default function MainPage() {
   const [username, setUser] = useState('username');
 
   //get database username
-  setUser('username');
+  // setUser('username');
 
   function search() {
     //go to patient search

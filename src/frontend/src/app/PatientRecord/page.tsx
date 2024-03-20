@@ -61,7 +61,7 @@ export default function PatientRecord() {
     setNotes('');
   }
 
-  updateTo();
+  // updateTo();
 
   function newStudy() {
     //go to the new study page

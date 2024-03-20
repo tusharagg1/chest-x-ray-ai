@@ -47,7 +47,7 @@ export default function loginPage() {
     <main className='min-h-screen bg-indigo-100'>
       <section className='py-2'>
         <div className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 text-center'>
-          <h1 className='text-indigo-500'>RadiAIdance PACS</h1>
+          <h1 className='text-indigo-500'>RadiAIdance</h1>
           <div className='bg-gray-500'>
             <Image
               //className='flex'
