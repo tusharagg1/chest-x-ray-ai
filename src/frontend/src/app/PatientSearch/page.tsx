@@ -16,17 +16,30 @@ export default function SearchPage() {
   const [patientID] = useState('Patient ID');
   const [MRN] = useState('MRN');
   const [Name] = useState('Name');
+  const [Ascending] = useState('Ascending');
+  const [Descending] = useState('Descending');
   const [lastVist] = useState('Last Vist');
   const [checkBox, setCheckBox] = useState('Patient ID');
+  const [orderType, setOrderType] = useState('Ascending');
+  const [checkBox2, setCheckBox2] = useState('Ascending');
 
   function handleSubmit() {
-    //go to the detailed page
-    window.location.href = 'http://localhost:3000/PatientRecord';
+    //update the table with the matching records
+  }
+
+  function study() {
+    //go to the x-ray study page
+    window.location.href = '/X-RayStudy';
   }
 
   function handleInputChange(value: string) {
     setCheckBox(value);
     setSearchKeyType(value);
+  }
+
+  function handleOrderInputChange(value: string) {
+    setCheckBox2(value);
+    setOrderType(value);
   }
 
   const data = () => {
@@ -40,8 +53,9 @@ export default function SearchPage() {
       Contact: '111-111-111',
       ReferringP: 'Spencer Smith',
       LastVisit: '2023-11-03',
+      Selected: false,
     });
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < 7; i++) {
       items.push({
         PatientID: null,
         MRN: null,
@@ -51,6 +65,7 @@ export default function SearchPage() {
         Contact: '-',
         ReferringP: '-',
         LastVisit: '-',
+        Selected: false,
       });
     }
     return items;
@@ -66,27 +81,26 @@ export default function SearchPage() {
           Patients List and Information
         </h1>
       </header>
-      <div className='layout relative flex min-h-screen flex-col items-center gap-5 py-2 text-center'>
+      <div className='layout relative flex flex-col items-center gap-5 py-2 text-center'>
         <div
           className='gap-2 bg-gray-100 p-5 px-5'
-          style={{ width: '85%', height: '75vh', zIndex: 5 }}
+          style={{ width: '90%', height: '80vh', zIndex: 5 }}
         >
-          <h2 className='mb-5 text-indigo-500'>Recent Patients List</h2>
           <form
             method='post'
             onSubmit={handleSubmit}
             className='items-left my-3 flex ps-1 text-center'
           >
-            <ol className='space-y-2'>
+            <ol className='space-y-1'>
               <div className='flex'>
                 <h3 className='mb-5 text-indigo-500'>Search: </h3>
                 <input
                   className='ms-2'
                   style={{
                     background: 'url("/images/person.png") no-repeat left',
-                    paddingLeft: '10%',
+                    paddingLeft: '5%',
                     backgroundColor: 'rgb(217, 217, 217)',
-                    width: '35%',
+                    width: '25%',
                     height: '6%',
                   }}
                   type='text'
@@ -145,20 +159,55 @@ export default function SearchPage() {
                   ></input>
                   <label className='px-2'>Last Visit</label>
                 </div>
+                <h3 className='ps-2 text-indigo-500'>Order: </h3>
+                <div className='ms-2 flex items-center bg-white px-2'>
+                  <input
+                    type='radio'
+                    name='type'
+                    checked={Ascending == checkBox2}
+                    onChange={() => handleOrderInputChange(Ascending)}
+                    style={{
+                      border: 'solid #6366F1',
+                      backgroundColor:
+                        Ascending == checkBox2 ? '#6366F1' : 'white',
+                    }}
+                  ></input>
+                  <label className='px-2'>Ascending </label>
+                  <input
+                    type='radio'
+                    name='type'
+                    checked={Descending == checkBox2}
+                    onChange={() => handleOrderInputChange(Descending)}
+                    style={{
+                      border: 'solid #6366F1',
+                      backgroundColor:
+                        Descending == checkBox2 ? '#6366F1' : 'white',
+                    }}
+                  ></input>
+                  <label className='px-2'>Descending </label>
+                </div>
               </div>
             </ol>
           </form>
           <div className='flex items-center justify-center text-center'>
             <Table data={data()} columns={cols} />
           </div>
-          <div className='mt-3 flex items-center justify-center text-center'>
+          <div className='mt-3 flex items-center justify-center px-2 text-center'>
             <Button
               size='base'
               variant='primary'
               // type='submit'
               onClick={handleSubmit}
             >
-              View patient record
+              Search
+            </Button>
+            <Button
+              size='base'
+              variant='primary'
+              // type='submit'
+              onClick={study}
+            >
+              X-ray Study
             </Button>
           </div>
         </div>
@@ -168,8 +217,8 @@ export default function SearchPage() {
             paddingTop: '2%',
             position: 'absolute',
             zIndex: 3,
-            width: '87%',
-            height: '77%',
+            width: '93%',
+            height: '100%',
           }}
         >
           <div

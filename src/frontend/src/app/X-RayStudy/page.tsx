@@ -64,7 +64,10 @@ export default function NewStudyPage() {
   };
 
   return (
-    <main className='bg-indigo-100'>
+    <main className='bg-indigo-100' style={{
+      backgroundImage:
+        'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))',
+    }}>
       <header className='mb-2'>
         <UnderlineLink href='/Main' className='px-8 text-indigo-500'>
           Main

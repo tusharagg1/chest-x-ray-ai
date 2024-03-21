@@ -7,6 +7,7 @@ type Patient = {
   Contact: string;
   ReferringP: string;
   LastVisit: string;
+  Selected: boolean;
 };
 
 type ColumnDefinitionType<T, K extends keyof T> = {
@@ -49,6 +50,10 @@ const cols: ColumnDefinitionType<Patient, keyof Patient>[] = [
     key: 'LastVisit',
     header: 'Last Visit',
   },
+  {
+    key: 'Selected',
+    header: 'Selected',
+  }
 ];
 
 export default cols;
