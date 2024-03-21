@@ -8,11 +8,12 @@ import torchxrayvision as xrv
 from PredictionModel.convertDcm import getfilenames, getimgdata
 
 diseases = [
-        "Atelectasis",
-        "Pneumonia",
-        "Cardiomegaly",
-        "Pleural_Thickening",
-    ]
+    "Atelectasis",
+    "Pneumonia",
+    "Cardiomegaly",
+    "Pleural_Thickening",
+]
+
 
 # get predictions from a dcm x-ray
 def getprediction(img_path, weights="densenet121-res224-all"):
