@@ -1,6 +1,7 @@
 import cv2
 import pydicom
 import numpy as np
+import os
 
 def lin_stretch_img(img, low_prc, high_prc, do_ignore_minmax=True):
     """ 
@@ -30,13 +31,43 @@ def lin_stretch_img(img, low_prc, high_prc, do_ignore_minmax=True):
     return stretch_img
 
 
-
-def convertDcm2Jpg(dcmpath, target):
+def getimgdata(dcmpath):
 
     ds = pydicom.dcmread(dcmpath)
     img = ds.pixel_array # get image array
 
     img = lin_stretch_img(img, 1, 99)  # Apply "linear stretching" (lower percentile 1 goes to 0, and percentile 99 to 255).
 
+    return img
     # TODO: save jpg file in database
+    #cv2.imwrite(target, img)
+
+
+# returns filenames in a directory that have given extension
+def getfilenames(directory, extension):
+    
+    filenames = []
+    try:
+        for filename in os.listdir(directory):
+            if filename.endswith(extension):
+                filenames.append(filename)
+    except IOError:
+        print(f"'{directory}': No such directory")
+    
+    return filenames
+
+
+# function to save a jpg file in target path
+def convertdcmtojpg(dcmpath, target):
+    img = getimgdata(dcmpath)
     cv2.imwrite(target, img)
+
+
+# saves a jpg conversion of all dcm files in given dir.
+def convertall(dcmdir):
+
+    dcmfiles = getfilenames(dcmdir, '.dcm')
+    for img in dcmfiles:
+        dcmpath = os.path.join(dcmdir, img)
+        target = os.path.join(dcmdir, img[:-3]+'jpg')
+        convertdcmtojpg(dcmpath,target)
