@@ -7,6 +7,12 @@ import torchvision.transforms
 import torchxrayvision as xrv
 from PredictionModel.convertDcm import getfilenames, getimgdata
 
+diseases = [
+        "Atelectasis",
+        "Pneumonia",
+        "Cardiomegaly",
+        "Pleural_Thickening",
+    ]
 
 # get predictions from a dcm x-ray
 def getprediction(img_path, weights="densenet121-res224-all"):
@@ -37,12 +43,6 @@ def getprediction(img_path, weights="densenet121-res224-all"):
             zip(xrv.datasets.default_pathologies, preds[0].detach().numpy())
         )
 
-    diseases = [
-        "Atelectasis",
-        "Pneumonia",
-        "Cardiomegaly",
-        "Pleural_Thickening",
-    ]
     allpreds = output.get("preds")
     predictions = {}
     if allpreds:
