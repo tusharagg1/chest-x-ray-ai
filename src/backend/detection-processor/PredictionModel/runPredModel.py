@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import sys
 import os
-sys.path.insert(0,"..")
-import skimage, skimage.io
-import pprint
-
 import torch
 import torchvision, torchvision.transforms
 import torchxrayvision as xrv
