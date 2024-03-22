@@ -56,26 +56,29 @@ def getprediction(img_path, weights="densenet121-res224-all"):
     return predictions
 
 
-# returns combined predictions for all dcm xrays in a directory
 def scanallxrays(xraydir):
+    """
+    Returns combined predictions for all dcm xrays in a directory.
 
-    # convertall(xraydir)
+    Args:
+        xraydir (str): Path to the directory containing the x-ray images.
+
+    Returns:
+        dict: Dictionary containing combined predictions for each disease.
+    """
 
     xray_imgs = getfilenames(xraydir, ".dcm")
     allpreds = []
 
     for img in xray_imgs:
         preds = getprediction(os.path.join(xraydir, img))
-        # print(os.path.join(xraydir, img))
         allpreds.append(preds)
 
     if len(allpreds) > 1:
-
         finalpreds = {}
         pnum = len(allpreds)
         diseases = allpreds[0].keys()
         for disease in diseases:
-            # taking avg value of predictions for all diseases
             combined_preds = (
                 sum([allpreds[i][disease] for i in range(pnum)]) / pnum
             )
