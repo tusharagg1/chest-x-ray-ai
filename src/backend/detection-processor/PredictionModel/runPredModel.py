@@ -53,7 +53,7 @@ def getprediction(img_path, weights="densenet121-res224-all"):
         print("results not found")
         return {}
 
-    return allpreds
+    return predictions
 
 
 # returns combined predictions for all dcm xrays in a directory
