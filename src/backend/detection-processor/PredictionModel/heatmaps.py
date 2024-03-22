@@ -35,12 +35,18 @@ def genheatmap(img_path):
     model = xrv.models.get_model("densenet121-res224-all")
 
     # choose the pathology for which to generate heatmaps
-    #target = model.pathologies.index(pathology)
+    # target = model.pathologies.index(pathology)
 
     img = img.requires_grad_()
 
     my_dpi = 100
-    fig, axs = plt.subplots(2, 2, frameon=True, figsize=(4*224 / my_dpi, 4*224 / my_dpi), dpi=my_dpi)
+    fig, axs = plt.subplots(
+        2,
+        2,
+        frameon=True,
+        figsize=(4 * 224 / my_dpi, 4 * 224 / my_dpi),
+        dpi=my_dpi,
+    )
 
     # making heatmap for each disease
     for i, target in enumerate(diseases):
@@ -57,14 +63,17 @@ def genheatmap(img_path):
         ax.imshow(img[0][0].detach().cpu().numpy(), cmap="gray", aspect="auto")
         ax.imshow(blurred, alpha=0.5)
         ax.set_title(target)
-    
-    fig.suptitle(f'{os.path.basename(img_path)[:-4]}', fontsize=35)
+
+    fig.suptitle(f"{os.path.basename(img_path)[:-4]}", fontsize=30, y=0.03)
 
     # Adjust layout
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-    #plt.tight_layout()
+    # plt.tight_layout()
     fig.savefig(
-        img_path[:-4]+'_heatmaps.png', dpi=my_dpi, bbox_inches="tight", pad_inches=0
+        img_path[:-4] + "_heatmaps.png",
+        dpi=my_dpi,
+        bbox_inches="tight",
+        pad_inches=0,
     )
     plt.close(fig)
 
