@@ -41,19 +41,12 @@ def getprediction(img_path, weights="densenet121-res224-all"):
         img = torch.from_numpy(img).unsqueeze(0)
         preds = model(img).cpu()
         output["preds"] = dict(
-            zip(xrv.datasets.default_pathologies, preds[0].detach().numpy())
+            zip(diseases, preds[0].detach().numpy())
         )
 
-    allpreds = output.get("preds")
-    predictions = {}
-    if allpreds:
-        for disease in diseases:
-            predictions[disease] = allpreds.get(disease)
-    else:
-        print("results not found")
-        return {}
+    allpreds = output.get("preds")    
 
-    return predictions
+    return allpreds
 
 
 def scanallxrays(xraydir):
