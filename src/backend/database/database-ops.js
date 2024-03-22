@@ -28,7 +28,8 @@ export async function readUserData(db, userId) {
     get(child(readUserDataRef, `users/${userId}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const userData = snapshot.val();
+          const rawUserData = snapshot.val();
+          var userData = transformRawUserData(rawUserData);
           resolve(userData);
         } else {
           reject(null);
@@ -38,6 +39,21 @@ export async function readUserData(db, userId) {
         reject(null);
       });
   });
+}
+
+// transform raw user data
+function transformRawUserData(rawUserData) {
+  const fields = ["userName", "email", "password", "firstName", "lastName", "medInsts", "isAdminUser"];
+  var userData = new Object();
+  for (var field of fields) {
+    if (rawUserData[field] != null) {
+      userData[field] = rawUserData[field];
+    }
+    else {
+      userData[field] = "-";
+    }
+  }
+  return userData;
 }
 
 // write patient data
@@ -80,4 +96,32 @@ export async function readPatientData(db, patientId) {
         reject(null);
       });
   });
+}
+
+// get all patients data
+export async function readAllPatientData(db) {
+  return new Promise((resolve, reject) => {
+    const readAllPatientDataRef = ref(db);
+    let patientsData = [];
+    get(child(readAllPatientDataRef, 'patientsData')).then((patients) => {
+      patients.forEach(pt => {
+        patientsData.push(addPatientAsListItem(pt));
+      });
+      if (patientsData) {
+        resolve(patientsData);
+      } else {
+        reject(null);
+      }
+    }).catch((error) => {
+      console.log(error);
+      reject(null);
+    });
+
+    function addPatientAsListItem(pt) {
+      let key = pt.key;
+      let value = pt.val();
+      value["patientID"] = key;
+      return value;
+    }
+  })
 }
