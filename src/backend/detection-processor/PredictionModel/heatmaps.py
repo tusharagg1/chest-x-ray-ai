@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-import skimage, skimage.io
+import skimage
+import skimage.io
 
 import torch
 import torchvision
@@ -55,6 +56,8 @@ def genheatmap(img_path, pathology):
     ax.imshow(img[0][0].detach().cpu().numpy(), cmap="gray", aspect="auto")
     ax.imshow(blurred, alpha=0.5)
 
-    fig.savefig('overlay_image.png', dpi=my_dpi, bbox_inches='tight', pad_inches=0)
+    fig.savefig(
+        "overlay_image.png", dpi=my_dpi, bbox_inches="tight", pad_inches=0
+    )
     plt.close(fig)
     # TODO: generate image with heatmaps for all diseases

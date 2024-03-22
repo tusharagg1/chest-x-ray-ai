@@ -54,7 +54,7 @@ def getimgdata(dcmpath):
     # cv2.imwrite(target, img)
 
 
-# returns filenames in a directory that have given extension
+# returns filenames in a directory that have given extension (example: ".dcm")
 def getfilenames(directory, extension):
 
     filenames = []

@@ -2,7 +2,7 @@ matplotlib==3.8.3
 numpy==1.26.4
 opencv_python==4.9.0.80
 pydicom==2.4.4
-skimage==0.0
+scikit-image==0.22.0
 torch==2.2.1
 torchvision==0.17.1
 torchxrayvision==1.2.2
