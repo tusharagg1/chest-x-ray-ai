@@ -18,6 +18,8 @@ diseases = [
 # get predictions from a dcm x-ray
 def getprediction(img_path, weights="densenet121-res224-all"):
 
+    disease_index_dict = dict(zip(diseases, [xrv.datasets.default_pathologies.index(diseases[i]) for i in range(len(diseases))]))
+
     img = getimgdata(img_path)
     img = xrv.datasets.normalize(img, 255)
 
@@ -40,11 +42,9 @@ def getprediction(img_path, weights="densenet121-res224-all"):
     with torch.no_grad():
         img = torch.from_numpy(img).unsqueeze(0)
         preds = model(img).cpu()
-        output["preds"] = dict(
-            zip(diseases, preds[0].detach().numpy())
+        allpreds = dict(
+            zip(diseases, [preds[0].detach().numpy()[i] for i in disease_index_dict.values()])
         )
-
-    allpreds = output.get("preds")    
 
     return allpreds
 
