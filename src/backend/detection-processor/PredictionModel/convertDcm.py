@@ -1,7 +1,10 @@
-import cv2
 import pydicom
 import numpy as np
-import os
+import pydicom
+from PIL import Image
+import io
+import base64
+import cv2
 
 
 def lin_stretch_img(img, low_prc, high_prc, do_ignore_minmax=True):
@@ -58,13 +61,23 @@ def getfilenames(file_list, extension = '.dcm'):
     return [filename for filename in file_list if filename.endswith(extension)]
 
 
+# function to return encoded png files
+def getencodedimg(img_array):
+    img = Image.fromarray(img_array)
+    img_bytes_io = io.BytesIO()
+    img.save(img_bytes_io, format='JPEG')
+    img_bytes_io.seek(0)
+    image_data = img_bytes_io.getvalue()
+    base64_image = base64.b64encode(image_data).decode('utf-8')
+    return base64_image
+    #img = getimgdata(raw_imgs)
+    #cv2.imwrite(raw_imgs, img)
 
-# function to save a jpg file in target path
-def convertdcmtojpg(dcmpath, target):
-    img = getimgdata(dcmpath)
-    cv2.imwrite(target, img)
 
+def get_xraypngs(raw_imgs):
+    return [getencodedimg(img_array) for img_array in raw_imgs]
 
+'''
 # saves a jpg conversion of all dcm files in given dir.
 def convertall(dcmdir):
 
@@ -73,3 +86,4 @@ def convertall(dcmdir):
         dcmpath = os.path.join(dcmdir, img)
         target = os.path.join(dcmdir, img[:-3] + "jpg")
         convertdcmtojpg(dcmpath, target)
+'''
