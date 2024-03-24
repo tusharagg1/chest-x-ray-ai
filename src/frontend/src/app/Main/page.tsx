@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactDOMServer from 'react-dom/server';
 
 import Button from '@/components/buttons/Button';
@@ -15,6 +15,11 @@ export default function MainPage() {
   const [username, setUser] = useState('username');
   const [selectedPatientId, setSelectedPatientId] = useState(0);
   const [patientSelected, setPatientSelected] = useState(false);
+
+  useEffect(() => {
+    // getUsername();
+    allPatientData();
+  }, []);
 
   function getUsername() {
     // get database username
@@ -136,10 +141,10 @@ export default function MainPage() {
       }}
     >
       <section>
-        <header className='mb-2 justify-center text-center' onLoad={getUsername}>
-          <h1 className='text-m py-2 text-indigo-500'>Welcome {username}!</h1>
-          <br></br>
-          <Button onClick={getUsername} variant='primary' size='base'>Verify User</Button>
+        <header className='mb-2 justify-center text-center'>
+          <h1 className='text-m py-2 text-indigo-500'>Welcome!</h1>
+          {/* <br></br>
+          <Button onClick={getUsername} variant='primary' size='base'>Verify User</Button> */}
         </header>
         <div className='layout relative flex flex-col items-center gap-5 py-2 text-center'>
           <div
@@ -150,7 +155,7 @@ export default function MainPage() {
             <div className='flex items-center justify-center text-center' id='patientDataTable'>
               <Table data={data()} columns={cols} />
             </div>
-            <Button
+            {/* <Button
               onClick={allPatientData}
               variant='primary'
               size='base'
@@ -158,7 +163,7 @@ export default function MainPage() {
             >
               Refresh Recent Patients
             </Button>
-            <br></br>
+            <br></br> */}
             <Button
               onClick={search}
               variant='primary'
@@ -174,8 +179,8 @@ export default function MainPage() {
               paddingTop: '2%',
               position: 'absolute',
               zIndex: 1,
-              width: '87%',
-              height: '77%',
+              width: '92%',
+              height: '70%',
             }}
           >
             <div
@@ -188,7 +193,7 @@ export default function MainPage() {
               onClick={newXrayStudy}
               variant='primary'
               size='base'
-              disabled={!patientSelected}
+              // disabled={!patientSelected}
             >
               X-ray Study
             </Button>

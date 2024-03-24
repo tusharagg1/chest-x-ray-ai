@@ -30,6 +30,12 @@ export default function NewStudyPage() {
   const [processTime, setProccessTime] = useState(0);
   const [notes, setNotes] = useState('\n Image observations, other notes');
 
+  useEffect(() => {
+    getPatientData();
+    performStudy();
+    setTimeout(() => setLoading(false), 1000);
+  }, []);
+
   const patientdata = () => {
     const info = [];
     info.push({
@@ -108,15 +114,7 @@ export default function NewStudyPage() {
       });
   }   
 
-  useEffect(() => {
-    //final timeout to reveal error message
-    // setTimeout(() => setLoadingError(true), 10000)
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
   const performStudy = async () => {
-
-
 
     const resultImagesCarousel = document.getElementById('resultImages');
     const originalImagesCarousel = document.getElementById('originalImages');
@@ -251,11 +249,11 @@ export default function NewStudyPage() {
             <div className='flex items-center text-center' id="patientDataTable">
               <Table data={patientdata()} columns={colsInfo}></Table>
             </div>
-            <div>
+            {/* <div>
               <Button onClick={getPatientData} variant='primary' size='base'>
               Verify Patient
             </Button>
-            </div>
+            </div> */}
             <div className='flex'>
               <div
                 style={{
@@ -289,9 +287,9 @@ export default function NewStudyPage() {
                   className='bg-white py-2'
                   style={{ zIndex: 5, height: '100%' }}
                 >
-                  <Button onClick={performStudy} variant='primary' size='base'>
+                  {/* <Button onClick={performStudy} variant='primary' size='base'>
                     Perform Study
-                  </Button>
+                  </Button> */}
                   <h3 className='text-m text-center text-indigo-500'>
                     Pathology Risk
                   </h3>

@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 /**
  * 
  * @description api call to model
@@ -6,8 +6,8 @@
  * @returns 
  */
 export async function conductStudy(patientId) {
-    patient_text = "patient data/p00" + patientId
-    user_body = JSON.stringify({patient_dir: patient_text})
+    const patient_text = "patient data/p00" + patientId;
+    const user_body = JSON.stringify({patient_dir: patient_text})
     console.log('attempting to post ' + user_body)
     return fetch('http://localhost:5000/get-diagnosis', {
         method: 'POST',

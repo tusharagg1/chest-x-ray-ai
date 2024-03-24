@@ -1,7 +1,7 @@
 'use client';
 
 //import Button from "@/components/buttons/Button";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
@@ -9,6 +9,8 @@ import UnderlineLink from '@/components/links/UnderlineLink';
 // import { Patient } from '../components/patientColumns';
 import { cols } from '@/app/components/patientColumns';
 import Table from '@/app/components/table';
+import { getAllPatientData } from '../../../../backend/database/backend';
+import ReactDOMServer from 'react-dom/server';
 
 export default function SearchPage() {
   const [searchKey, setSearchKey] = useState('');
@@ -22,6 +24,49 @@ export default function SearchPage() {
   const [checkBox, setCheckBox] = useState('Patient ID');
   const [orderType, setOrderType] = useState('Ascending');
   const [checkBox2, setCheckBox2] = useState('Ascending');
+
+  useEffect(() => {
+    allPatientData();
+  }, []);
+
+  function allPatientData() {
+    const items: any[] = [];
+    const patientDataTable = document.getElementById("patientDataTable");
+    getAllPatientData()
+      .then((patientData) => {
+        for (let i = 0; i < patientData.length; i++) {
+          let pd = patientData[i];
+          items.push({
+            PatientID: pd.patientID,
+            MRN: pd.mrn,
+            Name: pd.firstName + " " + pd.lastName,
+            DOB: pd.dob,
+            Gender: pd.gender,
+            Contact: pd.contact,
+            ReferringP: pd.refPhys,
+            LastVisit: pd.lastVisit,
+            Selected: false
+          });
+        }
+        for (let i= 0; i < 2; i++){
+          items.push({
+            PatientID: null,
+            MRN: null,
+            Name: '-',
+            DOB: '-',
+            Gender: '-',
+            Contact: '-',
+            ReferringP: '-',
+            LastVisit: '-',
+            Selected: false,
+          });
+        }
+        patientDataTable!.innerHTML = ReactDOMServer.renderToString(<Table data={items} columns={cols} />);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function handleSubmit() {
     //update the table with the matching records
@@ -196,7 +241,7 @@ export default function SearchPage() {
               </div>
             </ol>
           </form>
-          <div className='flex items-center justify-center text-center'>
+          <div className='flex items-center justify-center text-center' id='patientDataTable'>
             <Table data={data()} columns={cols} />
           </div>
           <div className='mt-3 flex items-center px-2 text-center'>
