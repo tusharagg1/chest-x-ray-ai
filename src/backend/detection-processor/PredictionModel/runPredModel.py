@@ -16,9 +16,17 @@ diseases = [
 # get predictions from a dcm x-ray
 def getprediction(img, weights="densenet121-res224-all"):
 
-    disease_index_dict = dict(zip(diseases, [xrv.datasets.default_pathologies.index(diseases[i]) for i in range(len(diseases))]))
+    disease_index_dict = dict(
+        zip(
+            diseases,
+            [
+                xrv.datasets.default_pathologies.index(diseases[i])
+                for i in range(len(diseases))
+            ],
+        )
+    )
 
-    #img = getimgdata(img_bytes)
+    # img = getimgdata(img_bytes)
     img = xrv.datasets.normalize(img, 255)
 
     # Check that images are 2D arrays
@@ -41,7 +49,10 @@ def getprediction(img, weights="densenet121-res224-all"):
         img = torch.from_numpy(img).unsqueeze(0)
         preds = model(img).cpu()
         allpreds = dict(
-            zip(diseases, [preds[0].detach().numpy()[i] for i in disease_index_dict.values()])
+            zip(
+                diseases,
+                [preds[0].detach().numpy()[i] for i in disease_index_dict.values()],
+            )
         )
 
     return allpreds
@@ -70,9 +81,7 @@ def scanallxrays(raw_imgs):
         pnum = len(allpreds)
         diseases = allpreds[0].keys()
         for disease in diseases:
-            combined_preds = (
-                sum([allpreds[i][disease] for i in range(pnum)]) / pnum
-            )
+            combined_preds = sum([allpreds[i][disease] for i in range(pnum)]) / pnum
             finalpreds[disease] = combined_preds
         return finalpreds
     else:

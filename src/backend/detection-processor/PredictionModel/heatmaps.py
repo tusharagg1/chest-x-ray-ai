@@ -14,7 +14,7 @@ from PredictionModel.runPredModel import diseases
 
 def genheatmap(img):
     print("generating heatmaps...")
-    #img = getimgdata(img_bytes)
+    # img = getimgdata(img_bytes)
     img = xrv.datasets.normalize(img, 255)
     print("normalized. processing...")
     # Check that images are 2D arrays
@@ -65,15 +65,15 @@ def genheatmap(img):
         ax.imshow(blurred, alpha=0.5)
         ax.set_title(target)
 
-    #fig.suptitle(f"{os.path.basename(img_path)[:-4]}", fontsize=30, y=0.03)
+    # fig.suptitle(f"{os.path.basename(img_path)[:-4]}", fontsize=30, y=0.03)
     print("heatmaps generated! saving response...")
     # Adjust layout
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
     # plt.tight_layout()
     image_data = io.BytesIO()
     fig.savefig(
-        image_data, # img_path[:-4] + "_heatmaps.png",
-        format='PNG',
+        image_data,  # img_path[:-4] + "_heatmaps.png",
+        format="PNG",
         dpi=my_dpi,
         bbox_inches="tight",
         pad_inches=0,
@@ -81,7 +81,7 @@ def genheatmap(img):
     plt.close(fig)
     image_data.seek(0)
     img = image_data.getvalue()
-    base64_image = base64.b64encode(img).decode('utf-8')
+    base64_image = base64.b64encode(img).decode("utf-8")
     print("response saved!")
     return base64_image
 
