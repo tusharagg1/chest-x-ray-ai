@@ -15,7 +15,7 @@ import {
 
 export default function MainPage() {
   const [username, setUser] = useState('username');
-  const [selectedPatient, setSelectedPatient] = useState(null);
+  const [selectedPatient, setSelectedPatient] = useState(' ');
   const [patientSelected, setPatietnSelected] = useState(false);
 
   async function load() {
@@ -91,11 +91,12 @@ export default function MainPage() {
       <section>
         <header className='mb-2 justify-center text-center' onLoad={load}>
           <h1 className='text-m py-2 text-indigo-500'>Welcome {username}!</h1>
+          {/* <p>{selectedPatient}</p> */}
         </header>
         <div className='layout relative flex flex-col items-center gap-5 py-2 text-center'>
           <div
             className='gap-2 bg-gray-100 p-5 pt-3'
-            style={{ width: '85%', height: '60vh', zIndex: 5 }}
+            style={{ width: '90%', height: '60vh', zIndex: 5 }}
           >
             <h2 className='mb-5 text-indigo-500'>Recent Patients</h2>
             <div className='flex items-center justify-center text-center'>
@@ -116,7 +117,7 @@ export default function MainPage() {
               paddingTop: '2%',
               position: 'absolute',
               zIndex: 3,
-              width: '87%',
+              width: '92%',
               height: '77%',
             }}
           >
@@ -146,3 +147,7 @@ export default function MainPage() {
     </main>
   );
 }
+function componentDidMount() {
+  throw new Error('Function not implemented.');
+}
+

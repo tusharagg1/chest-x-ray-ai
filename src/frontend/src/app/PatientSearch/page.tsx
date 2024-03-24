@@ -22,10 +22,6 @@ export default function SearchPage() {
   const [checkBox, setCheckBox] = useState('Patient ID');
   const [orderType, setOrderType] = useState('Ascending');
   const [checkBox2, setCheckBox2] = useState('Ascending');
-  const storedValue = localStorage.getItem('selectedPatient');
-  // if (storedValue) {
-  //   this.setState({ value: storedValue });
-  // }
 
   function handleSubmit() {
     //update the table with the matching records
@@ -197,15 +193,17 @@ export default function SearchPage() {
           <div className='flex items-center justify-center text-center'>
             <Table data={data()} columns={cols} />
           </div>
-          <div className='mt-3 flex items-center justify-center px-2 text-center'>
-            <Button
-              size='base'
-              variant='primary'
-              // type='submit'
-              onClick={handleSubmit}
-            >
-              Search
-            </Button>
+          <div className='mt-3 flex items-center px-2 text-center'>
+            <div style={{ paddingRight: '35%' }}>
+              <Button
+                size='base'
+                variant='primary'
+                // type='submit'
+                onClick={handleSubmit}
+              >
+                Search
+              </Button>
+            </div>
             <Button
               size='base'
               variant='primary'

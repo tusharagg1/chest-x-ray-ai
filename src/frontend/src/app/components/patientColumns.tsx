@@ -64,7 +64,7 @@ const cols: ColumnDefinitionType<Patient, keyof Patient>[] = [
   {
     key: 'Selected',
     header: 'Selected',
-  }
+  },
 ];
 
 const colsInfo: ColumnDefinitionType<PatientInfo, keyof PatientInfo>[] = [
@@ -100,11 +100,7 @@ const colsInfo: ColumnDefinitionType<PatientInfo, keyof PatientInfo>[] = [
   {
     key: 'LastVisit',
     header: 'Last Visit',
-  }
+  },
 ];
 
-export {
-  cols,
-  colsInfo
-}
-
+export { cols, colsInfo };
