@@ -9,11 +9,11 @@ import { cols } from '@/app/components/patientColumns';
 // import { Patient } from "@/app/components/patientColumns";
 import Table from '@/app/components/table';
 
-import { getAPatientsData, getAllPatientData, signOutAUser, getCurrentUser } from "../../../../backend/database/backend";
+import { getAPatientsData, getAllPatientData, signOutAUser, getCurrentUser, setActivePatientID } from "../../../../backend/database/backend";
 
 export default function MainPage() {
   const [username, setUser] = useState('username');
-  const [selectedPatient, setSelectedPatient] = useState(null);
+  const [selectedPatientId, setSelectedPatientId] = useState(0);
   const [patientSelected, setPatientSelected] = useState(false);
 
   function getUsername() {
@@ -61,6 +61,19 @@ export default function MainPage() {
           });
         }
         patientDataTable!.innerHTML = ReactDOMServer.renderToString(<Table data={items} columns={cols} />);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // use this function to set active patient id
+  function selectPatient(patientID: number) {
+    setActivePatientID(patientID)
+      .then((setSuccess) => {
+        console.log(setSuccess);
+        setSelectedPatientId(patientID);
+        setPatientSelected(true);
       })
       .catch((error) => {
         console.log(error);
@@ -160,7 +173,7 @@ export default function MainPage() {
               paddingLeft: '2%',
               paddingTop: '2%',
               position: 'absolute',
-              zIndex: 3,
+              zIndex: 1,
               width: '87%',
               height: '77%',
             }}
@@ -185,6 +198,11 @@ export default function MainPage() {
               Log Out
             </Button>
             <label id='signOutSuccess'></label>
+          </div>
+          <div className='flex'>
+            <Button onClick={() => {selectPatient(8); setPatientSelected(true);}} variant='primary' size='base'>
+              Select Patient
+            </Button>
           </div>
         </div>
       </section>
