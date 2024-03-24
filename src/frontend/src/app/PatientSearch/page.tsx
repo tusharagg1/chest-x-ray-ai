@@ -7,7 +7,7 @@ import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
 
 // import { Patient } from '../components/patientColumns';
-import cols from '@/app/components/patientColumns';
+import { cols } from '@/app/components/patientColumns';
 import Table from '@/app/components/table';
 
 export default function SearchPage() {
@@ -22,9 +22,14 @@ export default function SearchPage() {
   const [checkBox, setCheckBox] = useState('Patient ID');
   const [orderType, setOrderType] = useState('Ascending');
   const [checkBox2, setCheckBox2] = useState('Ascending');
+  const storedValue = localStorage.getItem('selectedPatient');
+  // if (storedValue) {
+  //   this.setState({ value: storedValue });
+  // }
 
   function handleSubmit() {
     //update the table with the matching records
+    //backend calls here
   }
 
   function study() {
@@ -229,4 +234,7 @@ export default function SearchPage() {
       </div>
     </main>
   );
+}
+function componentDidMount() {
+  throw new Error('Function not implemented.');
 }

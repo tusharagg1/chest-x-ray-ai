@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import Button from '@/components/buttons/Button';
 
-import cols from '@/app/components/patientColumns';
+import { cols } from '@/app/components/patientColumns';
 // import { Patient } from "@/app/components/patientColumns";
 import Table from '@/app/components/table';
 
@@ -62,7 +62,7 @@ export default function MainPage() {
       Contact: '111-111-111',
       ReferringP: 'Spencer Smith',
       LastVisit: '2023-11-03',
-      Selected: false
+      Selected: false,
     });
     for (let i = 1; i < 4; i++) {
       items.push({
@@ -85,63 +85,63 @@ export default function MainPage() {
       className='min-h-screen bg-indigo-100'
       style={{
         backgroundImage:
-          'radial-gradient(circle, rgb(224, 231, 255), rgb(165 180 252))',
+          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))',
       }}
     >
       <section>
-      <header className='mb-2 justify-center text-center' onLoad={load}>
-        <h1 className='text-m py-2 text-indigo-500'>Welcome {username}!</h1>
-      </header>
-      <div className='layout relative flex flex-col items-center gap-5 py-2 text-center'>
-        <div
-          className='gap-2 bg-gray-100 p-5 px-5 pt-3'
-          style={{ width: '85%', height: '60vh', zIndex: 5 }}
-        >
-          <h2 className='mb-5 text-indigo-500'>Recent Patients</h2>
-          <div className='flex items-center justify-center text-center'>
-            <Table data={data()} columns={cols} />
-          </div>
-          <Button
-            onClick={search}
-            variant='primary'
-            size='base'
-            className='mt-5'
-          >
-            Search for More Patients
-          </Button>
-        </div>
-        <div
-          style={{
-            paddingLeft: '2%',
-            paddingTop: '2%',
-            position: 'absolute',
-            zIndex: 3,
-            width: '87%',
-            height: '77%',
-          }}
-        >
+        <header className='mb-2 justify-center text-center' onLoad={load}>
+          <h1 className='text-m py-2 text-indigo-500'>Welcome {username}!</h1>
+        </header>
+        <div className='layout relative flex flex-col items-center gap-5 py-2 text-center'>
           <div
-            className='bg-indigo-500'
-            style={{ width: '100%', height: '100%' }}
-          ></div>
-        </div>
-        <div className='flex'>
-          <Button
-            onClick={newXrayStudy}
-            variant='primary'
-            size='base'
-            disabled={!patientSelected}
+            className='gap-2 bg-gray-100 p-5 pt-3'
+            style={{ width: '85%', height: '60vh', zIndex: 5 }}
           >
-            X-ray Study
-          </Button>
+            <h2 className='mb-5 text-indigo-500'>Recent Patients</h2>
+            <div className='flex items-center justify-center text-center'>
+              <Table data={data()} columns={cols} />
+            </div>
+            <Button
+              onClick={search}
+              variant='primary'
+              size='base'
+              className='mt-5'
+            >
+              Search for More Patients
+            </Button>
           </div>
-        <div className='flex'>
-          <Button onClick={onSignOut} variant='primary' size='base'>
-            Log Out
-          </Button>
-          <label id='signOutSuccess'></label>
+          <div
+            style={{
+              paddingLeft: '2%',
+              paddingTop: '2%',
+              position: 'absolute',
+              zIndex: 3,
+              width: '87%',
+              height: '77%',
+            }}
+          >
+            <div
+              className='bg-indigo-500'
+              style={{ width: '100%', height: '100%' }}
+            ></div>
+          </div>
+          <div className='flex'>
+            <Button
+              onClick={newXrayStudy}
+              variant='primary'
+              size='base'
+              disabled={!patientSelected}
+            >
+              X-ray Study
+            </Button>
+          </div>
+          <div className='flex'>
+            <Button onClick={onSignOut} variant='primary' size='base'>
+              Log Out
+            </Button>
+            <label id='signOutSuccess'></label>
+          </div>
         </div>
-      </div>
       </section>
     </main>
   );

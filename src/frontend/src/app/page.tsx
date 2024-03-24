@@ -74,7 +74,7 @@ export default function loginPage() {
     >
       <section>
         <div className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 py-2 text-center'>
-          <h1 className='text-indigo-500'>RadiAIdance</h1>
+          <h1 className='text-indigo-500'>X-Ray Assist</h1>
           <div className='bg-gray-500'>
             <Image
               //className='flex'
