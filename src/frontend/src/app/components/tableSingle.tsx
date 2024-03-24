@@ -14,50 +14,50 @@ type TableProps<T, K extends keyof T> = {
 };
 
 const Tstyle = {
-  width: '38vw',
-  height: '50vh',
-  fontWeight: 'bold',
+  width: '100%',
+  height: '50%',
 } as const;
 
-const Table = <T, K extends keyof T>({
+const SingleTable = <T, K extends keyof T>({
   data,
   columns,
 }: TableProps<T, K>): JSX.Element => {
   return (
     <table style={Tstyle}>
-      <TableHeader columns={columns} />
+      {/* <TableHeader columns={columns} /> */}
       <TableRows data={data} columns={columns} />
     </table>
   );
 };
 
-type TableHeaderProps<T, K extends keyof T> = {
-  columns: Array<ColumnDefinitionType<T, K>>;
-};
+// type TableHeaderProps<T, K extends keyof T> = {
+//   columns: Array<ColumnDefinitionType<T, K>>;
+// };
 
-const TableHeader = <T, K extends keyof T>({
-  columns,
-}: TableHeaderProps<T, K>): JSX.Element => {
-  const headers = columns.map((column, index) => {
-    const style = {
-      width: column.width ?? '10%', // 100 is our default value if width is not defined
-      fontsize: '10',
-      height: '10%',
-    };
+// const TableHeader = <T, K extends keyof T>({
+//   columns,
+// }: TableHeaderProps<T, K>): JSX.Element => {
+//   const headers = columns.map((column, index) => {
+//     const style = {
+//       width: column.width ?? '10%', // 100 is our default value if width is not defined
+//       fontsize: '10',
+//       borderBottom: '2px solid black',
+//       height: '10%',
+//     };
 
-    return (
-      <th key={`headCell-${index}`} style={style}>
-        {column.header}
-      </th>
-    );
-  });
+//     return (
+//       <th key={`headCell-${index}`} style={style}>
+//         {column.header}
+//       </th>
+//     );
+//   });
 
-  return (
-    <thead>
-      <tr>{headers}</tr>
-    </thead>
-  );
-};
+//   return (
+//     <thead>
+//       <tr>{headers}</tr>
+//     </thead>
+//   );
+// };
 
 type TableRowsProps<T, K extends keyof T> = {
   data: Array<T>;
@@ -65,13 +65,12 @@ type TableRowsProps<T, K extends keyof T> = {
 };
 
 const Sstyle = {
-  // border: '2px solid gray',
+  borderTop: '1px solid gray',
+  borderBottom: '1px solid gray',
   backgroundColor: 'white',
-  height: '5vh',
+  height: '4vh',
   paddingLeft: '3%',
 };
-
-// const firstChild = { fontWeight: "bold" }
 
 const TableRows = <T, K extends keyof T>({
   data,
@@ -94,4 +93,4 @@ const TableRows = <T, K extends keyof T>({
   return <tbody>{rows}</tbody>;
 };
 
-export default Table;
+export default SingleTable;

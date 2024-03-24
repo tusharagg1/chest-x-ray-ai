@@ -1,0 +1,19 @@
+/* cite https://www.educative.io/answers/how-to-create-a-custom-loading-screen-with-css-in-react */
+
+.loading-spinner {
+    border: 7px solid #f3f3f3;
+    border-top: 7px solid #818cf8;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 1.5s linear infinite;
+  }
+    
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

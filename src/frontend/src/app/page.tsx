@@ -4,12 +4,10 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-//import './styles/login.css';
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
-// import NextImage from '@/components/NextImage';
 
-//import {getUserData} from './backend/apis';
+import { signInAUser } from '../../../backend/database/backend';
 
 export default function loginPage() {
   const [emailError, setEmailError] = useState(false);
@@ -24,30 +22,59 @@ export default function loginPage() {
    */
   function handleSubmit() {
     setLoading(true);
+
+    setEmail(
+      (document.getElementById('userName_email') as HTMLInputElement).value
+    );
+    setPassword(
+      (document.getElementById('password') as HTMLInputElement).value
+    );
+    const signInTxt = document.getElementById('signInSuccess');
+
     //password validation
     if (password == '') {
       setPasswordError(true);
       setPasswordErrorMessage('Please enter your password');
+      return;
     } else if (password.length < 8) {
       setPasswordError(true);
       setPasswordErrorMessage('Password must be at least 8 characters');
+      return;
     } else {
       setPasswordError(false);
     }
 
-    setEmail('');
-    setEmailErrorMessage('missing');
-    setEmailError(false);
-    //TO-DO: call login api
+    if (email == '') {
+      setEmailError(true);
+      setEmailErrorMessage('Please enter your email');
+      return;
+    } else {
+      setEmailError(false);
+    }
 
-    window.location.href = 'http://localhost:3000/Main';
+    signInAUser(email, password)
+      .then((userData) => {
+        signInTxt!.innerHTML = `Sign In Successful! Welcome ${userData.userName}!`;
+        // setTimeout(() => {}, 1000);
+        window.location.href = '/Main';
+      })
+      .catch(() => {
+        // console.log(error);
+        signInTxt!.innerHTML = 'Sign In Failed! Error in User Sign In!';
+      });
   }
 
   return (
-    <main className='min-h-screen bg-indigo-100'>
-      <section className='py-2'>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 text-center'>
-          <h1 className='text-indigo-500'>RadiAIdance</h1>
+    <main
+      className='min-h-screen bg-indigo-100'
+      style={{
+        backgroundImage:
+          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))',
+      }}
+    >
+      <section>
+        <div className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 py-2 text-center'>
+          <h1 className='text-indigo-500'>X-Ray Assist</h1>
           <div className='bg-gray-500'>
             <Image
               //className='flex'
@@ -67,8 +94,15 @@ export default function loginPage() {
             <h2 className='text-indigo-500'>Login</h2>
             <p className='text-gray-500'>Sign in to your account</p>
             <form method='post' className='mt-3'>
-              <ol className='space-y-2'>
+              <ol>
                 <div>
+                  <label
+                    className='text-gray-500 '
+                    style={{ textAlign: 'left', paddingRight: '55%' }}
+                  >
+                    Email
+                  </label>
+                  <br></br>
                   <input
                     style={{
                       background: 'url("/images/person.png") no-repeat left',
@@ -83,6 +117,13 @@ export default function loginPage() {
                   />
                 </div>
                 <div>
+                  <label
+                    className='text-gray-500'
+                    style={{ textAlign: 'left', paddingRight: '50%' }}
+                  >
+                    Password
+                  </label>
+                  <br></br>
                   <input
                     style={{
                       background: 'url("/images/lock.png") no-repeat left',
@@ -96,7 +137,7 @@ export default function loginPage() {
                     placeholder='Password'
                   />
                 </div>
-                <div className='flex justify-center text-center'>
+                <div className='flex justify-center py-2 text-center'>
                   <Button
                     size='base'
                     variant='primary'
@@ -120,17 +161,25 @@ export default function loginPage() {
           <div
             style={{
               paddingLeft: '2%',
-              paddingTop: '17%',
+              paddingTop: '15%',
               position: 'absolute',
               zIndex: 3,
               width: '42%',
-              height: '72%',
+              height: '74%',
             }}
           >
             <div
               className='bg-indigo-500 '
               style={{ width: '100%', height: '100%' }}
             ></div>
+          </div>
+          <div className='text-gray-500'>
+            <p>
+              Don't have an account?
+              <UnderlineLink href='/SignUp' className='text-sm text-gray-500'>
+                Create one.
+              </UnderlineLink>
+            </p>
           </div>
         </div>
       </section>

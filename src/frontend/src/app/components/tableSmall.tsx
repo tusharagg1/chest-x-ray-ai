@@ -14,29 +14,8 @@ type TableProps<T, K extends keyof T> = {
 const Tstyle = {
   borderCollapse: 'collapse',
   width: '80vw',
-  height: '37vh',
+  height: '10vh',
 } as const;
-
-document.addEventListener(`click`, handle);
-function handle(evt) {
-if (evt.target.type === 'checkbox') {
-  const isChecked = evt.target.checked;
-  //writing the state value
-  const value = evt.target.value;
-  console.log("a value to print");
-  //setting the others to unchecked
-  document.querySelectorAll(`input[type='checkbox']`).forEach((cb) => {
-    cb.checked = cb !== evt.target ? false : isChecked;
-  });
-}
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// function handleChange(e: { target: { value: any; }; }) {
-//   const value = e.target.value;
-//   this.setState({ value });
-//   localStorage.setItem("selectedPatient", value);
-// }
 
 const Table = <T, K extends keyof T>({
   data,
@@ -89,39 +68,22 @@ type TableRowsProps<T, K extends keyof T> = {
 const Sstyle = {
   border: '2px solid gray',
   backgroundColor: 'white',
-  height: '6vh',
+  height: '5vh',
 };
 
 const TableRows = <T, K extends keyof T>({
   data,
   columns,
 }: TableRowsProps<T, K>): JSX.Element => {
-  let counter = 0;
   const rows = data.map((row, index) => {
     return (
       <tr key={`row-${index}`}>
         {columns.map((column, index2) => {
-          counter = counter + 1;
-          if (counter % 9 == 0) {
-            return (
-              <td key={`cell-${index2}`} style={Sstyle}>
-                <input
-                  type='checkbox'
-                  id='yes'
-                  style={{
-                    border: 'solid #6366F1',
-                    color: '#6366F1',
-                  }}
-                ></input>
-              </td>
-            );
-          } else {
             return (
               <td key={`cell-${index2}`} style={Sstyle}>
                 {row[column.key]}
               </td>
             );
-          }
         })}
       </tr>
     );
