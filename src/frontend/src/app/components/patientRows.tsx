@@ -1,25 +1,24 @@
-
 type PatientRow = {
-    Title : string|null
-    Value: string|number|null
-}
+  Title: string | null;
+  Value: string | number | null;
+};
 
 type ColumnDefinitionType<T, K extends keyof T> = {
-    key: K;
-    header: string;
-    width?: number|string;
-}
+  key: K;
+  header: string;
+  width?: number | string;
+};
 
 const cols: ColumnDefinitionType<PatientRow, keyof PatientRow>[] = [
-    {
-        key: 'Title',
-        header: ' ',
-    },
-    {
-        key: 'Value',
-        header: ' '
-    },
-]
+  {
+    key: 'Title',
+    header: ' ',
+  },
+  {
+    key: 'Value',
+    header: ' ',
+  },
+];
 
-export default cols
-export type {PatientRow}
+export default cols;
+export type { PatientRow };
