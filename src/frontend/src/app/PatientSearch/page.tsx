@@ -73,7 +73,13 @@ export default function SearchPage() {
   };
 
   return (
-    <main className='min-h-screen bg-indigo-100'>
+    <main
+      className='min-h-screen bg-indigo-100'
+      style={{
+        backgroundImage:
+          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))',
+      }}
+    >
       <header className='mb-2'>
         <UnderlineLink href='/Main' className='px-8 text-indigo-500'>
           Main
