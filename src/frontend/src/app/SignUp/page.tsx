@@ -1,23 +1,36 @@
 'use client';
-import Button from '@/components/buttons/Button';
-import { createANewUser } from '../../../../backend/database/backend';
 import React, { useState } from 'react';
+import Image from 'next/image';
+
+import Button from '@/components/buttons/Button';
+
+import { createANewUser } from '../../../../backend/database/backend';
+import UnderlineLink from '@/components/links/UnderlineLink';
 
 export default function SignUpPage() {
   const [emailError, setEmailError] = useState(false);
-  var [email, setEmail] = useState("");
-  var [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const onSignUp = () => {
-    const userName = (document.getElementById('userName') as HTMLInputElement).value;
-    email = (document.getElementById('email') as HTMLInputElement).value;
-    password = (document.getElementById('password') as HTMLInputElement).value;
-    const firstName = (document.getElementById('firstName') as HTMLInputElement).value;
-    const lastName = (document.getElementById('lastName') as HTMLInputElement).value;
-    const medInsts = (document.getElementById('medInsts') as HTMLInputElement).value;
-    const isAdmin = (document.getElementById('isAdmin') as HTMLInputElement).value == 'on' ? true : false;
+    const userName = (document.getElementById('userName') as HTMLInputElement)
+      .value;
+    setEmail((document.getElementById('email') as HTMLInputElement).value);
+    setPassword(
+      (document.getElementById('password') as HTMLInputElement).value
+    );
+    const firstName = (document.getElementById('firstName') as HTMLInputElement)
+      .value;
+    const lastName = (document.getElementById('lastName') as HTMLInputElement)
+      .value;
+    const medInsts = (document.getElementById('medInsts') as HTMLInputElement)
+      .value;
+    const isAdmin =
+      (document.getElementById('isAdmin') as HTMLInputElement).value == 'on'
+        ? true
+        : false;
 
-    const signUpBtn = document.getElementById('signUpBtn');
+    // const signUpBtn = document.getElementById('signUpBtn');
     const signUpTxt = document.getElementById('signUpSuccess');
 
     function verifyFields() {
@@ -25,7 +38,7 @@ export default function SignUpPage() {
       if (email === '') {
         setEmailError(true);
         hasError = true;
-        console.log('setEmailError:', hasError)
+        console.log('setEmailError:', hasError);
         console.log(emailError);
         return false;
       } else {
@@ -37,57 +50,159 @@ export default function SignUpPage() {
     }
 
     if (verifyFields()) {
-      createANewUser(userName, email, password, firstName, lastName, medInsts, isAdmin)
+      createANewUser(
+        userName,
+        email,
+        password,
+        firstName,
+        lastName,
+        medInsts,
+        isAdmin
+      )
         .then((_userId) => {
-          signUpTxt!.innerHTML = "Sign Up Successful! Welcome!";
-          setTimeout(() => {}, 1000);
+          signUpTxt!.innerHTML = 'Sign Up Successful! Welcome!';
+          // setTimeout(() => {}, 1000);
           window.location.href = '/Main';
         })
         .catch((_error) => {
-          signUpTxt!.innerHTML = "Sign Up Failed! Error in User Creation!";
+          signUpTxt!.innerHTML = 'Sign Up Failed! Error in User Creation!';
         });
+    } else {
+      signUpTxt!.innerHTML =
+        'Sign Up Failed! Invalid Username/Email or Password!';
     }
-    else {
-      signUpTxt!.innerHTML = "Sign Up Failed! Invalid Username/Email or Password!";
-    }
-  };
-
-  const goToSignIn = () => {
-    window.location.href = '/Login';
   };
 
   return (
-    <main className='bg-indigo-100'>
-      <section className='py-2'>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-          <h2 className='text-indigo-500'>Sign Up</h2>
-          <br></br>
+    <main
+      className='min-h-screen bg-indigo-100'
+      style={{
+        backgroundImage:
+          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))',
+      }}
+    >
+      <section>
+        <div className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 py-2 text-center'>
+          <h2 className='text-indigo-500'>Sign up</h2>
+          <div className='bg-gray-500'>
+            <Image
+              //className='flex'
+              src='/images/loginImage.png'
+              alt='x-ray results'
+              sizes='100vw'
+              //fill
+              style={{ width: '100%', height: 'auto' }}
+              width={500}
+              height={500}
+            />
+          </div>
+          <div
+            className='gap-2 bg-white py-5'
+            style={{ width: '35%', height: '50%', zIndex: 5 }}
+          >
+            <form className='mt-3'>
+              <label
+                className='text-gray-500 '
+                style={{ textAlign: 'left', paddingRight: '55%' }}
+              >
+                Email
+              </label>
+              <input
+                type='text'
+                id='email'
+                placeholder='Email'
+                style={{
+                  background: 'url("/images/person.png") no-repeat left',
+                  paddingLeft: '10%',
+                  backgroundColor: 'rgb(229, 231, 235)',
+                  width: '65%',
+                }}
+              />
+              <label
+                className='text-gray-500 '
+                style={{ textAlign: 'left', paddingRight: '47%' }}
+              >
+                Password
+              </label>
+              <input
+                type='password'
+                id='password'
+                placeholder='Password'
+                style={{
+                  background: 'url("/images/lock.png") no-repeat left',
+                  paddingLeft: '10%',
+                  backgroundColor: 'rgb(229, 231, 235)',
+                  width: '65%',
+                }}
+              />
+              <br></br>
+              <label
+                className='text-gray-500 '
+                style={{ textAlign: 'left', paddingRight: '45%' }}
+              >
+                First Name
+              </label>
+              <input
+                type='text'
+                id='firstName'
+                placeholder='First Name'
+                style={{
+                  background: 'url("/images/person.png") no-repeat left',
+                  paddingLeft: '10%',
+                  backgroundColor: 'rgb(229, 231, 235)',
+                  width: '65%',
+                }}
+              />
+              <br></br>
+              <label
+                className='text-gray-500 '
+                style={{ textAlign: 'left', paddingRight: '45%' }}
+              >
+                Last Name
+              </label>
+              <input
+                type='text'
+                id='lastName'
+                placeholder='Last Name'
+                style={{
+                  background: 'url("/images/person.png") no-repeat left',
+                  paddingLeft: '10%',
+                  backgroundColor: 'rgb(229, 231, 235)',
+                  width: '65%',
+                }}
+              />
+            </form>
+            <br></br>
 
-          <form className='bg-indigo-100'>
-            <p>Username:</p>
-            <input type='text' id='userName' placeholder='Username' />
-            <p>Email:</p>
-            <input type='text' id='email' placeholder='Email' />
-            <p>Password:</p>
-            <input type='password' id='password' placeholder='Password' />
-            <p>First Name:</p>
-            <input type='text' id='firstName' placeholder='First Name' />
-            <p>Last Name:</p>
-            <input type='text' id='lastName' placeholder='Last Name' />
-            <p>Medical Institutions:</p>
-            <input type='text' id='medInsts' placeholder='Medical Institutions' />
-            <p>Is Admin User:</p>
-            <input type='checkbox' id='isAdmin' />
-          </form>
-          <br></br>
+            <Button id='signUpBtn' onClick={onSignUp} variant='primary'>
+              Create Account
+            </Button>
+            <label id='signUpSuccess'></label>
+            <br></br>
+          </div>
 
-          <Button id='signUpBtn' onClick={onSignUp} variant='primary'>Create Account</Button>
-          <label id="signUpSuccess"></label>
-          <br></br>
+          <div
+            style={{
+              paddingLeft: '2%',
+              paddingTop: '14%',
+              position: 'absolute',
+              zIndex: 3,
+              width: '37%',
+              height: '82%',
+            }}
+          >
+            <div
+              className='bg-indigo-500 '
+              style={{ width: '100%', height: '100%' }}
+            ></div>
+          </div>
 
-          <label id="existingUser">Have an account? Sign in below.</label>
-          <br></br>
-          <Button id='signinBtn' onClick={goToSignIn} variant='primary'>Login</Button>
+          <p className='text-gray-500'>
+            Have an account?
+            <UnderlineLink href='/' className='text-sm text-gray-500'>
+              Sign in.
+            </UnderlineLink>
+          </p>
         </div>
       </section>
     </main>

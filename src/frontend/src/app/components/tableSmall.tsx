@@ -1,5 +1,4 @@
 //cite: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
-import './table.css';
 
 type ColumnDefinitionType<T, K extends keyof T> = {
   key: K;
@@ -15,39 +14,15 @@ type TableProps<T, K extends keyof T> = {
 const Tstyle = {
   borderCollapse: 'collapse',
   width: '80vw',
-  height: '37vh',
+  height: '10vh',
 } as const;
-
-if (typeof document !== 'undefined') {
-  document.addEventListener(`click`, handle);
-}
-
-function handle(evt) {
-  // only do something if a checkbox was clicked
-  if (evt.target.type === `checkbox`) {
-    const isChecked = evt.target.checked;
-    const selectedRow = evt.target.closest(`tr`);
-    const tds = Array.from(selectedRow.cells).map((td) => td.textContent);
-    const pid = tds[0];
-    //can we send this to the backend to get again on the other pages please
-    // reset checkboxes, row coloring and disabled state
-    document.querySelectorAll(`input[type='checkbox']`).forEach((cb) => {
-      cb.checked = cb !== evt.target ? false : isChecked;
-      const row = cb.closest(`tr`);
-      row.classList[isChecked && row === selectedRow ? `add` : `remove`](
-        'selected'
-      );
-    });
-    return tds;
-  }
-}
 
 const Table = <T, K extends keyof T>({
   data,
   columns,
 }: TableProps<T, K>): JSX.Element => {
   return (
-    <table style={Tstyle} id='tid'>
+    <table style={Tstyle}>
       <TableHeader columns={columns} />
       <TableRows data={data} columns={columns} />
     </table>
@@ -92,39 +67,23 @@ type TableRowsProps<T, K extends keyof T> = {
 
 const Sstyle = {
   border: '2px solid gray',
-  height: '6vh',
+  backgroundColor: 'white',
+  height: '5vh',
 };
 
 const TableRows = <T, K extends keyof T>({
   data,
   columns,
 }: TableRowsProps<T, K>): JSX.Element => {
-  let counter = 0;
   const rows = data.map((row, index) => {
     return (
       <tr key={`row-${index}`}>
         {columns.map((column, index2) => {
-          counter = counter + 1;
-          if (counter % 9 == 0) {
-            return (
-              <td key={`cell-${index2}`} style={Sstyle}>
-                <input
-                  type='checkbox'
-                  id='yes'
-                  style={{
-                    border: 'solid #6366F1',
-                    color: '#6366F1',
-                  }}
-                ></input>
-              </td>
-            );
-          } else {
             return (
               <td key={`cell-${index2}`} style={Sstyle}>
                 {row[column.key]}
               </td>
             );
-          }
         })}
       </tr>
     );

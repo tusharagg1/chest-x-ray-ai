@@ -7,7 +7,7 @@ import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
 
 // import { Patient } from '../components/patientColumns';
-import cols from '@/app/components/patientColumns';
+import { cols } from '@/app/components/patientColumns';
 import Table from '@/app/components/table';
 
 export default function SearchPage() {
@@ -25,6 +25,7 @@ export default function SearchPage() {
 
   function handleSubmit() {
     //update the table with the matching records
+    //backend calls here
   }
 
   function study() {
@@ -72,7 +73,13 @@ export default function SearchPage() {
   };
 
   return (
-    <main className='min-h-screen bg-indigo-100'>
+    <main
+      className='min-h-screen bg-indigo-100'
+      style={{
+        backgroundImage:
+          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))',
+      }}
+    >
       <header className='mb-2'>
         <UnderlineLink href='/Main' className='px-8 text-indigo-500'>
           Main
@@ -192,15 +199,17 @@ export default function SearchPage() {
           <div className='flex items-center justify-center text-center'>
             <Table data={data()} columns={cols} />
           </div>
-          <div className='mt-3 flex items-center justify-center px-2 text-center'>
-            <Button
-              size='base'
-              variant='primary'
-              // type='submit'
-              onClick={handleSubmit}
-            >
-              Search
-            </Button>
+          <div className='mt-3 flex items-center px-2 text-center'>
+            <div style={{ paddingRight: '35%' }}>
+              <Button
+                size='base'
+                variant='primary'
+                // type='submit'
+                onClick={handleSubmit}
+              >
+                Search
+              </Button>
+            </div>
             <Button
               size='base'
               variant='primary'
@@ -229,4 +238,7 @@ export default function SearchPage() {
       </div>
     </main>
   );
+}
+function componentDidMount() {
+  throw new Error('Function not implemented.');
 }
