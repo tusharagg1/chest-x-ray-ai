@@ -13,8 +13,8 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
 
   const onSignUp = () => {
-    const userName = (document.getElementById('userName') as HTMLInputElement)
-      .value;
+    // const userName = (document.getElementById('userName') as HTMLInputElement)
+    //   .value != null ? (document.getElementById('userName') as HTMLInputElement).value : '';
     setEmail((document.getElementById('email') as HTMLInputElement).value);
     setPassword(
       (document.getElementById('password') as HTMLInputElement).value
@@ -23,12 +23,15 @@ export default function SignUpPage() {
       .value;
     const lastName = (document.getElementById('lastName') as HTMLInputElement)
       .value;
-    const medInsts = (document.getElementById('medInsts') as HTMLInputElement)
-      .value;
-    const isAdmin =
-      (document.getElementById('isAdmin') as HTMLInputElement).value == 'on'
-        ? true
-        : false;
+    const userName = firstName + lastName;
+    // const medInsts = (document.getElementById('medInsts') as HTMLInputElement)
+    //   .value != null ? (document.getElementById('medInsts') as HTMLInputElement).value : '';
+    const medInsts = 'MedInsts';
+    // const isAdmin =
+    //   (document.getElementById('isAdmin') as HTMLInputElement).value == 'on'
+    //     ? true
+    //     : false;
+    const isAdmin = false;
 
     // const signUpBtn = document.getElementById('signUpBtn');
     const signUpTxt = document.getElementById('signUpSuccess');
@@ -177,6 +180,8 @@ export default function SignUpPage() {
             <Button id='signUpBtn' onClick={onSignUp} variant='primary'>
               Create Account
             </Button>
+          </div>
+          <div>
             <label id='signUpSuccess'></label>
             <br></br>
           </div>
@@ -186,19 +191,23 @@ export default function SignUpPage() {
               paddingLeft: '2%',
               paddingTop: '14%',
               position: 'absolute',
-              zIndex: 3,
+              zIndex: 1,
               width: '37%',
               height: '82%',
             }}
           >
+            <br></br>
+            <br></br>
+            <br></br>
             <div
               className='bg-indigo-500 '
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '60%' }}
             ></div>
           </div>
 
-          <p className='text-gray-500'>
+          <p className='text-gray-500' style={{ zIndex: 2 }}>
             Have an account?
+            <br></br>
             <UnderlineLink href='/' className='text-sm text-gray-500'>
               Sign in.
             </UnderlineLink>

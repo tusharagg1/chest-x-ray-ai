@@ -5,8 +5,7 @@ import { getDatabase } from "firebase/database";
 
 // import needed internally defined modules
 import { createNewUser, deleteAUser, signInUser, signOutUser } from './user-auth-mgmt';
-import { readUserData, writeUserData, writePatientData } from './database-ops';
-import { resolve } from "path";
+import { readUserData, writeUserData, writePatientData, readPatientData, readAllPatientData, writeActivePatientID, readActivePatientID } from './database-ops';
 
 // necessary firebase configuration setip
 const firebaseConfig = {
@@ -106,5 +105,77 @@ export function createANewPatient(patientId, mrn, firstName, lastName, email, do
     else {
       reject(false);
     }
+  });
+}
+
+// read a patient's data
+export function getAPatientsData(patientId) {
+  return new Promise((resolve, reject) => {
+    readPatientData(db, patientId)
+      .then((patientData) => {
+        if (patientData) {
+          resolve(patientData);
+        }
+        else {
+          reject(null);
+        }
+      })
+      .catch((_error) => {
+        reject(null);
+      });
+  });
+}
+
+// read all patient data
+export function getAllPatientData() {
+  return new Promise((resolve, reject) => {
+    readAllPatientData(db)
+      .then((patientData) => {
+        if (patientData) {
+          resolve(patientData);
+        } else {
+          reject(null);
+        }
+      })
+      .catch((_error) => {
+        reject(null);
+      });
+  });
+}
+
+// set active patient id
+export function setActivePatientID(patientId) {
+  return new Promise((resolve, reject) => {
+    writeActivePatientID(db, patientId)
+      .then((setSuccess) => {
+        if (setSuccess) {
+          resolve(true);
+        }
+        else {
+          reject(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(false);
+      });
+  });
+}
+
+// read a patient's data
+export function getActivePatientId() {
+  return new Promise((resolve, reject) => {
+    readActivePatientID(db)
+      .then((patientID) => {
+        if (patientID) {
+          resolve(patientID);
+        }
+        else {
+          reject(null);
+        }
+      })
+      .catch((_error) => {
+        reject(null);
+      });
   });
 }

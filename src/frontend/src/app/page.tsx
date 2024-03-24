@@ -23,12 +23,12 @@ export default function loginPage() {
   function handleSubmit() {
     setLoading(true);
 
-    setEmail(
-      (document.getElementById('userName_email') as HTMLInputElement).value
-    );
-    setPassword(
-      (document.getElementById('password') as HTMLInputElement).value
-    );
+    // setEmail(
+    //   (document.getElementById('userName_email') as HTMLInputElement).value
+    // );
+    // setPassword(
+    //   (document.getElementById('password') as HTMLInputElement).value
+    // );
     const signInTxt = document.getElementById('signInSuccess');
 
     //password validation
@@ -36,7 +36,7 @@ export default function loginPage() {
       setPasswordError(true);
       setPasswordErrorMessage('Please enter your password');
       return;
-    } else if (password.length < 8) {
+    } else if (password.length < 4) {
       setPasswordError(true);
       setPasswordErrorMessage('Password must be at least 8 characters');
       return;
@@ -147,6 +147,9 @@ export default function loginPage() {
                     Login
                   </Button>
                 </div>
+                <div>
+                  <label id='signInSuccess'></label>
+                </div>
               </ol>
             </form>
             <UnderlineLink href='/X-RayStudy' className='text-sm text-gray-500'>
@@ -163,19 +166,22 @@ export default function loginPage() {
               paddingLeft: '2%',
               paddingTop: '15%',
               position: 'absolute',
-              zIndex: 3,
+              zIndex: 1,
               width: '42%',
               height: '74%',
             }}
           >
+            <br></br>
+            <br></br>
             <div
               className='bg-indigo-500 '
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '60%' }}
             ></div>
           </div>
-          <div className='text-gray-500'>
+          <div className='text-gray-500' style={{ zIndex: 2 }}>
             <p>
               Don't have an account?
+              <br></br>
               <UnderlineLink href='/SignUp' className='text-sm text-gray-500'>
                 Create one.
               </UnderlineLink>

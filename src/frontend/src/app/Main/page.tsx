@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState } from "react";
+import ReactDOMServer from 'react-dom/server';
 
 import Button from '@/components/buttons/Button';
 
@@ -8,40 +9,86 @@ import { cols } from '@/app/components/patientColumns';
 // import { Patient } from "@/app/components/patientColumns";
 import Table from '@/app/components/table';
 
-import {
-  getCurrentUser,
-  signOutAUser,
-} from '../../../../backend/database/backend';
+import { getAPatientsData, getAllPatientData, signOutAUser, getCurrentUser, setActivePatientID } from "../../../../backend/database/backend";
 
 export default function MainPage() {
   const [username, setUser] = useState('username');
-  const [selectedPatient, setSelectedPatient] = useState(' ');
-  const [patientSelected, setPatietnSelected] = useState(false);
+  const [selectedPatientId, setSelectedPatientId] = useState(0);
+  const [patientSelected, setPatientSelected] = useState(false);
 
-  async function load() {
-    //get database username
-    setUser(await getCurrentUser());
+  function getUsername() {
+    // get database username
+    getCurrentUser()
+      .then((user) => {
+        if (user != null) {
+          setUser(user.userName);
+        }
+      });
   }
 
   function search() {
-    //go to patient search
+    // go to patient search
     window.location.href = '/PatientSearch';
   }
 
+  function newUpload() {
+    // go to the upload patient data page
+    window.location.href = '/NewPatient';
+  }
+
   function newXrayStudy() {
-    //go to the x-ray study page
+    // go to the x-ray study page
     window.location.href = '/X-RayStudy';
   }
 
+  function allPatientData() {
+    const items: any[] = [];
+    const patientDataTable = document.getElementById("patientDataTable");
+    getAllPatientData()
+      .then((patientData) => {
+        for (let i = 0; i < patientData.length; i++) {
+          let pd = patientData[i];
+          items.push({
+            PatientID: pd.patientID,
+            MRN: pd.mrn,
+            Name: pd.firstName + " " + pd.lastName,
+            DOB: pd.dob,
+            Gender: pd.gender,
+            Contact: pd.contact,
+            ReferringP: pd.refPhys,
+            LastVisit: pd.lastVisit,
+            Selected: false
+          });
+        }
+        patientDataTable!.innerHTML = ReactDOMServer.renderToString(<Table data={items} columns={cols} />);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // use this function to set active patient id
+  function selectPatient(patientID: number) {
+    setActivePatientID(patientID)
+      .then((setSuccess) => {
+        console.log(setSuccess);
+        setSelectedPatientId(patientID);
+        setPatientSelected(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   const onSignOut = () => {
-    // const signOutBtn = document.getElementById("signOutBtn");
-    const signOutTxt = document.getElementById('signOutSuccess');
+    const signOutBtn = document.getElementById("signOutBtn");
+    const signOutTxt = document.getElementById("signOutSuccess");
 
     signOutAUser()
       .then((_userSignedOut) => {
         signOutTxt!.innerHTML = `Sign Out Successful! Goodbye ${username}!`;
-        // setTimeout(() => {}, 1000);
-        window.location.href = '/'; //home page
+        setTimeout(() => {}, 1000);
+        window.location.href = "/"; // login page
       })
       .catch((_error) => {
         if (signOutTxt!)
@@ -59,8 +106,8 @@ export default function MainPage() {
       Name: 'Jack Mean',
       DOB: '2000-10-30',
       Gender: 'M',
-      Contact: '111-111-111',
-      ReferringP: 'Spencer Smith',
+      Contact: '111-111-1111',
+      ReferringP: 'Dr. Spencer Smith',
       LastVisit: '2023-11-03',
       Selected: false,
     });
@@ -89,9 +136,10 @@ export default function MainPage() {
       }}
     >
       <section>
-        <header className='mb-2 justify-center text-center' onLoad={load}>
+        <header className='mb-2 justify-center text-center' onLoad={getUsername}>
           <h1 className='text-m py-2 text-indigo-500'>Welcome {username}!</h1>
-          {/* <p>{selectedPatient}</p> */}
+          <br></br>
+          <Button onClick={getUsername} variant='primary' size='base'>Verify User</Button>
         </header>
         <div className='layout relative flex flex-col items-center gap-5 py-2 text-center'>
           <div
@@ -99,9 +147,18 @@ export default function MainPage() {
             style={{ width: '90%', height: '60vh', zIndex: 5 }}
           >
             <h2 className='mb-5 text-indigo-500'>Recent Patients</h2>
-            <div className='flex items-center justify-center text-center'>
+            <div className='flex items-center justify-center text-center' id='patientDataTable'>
               <Table data={data()} columns={cols} />
             </div>
+            <Button
+              onClick={allPatientData}
+              variant='primary'
+              size='base'
+              className='mt-5'
+            >
+              Refresh Recent Patients
+            </Button>
+            <br></br>
             <Button
               onClick={search}
               variant='primary'
@@ -116,8 +173,8 @@ export default function MainPage() {
               paddingLeft: '2%',
               paddingTop: '2%',
               position: 'absolute',
-              zIndex: 3,
-              width: '92%',
+              zIndex: 1,
+              width: '87%',
               height: '77%',
             }}
           >
@@ -141,6 +198,11 @@ export default function MainPage() {
               Log Out
             </Button>
             <label id='signOutSuccess'></label>
+          </div>
+          <div className='flex'>
+            <Button onClick={() => {selectPatient(8); setPatientSelected(true);}} variant='primary' size='base'>
+              Select Patient
+            </Button>
           </div>
         </div>
       </section>
