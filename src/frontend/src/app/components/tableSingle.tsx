@@ -1,7 +1,4 @@
 //cite: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
-
-// import { Bold } from 'lucide-react';
-
 type ColumnDefinitionType<T, K extends keyof T> = {
   key: K;
   header: string;
@@ -29,35 +26,6 @@ const SingleTable = <T, K extends keyof T>({
     </table>
   );
 };
-
-// type TableHeaderProps<T, K extends keyof T> = {
-//   columns: Array<ColumnDefinitionType<T, K>>;
-// };
-
-// const TableHeader = <T, K extends keyof T>({
-//   columns,
-// }: TableHeaderProps<T, K>): JSX.Element => {
-//   const headers = columns.map((column, index) => {
-//     const style = {
-//       width: column.width ?? '10%', // 100 is our default value if width is not defined
-//       fontsize: '10',
-//       borderBottom: '2px solid black',
-//       height: '10%',
-//     };
-
-//     return (
-//       <th key={`headCell-${index}`} style={style}>
-//         {column.header}
-//       </th>
-//     );
-//   });
-
-//   return (
-//     <thead>
-//       <tr>{headers}</tr>
-//     </thead>
-//   );
-// };
 
 type TableRowsProps<T, K extends keyof T> = {
   data: Array<T>;

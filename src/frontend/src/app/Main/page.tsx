@@ -144,7 +144,7 @@ export default function MainPage() {
         <div className='layout relative flex flex-col items-center gap-5 py-2 text-center'>
           <div
             className='gap-2 bg-gray-100 p-5 pt-3'
-            style={{ width: '85%', height: '60vh', zIndex: 5 }}
+            style={{ width: '90%', height: '60vh', zIndex: 5 }}
           >
             <h2 className='mb-5 text-indigo-500'>Recent Patients</h2>
             <div className='flex items-center justify-center text-center' id='patientDataTable'>
@@ -209,3 +209,7 @@ export default function MainPage() {
     </main>
   );
 }
+function componentDidMount() {
+  throw new Error('Function not implemented.');
+}
+
