@@ -4,7 +4,6 @@
 import torch
 import torchvision.transforms
 import torchxrayvision as xrv
-from PredictionModel.convertDcm import getimgdata
 
 diseases = [
     "Atelectasis",

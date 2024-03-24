@@ -1,4 +1,3 @@
-import os
 from PredictionModel.runPredModel import scanallxrays
 from PredictionModel.convertDcm import get_xraypngs
 from PredictionModel.heatmaps import genheatmappatient

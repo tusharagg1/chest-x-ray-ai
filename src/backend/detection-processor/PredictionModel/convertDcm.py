@@ -4,7 +4,6 @@ import pydicom
 from PIL import Image
 import io
 import base64
-import cv2
 
 
 def lin_stretch_img(img, low_prc, high_prc, do_ignore_minmax=True):

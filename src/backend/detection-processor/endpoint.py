@@ -1,6 +1,7 @@
-# app.py
+#### command to download requirements
+#### python -m pipreqs.pipreqs
+
 from flask import Flask, request, jsonify
-import os
 from PredictionModel.diagnosis import get_resp
 from fbinterface import getdcmfiles, checkdir, initapp
 
