@@ -14,6 +14,8 @@ import Table from '@/app/components/tableSmall';
 
 import { colsInfo } from '../components/patientColumns';
 
+import {conductStudy} from './XRayStudyScript'
+
 import { getAPatientsData, getActivePatientId } from '../../../../backend/database/backend';
 
 export default function NewStudyPage() {
@@ -112,7 +114,10 @@ export default function NewStudyPage() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  function performStudy() {
+  const performStudy = async () => {
+
+
+
     const resultImagesCarousel = document.getElementById('resultImages');
     const originalImagesCarousel = document.getElementById('originalImages');
     const predictions = document.getElementById('predictions');
@@ -122,6 +127,9 @@ export default function NewStudyPage() {
     // write and retrieve this value from the database
     // (e.g. temp variable activePatient in the backend database)
     let id = 3;
+
+    let test = await conductStudy(8);
+    console.log("post result" + test)
     // sample ml model results data
     let StudyResults = {
       "heatmaps": [
