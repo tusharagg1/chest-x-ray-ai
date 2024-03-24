@@ -41,31 +41,22 @@ def lin_stretch_img(img, low_prc, high_prc, do_ignore_minmax=True):
     return stretch_img
 
 
-def getimgdata(dcmpath):
+def getimgdata(dcmdata):
 
-    ds = pydicom.dcmread(dcmpath)
+    ds = pydicom.dcmread(dcmdata, force=True)
     img = ds.pixel_array  # get image array
 
     img = lin_stretch_img(img, 1, 99)  # Apply "linear stretching"
     # (lower percentile 1 goes to 0, and percentile 99 to 255).
 
+    #cv2.imwrite('img.png', img)
     return img
-    # TODO: save jpg file in database
-    # cv2.imwrite(target, img)
 
 
 # returns filenames in a directory that have given extension (example: ".dcm")
-def getfilenames(directory, extension):
+def getfilenames(file_list, extension = '.dcm'):
+    return [filename for filename in file_list if filename.endswith(extension)]
 
-    filenames = []
-    try:
-        for filename in os.listdir(directory):
-            if filename.endswith(extension):
-                filenames.append(filename)
-    except IOError:
-        print(f"'{directory}': No such directory")
-
-    return filenames
 
 
 # function to save a jpg file in target path

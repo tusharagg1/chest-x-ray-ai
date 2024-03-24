@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import os
 import torch
 import torchvision.transforms
 import torchxrayvision as xrv
-from PredictionModel.convertDcm import getfilenames, getimgdata
+from PredictionModel.convertDcm import getimgdata
 
 diseases = [
     "Atelectasis",
@@ -16,11 +15,11 @@ diseases = [
 
 
 # get predictions from a dcm x-ray
-def getprediction(img_path, weights="densenet121-res224-all"):
+def getprediction(img, weights="densenet121-res224-all"):
 
     disease_index_dict = dict(zip(diseases, [xrv.datasets.default_pathologies.index(diseases[i]) for i in range(len(diseases))]))
 
-    img = getimgdata(img_path)
+    #img = getimgdata(img_bytes)
     img = xrv.datasets.normalize(img, 255)
 
     # Check that images are 2D arrays
@@ -49,7 +48,7 @@ def getprediction(img_path, weights="densenet121-res224-all"):
     return allpreds
 
 
-def scanallxrays(xraydir):
+def scanallxrays(raw_imgs):
     """
     Returns combined predictions for all dcm xrays in a directory.
 
@@ -60,11 +59,11 @@ def scanallxrays(xraydir):
         dict: Dictionary containing combined predictions for each disease.
     """
 
-    xray_imgs = getfilenames(xraydir, ".dcm")
     allpreds = []
 
-    for img in xray_imgs:
-        preds = getprediction(os.path.join(xraydir, img))
+    for img in raw_imgs:
+        preds = getprediction(img)
+        print(f"gotpreds!/n{preds}")
         allpreds.append(preds)
 
     if len(allpreds) > 1:
