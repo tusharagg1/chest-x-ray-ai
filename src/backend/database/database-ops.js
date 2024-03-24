@@ -83,10 +83,11 @@ export async function writePatientData(db, patientId, mrn, firstName, lastName, 
 export async function readPatientData(db, patientId) {
   return new Promise((resolve, reject) => {
     const readPatientDataRef = ref(db);
-    get(child(readPatientDataRef, `patients/${patientId}`))
+    get(child(readPatientDataRef, `patientsData/${patientId}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const patientData = snapshot.val();
+          let patientData = snapshot.val();
+          patientData["patientID"] = patientId;
           resolve(patientData);
         } else {
           reject(null);
@@ -124,4 +125,38 @@ export async function readAllPatientData(db) {
       return value;
     }
   })
+}
+
+// write active patient id
+export async function writeActivePatientID(db, patientId) {
+  const writeActivePatientIDRef = ref(db, 'activePatient');
+  await set(writeActivePatientIDRef, {
+    patientID: patientId
+  })
+  .then(() => {
+    return true;
+  })
+  .catch((error) => {
+    console.log(error);
+    return false;
+  });
+}
+
+// read active patient id
+export async function readActivePatientID(db) {
+  return new Promise((resolve, reject) => {
+    const readActivePatientIDRef = ref(db, 'activePatient');
+    get(child(readActivePatientIDRef, 'patientID'))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let patientID = snapshot.val();
+          resolve(patientID);
+        } else {
+          reject(null);
+        }
+      })
+      .catch((_error) => {
+        reject(null);
+      });
+  });
 }
