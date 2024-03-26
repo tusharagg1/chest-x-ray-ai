@@ -21,6 +21,7 @@ def get_resp(pdicoms):
         'predictions': preds,
         'report': report,
         'heatmaps': heatmaps,
-        'xrayimgs': xraypngs
+        'xrayimgs': xraypngs,
+        'success': True
     }
     return response_data

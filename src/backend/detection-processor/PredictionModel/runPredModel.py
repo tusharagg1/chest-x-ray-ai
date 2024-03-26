@@ -62,7 +62,7 @@ def scanallxrays(raw_imgs):
 
     for img in raw_imgs:
         preds = getprediction(img)
-        print(f"gotpreds!/n{preds}")
+        print(f"gotpreds!\n{preds}")
         allpreds.append(preds)
 
     if len(allpreds) > 1:

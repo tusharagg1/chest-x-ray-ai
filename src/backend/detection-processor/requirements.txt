@@ -1,5 +1,6 @@
 firebase_admin==6.5.0
 Flask==3.0.2
+Flask_Cors==4.0.0
 matplotlib==3.8.2
 numpy==1.26.4
 Pillow==10.1.0
