@@ -1,0 +1,3 @@
+backend: src/backend/*
+documentation: docs/*
+frontend: src/frontend/*

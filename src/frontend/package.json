@@ -1,5 +1,5 @@
 {
-  "name": "ts-nextjs-tailwind-starter",
+  "name": "chest-x-ray-ai-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,9 +14,14 @@
     "test": "jest",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
-    "postbuild": "next-sitemap --config next-sitemap.config.js"
+    "postbuild": "next-sitemap --config next-sitemap.config.js",
+    "onetime-setup-husky": "cd .. && husky install frontend/.husky"
   },
   "dependencies": {
+    "@tanstack/match-sorter-utils": "^8.8.4",
+    "@tanstack/react-table": "^8.10.7",
+    "@types/node": "^20.11.30",
+    "any-text": "^1.2.0",
     "clsx": "^1.2.1",
     "lucide-react": "^0.260.0",
     "next": "^13.5.4",
@@ -28,20 +33,21 @@
   "devDependencies": {
     "@commitlint/cli": "^16.3.0",
     "@commitlint/config-conventional": "^16.2.4",
-    "@tailwindcss/forms": "^0.5.6",
     "@svgr/webpack": "^8.1.0",
+    "@tailwindcss/forms": "^0.5.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@types/react": "^18.2.25",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "autoprefixer": "^10.4.16",
+    "depcheck": "^1.4.7",
     "eslint": "^8.51.0",
     "eslint-config-next": "^13.5.4",
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    
+    "husky": "7",
     "jest": "^27.5.1",
     "lint-staged": "^12.5.0",
     "next-router-mock": "^0.7.5",
