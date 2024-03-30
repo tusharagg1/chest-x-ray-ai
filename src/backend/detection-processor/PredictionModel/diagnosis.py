@@ -19,9 +19,10 @@ def get_resp(pdicoms):
     report = genreport(preds)
 
     response_data = {
-        "predictions": preds,
-        "report": report,
-        "heatmaps": heatmaps,
-        "xrayimgs": xraypngs,
+        'predictions': preds,
+        'report': report,
+        'heatmaps': heatmaps,
+        'xrayimgs': xraypngs,
+        'success': True
     }
     return response_data

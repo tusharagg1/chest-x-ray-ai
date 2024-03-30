@@ -11,6 +11,7 @@
   "author": "Nathaniel Hu",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^20.11.30",
     "firebase": "^10.6.0"
   }
 }
