@@ -19,19 +19,22 @@ export function createNewUser(auth, email, password) {
 }
 
 // delete a user
-export async function deleteAUser(auth, email, password) {
-  const user = auth.currentUser;
-
-  if (user === null || user.email !== email || user.password !== password) {
-    return false;
-  }
-
-  await deleteUser(user).then(() => {
-    // User deleted.
-    return true;
-  }).catch((_error) => {
-    // An error happened.
-    return false;
+export function deleteAUser(auth, email) {
+  return new Promise((resolve, reject) => {
+    const user = auth.currentUser;
+    if (user == null) {
+      reject(null);
+    }
+    else if (user.email !== email) {
+      reject(false);
+    }
+    deleteUser(user)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 }
 
