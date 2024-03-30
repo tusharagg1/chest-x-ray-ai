@@ -1,18 +1,26 @@
 #### command to download requirements
 #### python -m pipreqs.pipreqs --force
 
+## This is the main endpoint for the backend
+## start the http endpoint with `python endpoint.py`
+
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 from PredictionModel.diagnosis import get_resp
 from fbinterface import getdcmfiles, checkdir, initapp
 
+
+# endpoint route name
 endpoint_call = "/get-diagnosis"
+
 bucket = initapp()
 app = Flask(__name__)
 CORS(app)
 
 # function to return mock response for testing
+# uses static response text stored in respnew.txt
 def mockresponse():
     file_path = "respnew.txt"
     try:
@@ -26,6 +34,7 @@ def mockresponse():
         print(f"An error occurred while reading the file '{file_path}'.")
 
 
+# "patient_dir" is the directory with the patient's dicom x-ray files
 @app.route(endpoint_call, methods=['POST'])
 def process_file_endpoint():
     # Receive file path from client
@@ -42,7 +51,8 @@ def process_file_endpoint():
         return response, 404
 
     try:
-        # to test with mock response
+        # condition to test with mock response
+        # must be communicated by frontend by ending path with "mock"
         if patient_dir.endswith("mock"):
             response = jsonify(mockresponse())
         else:
@@ -57,5 +67,3 @@ def process_file_endpoint():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-### TODO CURRENT ERROR: post request being made twice? look into why this happens
