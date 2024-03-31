@@ -1,6 +1,6 @@
 // import needed externally defined modules
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 // import needed internally defined modules
@@ -20,7 +20,7 @@ const firebaseConfig = {
   measurementId: "G-085B846RRX"
 }
 
-// necessary constnats for various firebase cuntionalities (i.e. auth, database)
+// necessary constants for various firebase functionalities (i.e. auth, database)
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -113,6 +113,26 @@ export function getCurrentUser() {
         console.log(error);
         reject(null);
       });
+  });
+}
+
+// get current user after initial authentication
+export function getCurrentUserAfterInitAuth() {
+  return new Promise((resolve, reject) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        readUserData(db, user.uid)
+          .then((userData) => {
+            resolve(userData);
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(null);
+          });
+      } else {
+        reject(null);
+      }
+    });
   });
 }
 
