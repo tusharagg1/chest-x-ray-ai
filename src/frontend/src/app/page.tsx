@@ -54,10 +54,6 @@ export default function loginPage() {
       setPasswordError(true);
       setPasswordErrorMessage('Please enter your password');
       return;
-    } else if (password.length < 4) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 8 characters');
-      return;
     } else {
       setPasswordError(false);
     }
