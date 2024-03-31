@@ -5,12 +5,15 @@
   "main": "backend.js",
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage --detectOpenHandles --forceExit"
   },
   "keywords": [],
   "author": "Nathaniel Hu",
   "license": "ISC",
   "dependencies": {
     "firebase": "^10.6.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.24.1"
   }
 }
