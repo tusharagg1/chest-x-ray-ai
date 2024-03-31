@@ -5,9 +5,10 @@ import { getDatabase } from "firebase/database";
 
 // import needed internally defined modules
 import { createNewUser, deleteAUser, signInUser, signOutUser } from './user-auth-mgmt';
-import { readUserData, writeUserData, writePatientData, readPatientData, readAllPatientData, writeActivePatientID, readActivePatientID } from './database-ops';
+import { readUserData, writeUserData, deleteUserData, writePatientData, readPatientData,
+  deletePatientData, readAllPatientData, writeActivePatientID, readActivePatientID } from './database-ops';
 
-// necessary firebase configuration setip
+// necessary firebase configuration setup
 const firebaseConfig = {
   apiKey: "AIzaSyB5RHIQl0a8nzZ2bMUwTMJ6XNYWciBaneM",
   authDomain: "chest-x-ray-ai-f0b4a.firebaseapp.com",
@@ -19,7 +20,7 @@ const firebaseConfig = {
   measurementId: "G-085B846RRX"
 }
 
-// necessary constnats for various firebase cuntionalities (i.e. auth, database)
+// necessary constants for various firebase functionalities (i.e. auth, database)
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -29,24 +30,43 @@ export function createANewUser(userName, email, password, firstName, lastName, m
   return new Promise((resolve, reject) => {
     createNewUser(auth, email, password)
       .then((userId) => {
-        const userDataWritten = writeUserData(db, userId, userName, email, password, firstName, lastName, medInsts, isAdminUser);
-        if (userDataWritten) {
-          resolve(userId);
-        }
-        else {
-          reject(null);
-        }
+        writeUserData(db, userId, userName, email, password, firstName, lastName, medInsts, isAdminUser)
+          .then((_userDataWritten) => {
+            resolve(userId);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       })
-      .catch((_error) => {
-        reject(null);
+      .catch((error) => {
+        reject(error);
       });
   });
 }
 
 // delete a user
-export async function deleteUser(email, password) {
-  const userDeleted = await deleteAUser(auth, email, password);
-  return userDeleted;
+export function deleteUser(email, password) {
+  return new Promise((resolve, reject) => {
+    signInAUser(email, password)
+      .then((user) => {
+        deleteUserData(db, user.uid)
+          .then((_userDataDeleted) => {
+            deleteAUser(auth, email)
+              .then((userDeleted) => {
+                resolve(userDeleted);
+              })
+              .catch((error) => {
+                reject(error);
+              });
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
 // sign in a user
@@ -75,7 +95,8 @@ export function signOutAUser() {
       .then((userSignedOut) => {
         resolve(userSignedOut);
       })
-      .catch((_error) => {
+      .catch((error) => {
+        console.log(error);
         reject(null);
       });
   });
@@ -84,27 +105,60 @@ export function signOutAUser() {
 // get current user
 export function getCurrentUser() {
   return new Promise((resolve, reject) => {
-    const userId = auth.currentUser.uid;
-    const userData = readUserData(db, userId);
-    if (userData !== null) {
-      resolve(userData);
-    }
-    else {
-      reject(null);
-    }
+    readUserData(db, auth.currentUser.uid)
+      .then((userData) => {
+        resolve(userData);
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(null);
+      });
   });
 }
 
-// create a new patient
-export function createANewPatient(patientId, mrn, firstName, lastName, email, dob, gender, phone, refPhys, lastVisit, notes) {
+// get current user after initial authentication
+export function getCurrentUserAfterInitAuth() {
   return new Promise((resolve, reject) => {
-    const patientDataWritten = writePatientData(db, patientId, mrn, firstName, lastName, email, dob, gender, phone, refPhys, lastVisit, notes);
-    if (patientDataWritten) {
-      resolve(patientId);
-    }
-    else {
-      reject(false);
-    }
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        readUserData(db, user.uid)
+          .then((userData) => {
+            resolve(userData);
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(null);
+          });
+      } else {
+        reject(null);
+      }
+    });
+  });
+}
+
+// create a patient's data
+export function createANewPatient(patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit) {
+  return new Promise((resolve, reject) => {
+    writePatientData(db, patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit)
+      .then((_patientDataWritten) => {
+        resolve(patientId);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+// delete a patient's data
+export function deleteAPatientsData(patientId) {
+  return new Promise((resolve, reject) => {
+    deletePatientData(db, patientId)
+      .then((_deleteSuccess) => {
+        resolve(true);
+      })
+      .catch((_error) => {
+        reject(false);
+      });
   });
 }
 
@@ -162,7 +216,7 @@ export function setActivePatientID(patientId) {
   });
 }
 
-// read a patient's data
+// read active patient id
 export function getActivePatientId() {
   return new Promise((resolve, reject) => {
     readActivePatientID(db)
@@ -179,3 +233,8 @@ export function getActivePatientId() {
       });
   });
 }
+
+// export all functions
+// module.exports = { createANewUser, deleteUser, signInAUser, signOutAUser, getCurrentUser,
+//   createANewPatient, getAPatientsData, deleteAPatientsData, getAllPatientData,
+//   setActivePatientID, getActivePatientId };

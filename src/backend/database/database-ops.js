@@ -30,6 +30,7 @@ export async function readUserData(db, userId) {
         if (snapshot.exists()) {
           const rawUserData = snapshot.val();
           var userData = transformRawUserData(rawUserData);
+          userData["uid"] = userId;
           resolve(userData);
         } else {
           reject(null);
@@ -37,6 +38,20 @@ export async function readUserData(db, userId) {
       })
       .catch((_error) => {
         reject(null);
+      });
+  });
+}
+
+// delete user data
+export async function deleteUserData(db, userId) {
+  return new Promise((resolve, reject) => {
+    const deleteUserDataRef = ref(db, `users/${userId}`);
+    set(deleteUserDataRef, null)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((error) => {
+        reject(error);
       });
   });
 }
@@ -57,19 +72,17 @@ function transformRawUserData(rawUserData) {
 }
 
 // write patient data
-export async function writePatientData(db, patientId, mrn, firstName, lastName, email, dob, gender, phone, refPhys, lastVisit, notes) {
-  const writePatientDataRef = ref(db, `patients/${patientId}`);
+export async function writePatientData(db, patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit) {
+  const writePatientDataRef = ref(db, `patientsData/${patientId}`);
   await set(writePatientDataRef, {
     mrn: mrn,
     firstName: firstName,
     lastName: lastName,
-    email: email,
     dob: dob,
     gender: gender,
-    phone: phone,
+    contact: contact,
     refPhys: refPhys,
-    lastVisit: lastVisit,
-    notes: notes
+    lastVisit: lastVisit
   })
   .then(() => {
     return true;
@@ -95,6 +108,20 @@ export async function readPatientData(db, patientId) {
       })
       .catch((_error) => {
         reject(null);
+      });
+  });
+}
+
+// delete patient data
+export async function deletePatientData(db, patientId) {
+  return new Promise((resolve, reject) => {
+    const deletePatientDataRef = ref(db, `patientsData/${patientId}`);
+    set(deletePatientDataRef, null)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((error) => {
+        reject(error);
       });
   });
 }
@@ -129,16 +156,17 @@ export async function readAllPatientData(db) {
 
 // write active patient id
 export async function writeActivePatientID(db, patientId) {
-  const writeActivePatientIDRef = ref(db, 'activePatient');
-  await set(writeActivePatientIDRef, {
-    patientID: patientId
-  })
-  .then(() => {
-    return true;
-  })
-  .catch((error) => {
-    console.log(error);
-    return false;
+  return new Promise((resolve, reject) => {
+    const writeActivePatientIDRef = ref(db, 'activePatient');
+    set(writeActivePatientIDRef, {
+      patientID: patientId
+    })
+    .then(() => {
+      resolve(true);
+    })
+    .catch((error) => {
+      reject(error);
+    });
   });
 }
 
