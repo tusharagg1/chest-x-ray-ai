@@ -8,6 +8,7 @@ from PredictionModel.convertDcm import getimgdata
 def get_rawimg(pdicoms):
     return [getimgdata(img) for img in pdicoms]
 
+
 def get_resp(pdicoms):
 
     raw_imgs = get_rawimg(pdicoms)
@@ -18,10 +19,10 @@ def get_resp(pdicoms):
     report = genreport(preds)
 
     response_data = {
-        'predictions': preds,
-        'report': report,
-        'heatmaps': heatmaps,
-        'xrayimgs': xraypngs,
-        'success': True
+        "predictions": preds,
+        "report": report,
+        "heatmaps": heatmaps,
+        "xrayimgs": xraypngs,
+        "success": True,
     }
     return response_data
