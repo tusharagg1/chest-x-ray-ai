@@ -1,37 +1,56 @@
+/*
+  Web Page Name: Login
+  Author(s): Allison Cook, Nathaniel Hu
+  Last Modified Date: 2024-03-30
+  Purpose: Allows user to login to app, or navigate to sign up page if user does
+           not already have an account.
+*/
+
 /* eslint-disable react-hooks/rules-of-hooks */
+
+// desigate this as a client-side web page
 'use client';
 
+// import externally defined libraries
 import Image from 'next/image';
 import React, { useState } from 'react';
 
+// import internally defined components
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
 
+// import internally defined backend functions
 import { signInAUser } from '../../../backend/database/backend';
 
+// define the login page
 export default function loginPage() {
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // define email related state variables
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  // define password related state variables
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  /**
-   * @description Validates the email and password, calls the apis
-   */
+  // define login button loading state variable
+  const [loading, setLoading] = useState(false);
+
+  // validates the email and password, calls the apis to sign in the user
   function handleSubmit() {
+    // set loading to true, get the login success text element
     setLoading(true);
+    const loginTxt = document.getElementById('loginSuccess');
 
-    // setEmail(
-    //   (document.getElementById('userName_email') as HTMLInputElement).value
-    // );
-    // setPassword(
-    //   (document.getElementById('password') as HTMLInputElement).value
-    // );
-    const signInTxt = document.getElementById('signInSuccess');
+    // email validation
+    if (email == '') {
+      setEmailError(true);
+      setEmailErrorMessage('Please enter your email');
+      return;
+    } else {
+      setEmailError(false);
+    }
 
-    //password validation
+    // password validation
     if (password == '') {
       setPasswordError(true);
       setPasswordErrorMessage('Please enter your password');
@@ -44,44 +63,42 @@ export default function loginPage() {
       setPasswordError(false);
     }
 
-    if (email == '') {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter your email');
-      return;
-    } else {
-      setEmailError(false);
-    }
-
+    // attempt login with email and password
     signInAUser(email, password)
-      .then((userData) => {
-        signInTxt!.innerHTML = `Sign In Successful! Welcome ${userData.userName}!`;
-        // setTimeout(() => {}, 1000);
+      .then((user) => {
+        // display success message, redirect to main page on successful login
+        loginTxt!.innerHTML = `Sign In Successful! Welcome ${user.userName}!`;
+        setTimeout(() => {}, 1000);
         window.location.href = '/Main';
       })
-      .catch(() => {
-        // console.log(error);
-        signInTxt!.innerHTML = 'Sign In Failed! Error in User Sign In!';
+      .catch((error) => {
+        // log error, display failure message if login attempt fails
+        console.log(error);
+        loginTxt!.innerHTML = 'Sign In Failed! Error in User Sign In!';
       });
   }
 
+  // render the login page
   return (
     <main
       className='min-h-screen bg-indigo-100'
       style={{
         backgroundImage:
-          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))',
+          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))'
       }}
     >
       <section>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 py-2 text-center'>
+        <div
+          className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 py-2 text-center'
+        >
           <h1 className='text-indigo-500'>X-Ray Assist</h1>
           <div className='bg-gray-500'>
             <Image
-              //className='flex'
+              // className='flex'
               src='/images/loginImage.png'
               alt='x-ray results'
               sizes='100vw'
-              //fill
+              // fill
               style={{ width: '100%', height: 'auto' }}
               width={500}
               height={500}
@@ -97,7 +114,7 @@ export default function loginPage() {
               <ol>
                 <div>
                   <label
-                    className='text-gray-500 '
+                    className='text-gray-500'
                     style={{ textAlign: 'left', paddingRight: '55%' }}
                   >
                     Email
@@ -108,12 +125,13 @@ export default function loginPage() {
                       background: 'url("/images/person.png") no-repeat left',
                       paddingLeft: '10%',
                       backgroundColor: 'rgb(229, 231, 235)',
-                      width: '65%',
+                      width: '65%'
                     }}
                     type='email'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder='Email'
+                    required
                   />
                 </div>
                 <div>
@@ -148,14 +166,18 @@ export default function loginPage() {
                   </Button>
                 </div>
                 <div>
-                  <label id='signInSuccess'></label>
+                  <label id='loginSuccess'></label>
                 </div>
               </ol>
             </form>
-            <UnderlineLink href='/X-RayStudy' className='text-sm text-gray-500'>
-              Forgot password
+            <UnderlineLink
+              href='/RecoverPassword'
+              className='text-sm text-gray-500'
+            >
+              Forgot your password?
+              <br></br>
+              Click here to recover it.
             </UnderlineLink>
-
             {emailError && <p className='text-red-500'>{emailErrorMessage}</p>}
             {passwordError && (
               <p className='text-red-500'>{passwordErrorMessage}</p>
@@ -168,22 +190,24 @@ export default function loginPage() {
               position: 'absolute',
               zIndex: 1,
               width: '42%',
-              height: '74%',
+              height: '74%'
             }}
           >
             <br></br>
             <br></br>
+            <br></br>
             <div
-              className='bg-indigo-500 '
-              style={{ width: '100%', height: '60%' }}
-            ></div>
+              className='bg-indigo-500'
+              style={{ width: '100%', height: '63%' }}
+            >
+            </div>
           </div>
           <div className='text-gray-500' style={{ zIndex: 2 }}>
             <p>
               Don't have an account?
               <br></br>
               <UnderlineLink href='/SignUp' className='text-sm text-gray-500'>
-                Create one.
+                Click here to create one.
               </UnderlineLink>
             </p>
           </div>
