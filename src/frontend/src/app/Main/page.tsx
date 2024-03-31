@@ -9,10 +9,21 @@ import { cols } from '@/app/components/patientColumns';
 // import { Patient } from "@/app/components/patientColumns";
 import Table from '@/app/components/table';
 
-import { getAPatientsData, getAllPatientData, signOutAUser, getCurrentUser, setActivePatientID } from "../../../../backend/database/backend";
+import { getAPatientsData, getAllPatientData, signOutAUser, getCurrentUser, getCurrentUserAfterInitAuth, setActivePatientID } from "../../../../backend/database/backend";
 
 export default function MainPage() {
-  const [username, setUser] = useState('username');
+  const [username, setUser] = useState(() => {
+    getCurrentUserAfterInitAuth()
+      .then((user) => {
+        if (user != null) {
+          return user.userName;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return 'username';
+  });
   const [selectedPatientId, setSelectedPatientId] = useState(0);
   const [patientSelected, setPatientSelected] = useState(false);
 
