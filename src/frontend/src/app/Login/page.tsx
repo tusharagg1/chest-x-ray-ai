@@ -76,13 +76,13 @@ export default function LoginPage() {
     // log email and password for login attempt
     console.log('Email:', email);
     console.log('Password:', password);
-    // set loading to true
-    setLoading(true);
 
     if (email !== '' && password !== '') {
       // attempt login with email and password
       signInAUser(email, password)
         .then((userData) => {
+          // set loading to true
+          setLoading(true);
           // display success message, redirect to main page on successful login
           setLoginSuccess(`Sign In Successful! Welcome ${userData.userName}!`);
           setTimeout(() => {}, 1000);

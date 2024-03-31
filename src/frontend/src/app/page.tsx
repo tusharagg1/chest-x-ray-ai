@@ -37,8 +37,7 @@ export default function loginPage() {
 
   // validates the email and password, calls the apis to sign in the user
   function handleSubmit() {
-    // set loading to true, get the login success text element
-    setLoading(true);
+    // get the login success text element
     const loginTxt = document.getElementById('loginSuccess');
 
     // email validation
@@ -66,6 +65,8 @@ export default function loginPage() {
     // attempt login with email and password
     signInAUser(email, password)
       .then((user) => {
+        // set loading to true
+        setLoading(true);
         // display success message, redirect to main page on successful login
         loginTxt!.innerHTML = `Sign In Successful! Welcome ${user.userName}!`;
         setTimeout(() => {}, 1000);
