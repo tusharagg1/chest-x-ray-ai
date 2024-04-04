@@ -1,23 +1,34 @@
+/*
+  Module Name: DatabaseOps
+  Author(s): Nathaniel Hu
+  Date Modified: 2024-04-04
+  Description: Contains database operations functionality to read and write user
+               and patient data
+*/
+
 // import needed externally defined modules
 import { ref, set, child, get } from 'firebase/database';
 
 // write user data
-export async function writeUserData(db, userId, userName, email, password, firstName, lastName, medInsts, isAdminUser) {
-  const writeUserDataRef = ref(db, `users/${userId}`);
-  await set(writeUserDataRef, {
-    userName: userName,
-    email: email,
-    password: password,
-    firstName: firstName,
-    lastName: lastName,
-    medInsts: medInsts,
-    isAdminUser: isAdminUser
-  })
-  .then(() => {
-    return true;
-  })
-  .catch((_error) => {
-    return false;
+export async function writeUserData(db, userId, userName, email, password,
+  firstName, lastName, medInsts, isAdminUser) {
+  return new Promise((resolve, reject) => {
+    const writeUserDataRef = ref(db, `users/${userId}`);
+    set(writeUserDataRef, {
+      userName: userName,
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      medInsts: medInsts,
+      isAdminUser: isAdminUser
+    })
+    .then(() => {
+      resolve(true);
+    })
+    .catch((_error) => {
+      reject(false);
+    });
   });
 }
 
@@ -50,15 +61,16 @@ export async function deleteUserData(db, userId) {
       .then(() => {
         resolve(true);
       })
-      .catch((error) => {
-        reject(error);
+      .catch((_error) => {
+        reject(false);
       });
   });
 }
 
 // transform raw user data
 function transformRawUserData(rawUserData) {
-  const fields = ["userName", "email", "password", "firstName", "lastName", "medInsts", "isAdminUser"];
+  const fields = ["userName", "email", "password", "firstName", "lastName",
+    "medInsts", "isAdminUser"];
   var userData = new Object();
   for (var field of fields) {
     if (rawUserData[field] != null) {
@@ -72,23 +84,26 @@ function transformRawUserData(rawUserData) {
 }
 
 // write patient data
-export async function writePatientData(db, patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit) {
-  const writePatientDataRef = ref(db, `patientsData/${patientId}`);
-  await set(writePatientDataRef, {
-    mrn: mrn,
-    firstName: firstName,
-    lastName: lastName,
-    dob: dob,
-    gender: gender,
-    contact: contact,
-    refPhys: refPhys,
-    lastVisit: lastVisit
-  })
-  .then(() => {
-    return true;
-  })
-  .catch((_error) => {
-    return false;
+export async function writePatientData(db, patientId, mrn, firstName, lastName,
+  dob, gender, contact, refPhys, lastVisit) {
+  return new Promise((resolve, reject) => {
+    const writePatientDataRef = ref(db, `patientsData/${patientId}`);
+    set(writePatientDataRef, {
+      mrn: mrn,
+      firstName: firstName,
+      lastName: lastName,
+      dob: dob,
+      gender: gender,
+      contact: contact,
+      refPhys: refPhys,
+      lastVisit: lastVisit
+    })
+    .then(() => {
+      resolve(true);
+    })
+    .catch((_error) => {
+      reject(false);
+    });
   });
 }
 
@@ -120,8 +135,8 @@ export async function deletePatientData(db, patientId) {
       .then(() => {
         resolve(true);
       })
-      .catch((error) => {
-        reject(error);
+      .catch((_error) => {
+        reject(false);
       });
   });
 }
@@ -151,7 +166,7 @@ export async function readAllPatientData(db) {
       value["patientID"] = key;
       return value;
     }
-  })
+  });
 }
 
 // write active patient id
@@ -164,8 +179,8 @@ export async function writeActivePatientID(db, patientId) {
     .then(() => {
       resolve(true);
     })
-    .catch((error) => {
-      reject(error);
+    .catch((_error) => {
+      reject(false);
     });
   });
 }
