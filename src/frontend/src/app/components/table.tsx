@@ -1,4 +1,11 @@
-//cite: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
+/*
+* Author: Allison Cook
+* Date Created: January 2024
+* Purpose: Create exported table element to display custom table 
+*/
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//ts comments stop errors that didn't effect compliation or function
+//referenced: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
 import './table.css';
 
 type ColumnDefinitionType<T, K extends keyof T> = {
@@ -18,29 +25,33 @@ const Tstyle = {
   height: '37vh',
 } as const;
 
-if (typeof document !== 'undefined') {
-  document.addEventListener(`click`, handle);
-}
+// if (typeof document !== 'undefined') {
+//   document.addEventListener(`click`, handle);
+// }
 
-function handle(evt) {
-  // only do something if a checkbox was clicked
-  if (evt.target.type === `checkbox`) {
-    const isChecked = evt.target.checked;
-    const selectedRow = evt.target.closest(`tr`);
-    const tds = Array.from(selectedRow.cells).map((td) => td.textContent);
-    const pid = tds[0];
-    //can we send this to the backend to get again on the other pages please
-    // reset checkboxes, row coloring and disabled state
-    document.querySelectorAll(`input[type='checkbox']`).forEach((cb) => {
-      cb.checked = cb !== evt.target ? false : isChecked;
-      const row = cb.closest(`tr`);
-      row.classList[isChecked && row === selectedRow ? `add` : `remove`](
-        'selected'
-      );
-    });
-    return tds;
-  }
-}
+// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// function handle(evt: { target: any }) {
+//   // only do something if a checkbox was clicked
+//   if (evt.target.type === `checkbox`) {
+//     const isChecked = evt.target.checked;
+//     const selectedRow = evt.target.closest(`tr`);
+
+//     /* @ts-ignore */
+//     const tds = Array.from(selectedRow.cells).map((td) => td.textContent);
+//     // reset checkboxes, row coloring and disabled state
+//     document.querySelectorAll(`input[type='checkbox']`).forEach((cb) => {
+//       /* @ts-ignore */
+//       cb.checked = cb !== evt.target ? false : isChecked;
+//       const row = cb.closest(`tr`);
+
+//       /* @ts-ignore */
+//       row.classList[isChecked && row === selectedRow ? `add` : `remove`](
+//         'selected'
+//       );
+//     });
+//     return tds;
+//   }
+// }
 
 const Table = <T, K extends keyof T>({
   data,
@@ -121,6 +132,7 @@ const TableRows = <T, K extends keyof T>({
           } else {
             return (
               <td key={`cell-${index2}`} style={Sstyle}>
+                {/* @ts-ignore */}
                 {row[column.key]}
               </td>
             );

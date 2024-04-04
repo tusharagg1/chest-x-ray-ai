@@ -1,11 +1,16 @@
+/*
+* Author: Allison Cook
+* Date Created: March 2024
+* Purpose: Display the account creation page
+*/
 'use client';
-import React, { useState } from 'react';
 import Image from 'next/image';
+import React, { useState } from 'react';
 
 import Button from '@/components/buttons/Button';
+import UnderlineLink from '@/components/links/UnderlineLink';
 
 import { createANewUser } from '../../../../backend/database/backend';
-import UnderlineLink from '@/components/links/UnderlineLink';
 
 export default function SignUpPage() {
   const [emailError, setEmailError] = useState(false);
@@ -13,8 +18,6 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
 
   const onSignUp = () => {
-    // const userName = (document.getElementById('userName') as HTMLInputElement)
-    //   .value != null ? (document.getElementById('userName') as HTMLInputElement).value : '';
     setEmail((document.getElementById('email') as HTMLInputElement).value);
     setPassword(
       (document.getElementById('password') as HTMLInputElement).value
@@ -24,32 +27,17 @@ export default function SignUpPage() {
     const lastName = (document.getElementById('lastName') as HTMLInputElement)
       .value;
     const userName = firstName + lastName;
-    // const medInsts = (document.getElementById('medInsts') as HTMLInputElement)
-    //   .value != null ? (document.getElementById('medInsts') as HTMLInputElement).value : '';
     const medInsts = 'MedInsts';
-    // const isAdmin =
-    //   (document.getElementById('isAdmin') as HTMLInputElement).value == 'on'
-    //     ? true
-    //     : false;
     const isAdmin = false;
-
-    // const signUpBtn = document.getElementById('signUpBtn');
     const signUpTxt = document.getElementById('signUpSuccess');
 
     function verifyFields() {
-      let hasError = false;
       if (email === '') {
         setEmailError(true);
-        hasError = true;
-        console.log('setEmailError:', hasError);
-        console.log(emailError);
-        return false;
       } else {
         setEmailError(false);
-        console.log('Username/Email:', email);
-        console.log('Password:', password);
-        return true;
       }
+      return !emailError;
     }
 
     if (verifyFields()) {
@@ -63,14 +51,16 @@ export default function SignUpPage() {
         isAdmin
       )
         .then((_userId) => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           signUpTxt!.innerHTML = 'Sign Up Successful! Welcome!';
-          // setTimeout(() => {}, 1000);
           window.location.href = '/Main';
         })
         .catch((_error) => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           signUpTxt!.innerHTML = 'Sign Up Failed! Error in User Creation!';
         });
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       signUpTxt!.innerHTML =
         'Sign Up Failed! Invalid Username/Email or Password!';
     }
@@ -103,6 +93,7 @@ export default function SignUpPage() {
             className='gap-2 bg-white py-5'
             style={{ width: '35%', height: '50%', zIndex: 5 }}
           >
+            {/* input form with elements to create a new user */}
             <form className='mt-3'>
               <label
                 className='text-gray-500 '
