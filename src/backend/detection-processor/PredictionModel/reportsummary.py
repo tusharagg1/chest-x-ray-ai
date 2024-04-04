@@ -1,8 +1,22 @@
+## generate a basic summary of the findings in predictions
+"""
+SAMPLE REPORT TEMPLATE
+Highest priority: further investigation of <> recommended. #disease with highest value
+
+High risk of Q,W,E was found #value > 0.75
+Moderate risk of Q,W,E was found #value > 0.4
+Low risk of Q,W,E was found #value > 0.05
+A significant risk was not found for any of the diseases #if above 3 are empty
+Negligible risk of Q,W,E #value <= 0.05
+"""
+
+
 def genreport(preds):
 
     priority = max(preds, key=preds.get)
 
-    low, mod, hi, neg = [], [], [], []
+    # 4 levels of risk: high, moderate, low, negligible
+    hi, mod, low, neg = [], [], [], []
     report = ""
     for disease in preds:
         if preds[disease] > 0.75:
@@ -14,8 +28,8 @@ def genreport(preds):
         else:
             neg.append(disease)
 
-    report += f"Highest priority: further investigation of {
-        priority} recommended.\n\n"
+    report += f"Highest priority: further investigation of
+        {priority} recommended.\n\n"
     if len(hi) > 0:
         hiS = ", ".join(hi)
         report += f"High risk of {hiS} was found\n"
@@ -36,16 +50,3 @@ def genreport(preds):
         report += f"Negligible risk of {neg}.\n"
 
     return report
-
-
-"""
-SAMPLE REPORT TEMPLATE
-Highest priority: further investigation of <> recommended.
-#disease with highest value
-
-High risk of Q,W,E was found #value > 0.75
-Moderate risk of Q,W,E was found #value > 0.4
-Low risk of Q,W,E was found #value > 0.05
-A significant risk was not found for any of the diseases #if above 3 are empty
-Negligible risk of Q,W,E #value <= 0.05
-"""

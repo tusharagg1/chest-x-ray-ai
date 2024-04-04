@@ -5,6 +5,7 @@ import torch
 import torchvision.transforms
 import torchxrayvision as xrv
 
+# list of diseases that are checked
 diseases = [
     "Atelectasis",
     "Pneumonia",
@@ -13,7 +14,9 @@ diseases = [
 ]
 
 
-# get predictions from a dcm x-ray
+# get predictions from raw image data
+# by default, "all" weights used (all datasets trained in torchxrayvision)
+
 def getprediction(img, weights="densenet121-res224-all"):
 
     disease_index_dict = dict(
@@ -26,7 +29,6 @@ def getprediction(img, weights="densenet121-res224-all"):
         )
     )
 
-    # img = getimgdata(img_bytes)
     img = xrv.datasets.normalize(img, 255)
 
     # Check that images are 2D arrays
@@ -59,24 +61,18 @@ def getprediction(img, weights="densenet121-res224-all"):
     return allpreds
 
 
+
+# Returns combined predictions for all dcm xrays in a directory.
+# Args: xraydir: Path to the directory containing the x-ray images.
 def scanallxrays(raw_imgs):
-    """
-    Returns combined predictions for all dcm xrays in a directory.
-
-    Args:
-        xraydir (str): Path to the directory containing the x-ray images.
-
-    Returns:
-        dict: Dictionary containing combined predictions for each disease.
-    """
-
     allpreds = []
 
     for img in raw_imgs:
         preds = getprediction(img)
-        print(f"gotpreds!\n{preds}")
+        print(f"gotpreds!\n{preds}") # print for debug
         allpreds.append(preds)
 
+    # if there are multiple images, prediction is the avg value
     if len(allpreds) > 1:
         finalpreds = {}
         pnum = len(allpreds)
