@@ -13,7 +13,6 @@ readActivePatientID } = require('./database-ops');
 // import user-auth-mgmt module functions for testing
 const { createNewUser, deleteAUser } = require('./user-auth-mgmt');
 
-import { error } from "console";
 // import necessary firebase configuration setup
 import { auth, db } from "./backend-config";
 
