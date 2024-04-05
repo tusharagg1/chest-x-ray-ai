@@ -1,8 +1,18 @@
 // import needed externally defined modules
-import { ref, set, child, get } from 'firebase/database';
+import { ref, set, child, get } from "firebase/database";
 
 // write user data
-export async function writeUserData(db, userId, userName, email, password, firstName, lastName, medInsts, isAdminUser) {
+export async function writeUserData(
+  db,
+  userId,
+  userName,
+  email,
+  password,
+  firstName,
+  lastName,
+  medInsts,
+  isAdminUser,
+) {
   const writeUserDataRef = ref(db, `users/${userId}`);
   await set(writeUserDataRef, {
     userName: userName,
@@ -11,14 +21,14 @@ export async function writeUserData(db, userId, userName, email, password, first
     firstName: firstName,
     lastName: lastName,
     medInsts: medInsts,
-    isAdminUser: isAdminUser
+    isAdminUser: isAdminUser,
   })
-  .then(() => {
-    return true;
-  })
-  .catch((_error) => {
-    return false;
-  });
+    .then(() => {
+      return true;
+    })
+    .catch((_error) => {
+      return false;
+    });
 }
 
 // read user data
@@ -58,13 +68,20 @@ export async function deleteUserData(db, userId) {
 
 // transform raw user data
 function transformRawUserData(rawUserData) {
-  const fields = ["userName", "email", "password", "firstName", "lastName", "medInsts", "isAdminUser"];
+  const fields = [
+    "userName",
+    "email",
+    "password",
+    "firstName",
+    "lastName",
+    "medInsts",
+    "isAdminUser",
+  ];
   var userData = new Object();
   for (var field of fields) {
     if (rawUserData[field] != null) {
       userData[field] = rawUserData[field];
-    }
-    else {
+    } else {
       userData[field] = "-";
     }
   }
@@ -72,7 +89,18 @@ function transformRawUserData(rawUserData) {
 }
 
 // write patient data
-export async function writePatientData(db, patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit) {
+export async function writePatientData(
+  db,
+  patientId,
+  mrn,
+  firstName,
+  lastName,
+  dob,
+  gender,
+  contact,
+  refPhys,
+  lastVisit,
+) {
   const writePatientDataRef = ref(db, `patientsData/${patientId}`);
   await set(writePatientDataRef, {
     mrn: mrn,
@@ -82,14 +110,14 @@ export async function writePatientData(db, patientId, mrn, firstName, lastName, 
     gender: gender,
     contact: contact,
     refPhys: refPhys,
-    lastVisit: lastVisit
+    lastVisit: lastVisit,
   })
-  .then(() => {
-    return true;
-  })
-  .catch((_error) => {
-    return false;
-  });
+    .then(() => {
+      return true;
+    })
+    .catch((_error) => {
+      return false;
+    });
 }
 
 // read patient data
@@ -131,19 +159,21 @@ export async function readAllPatientData(db) {
   return new Promise((resolve, reject) => {
     const readAllPatientDataRef = ref(db);
     let patientsData = [];
-    get(child(readAllPatientDataRef, 'patientsData')).then((patients) => {
-      patients.forEach(pt => {
-        patientsData.push(addPatientAsListItem(pt));
-      });
-      if (patientsData) {
-        resolve(patientsData);
-      } else {
+    get(child(readAllPatientDataRef, "patientsData"))
+      .then((patients) => {
+        patients.forEach((pt) => {
+          patientsData.push(addPatientAsListItem(pt));
+        });
+        if (patientsData) {
+          resolve(patientsData);
+        } else {
+          reject(null);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
         reject(null);
-      }
-    }).catch((error) => {
-      console.log(error);
-      reject(null);
-    });
+      });
 
     function addPatientAsListItem(pt) {
       let key = pt.key;
@@ -151,30 +181,30 @@ export async function readAllPatientData(db) {
       value["patientID"] = key;
       return value;
     }
-  })
+  });
 }
 
 // write active patient id
 export async function writeActivePatientID(db, patientId) {
   return new Promise((resolve, reject) => {
-    const writeActivePatientIDRef = ref(db, 'activePatient');
+    const writeActivePatientIDRef = ref(db, "activePatient");
     set(writeActivePatientIDRef, {
-      patientID: patientId
+      patientID: patientId,
     })
-    .then(() => {
-      resolve(true);
-    })
-    .catch((error) => {
-      reject(error);
-    });
+      .then(() => {
+        resolve(true);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 }
 
 // read active patient id
 export async function readActivePatientID(db) {
   return new Promise((resolve, reject) => {
-    const readActivePatientIDRef = ref(db, 'activePatient');
-    get(child(readActivePatientIDRef, 'patientID'))
+    const readActivePatientIDRef = ref(db, "activePatient");
+    get(child(readActivePatientIDRef, "patientID"))
       .then((snapshot) => {
         if (snapshot.exists()) {
           let patientID = snapshot.val();

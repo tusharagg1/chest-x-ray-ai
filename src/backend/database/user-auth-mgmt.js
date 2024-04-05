@@ -1,12 +1,16 @@
 // import needed externally defined modules
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  deleteUser,
+} from "firebase/auth";
 
 // create a new user
 export function createNewUser(auth, email, password) {
   return new Promise((resolve, reject) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
         const user = userCredential.user;
         resolve(user.uid);
       })
@@ -24,8 +28,7 @@ export function deleteAUser(auth, email) {
     const user = auth.currentUser;
     if (user == null) {
       reject(null);
-    }
-    else if (user.email !== email) {
+    } else if (user.email !== email) {
       reject(false);
     }
     deleteUser(user)
@@ -43,7 +46,7 @@ export function signInUser(auth, email, password) {
   return new Promise((resolve, reject) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
         const user = userCredential.user;
         resolve(user.uid);
       })
@@ -58,12 +61,15 @@ export function signInUser(auth, email, password) {
 // sign out a user
 export function signOutUser(auth) {
   return new Promise((resolve, reject) => {
-    auth.signOut().then(() => {
-      // Sign-out successful.
-      resolve(true);
-    }).catch((_error) => {
-      // An error happened.
-      reject(false);
-    });
+    auth
+      .signOut()
+      .then(() => {
+        // Sign-out successful.
+        resolve(true);
+      })
+      .catch((_error) => {
+        // An error happened.
+        reject(false);
+      });
   });
 }

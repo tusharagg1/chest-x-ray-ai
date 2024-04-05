@@ -1,8 +1,8 @@
 /*
-* Author: Allison Cook
-* Date Created: March 2024
-* Purpose: Display the account creation page
-*/
+ * Author: Allison Cook
+ * Date Created: March 2024
+ * Purpose: Display the account creation page
+ */
 'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -20,7 +20,7 @@ export default function SignUpPage() {
   const onSignUp = () => {
     setEmail((document.getElementById('email') as HTMLInputElement).value);
     setPassword(
-      (document.getElementById('password') as HTMLInputElement).value
+      (document.getElementById('password') as HTMLInputElement).value,
     );
     const firstName = (document.getElementById('firstName') as HTMLInputElement)
       .value;
@@ -48,7 +48,7 @@ export default function SignUpPage() {
         firstName,
         lastName,
         medInsts,
-        isAdmin
+        isAdmin,
       )
         .then((_userId) => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

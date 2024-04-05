@@ -1,13 +1,13 @@
 /*
-* Author: Allison Cook
-* Date Created: January 2024
-* Purpose: Create the main application page display
-*/
+ * Author: Allison Cook
+ * Date Created: January 2024
+ * Purpose: Create the main application page display
+ */
 'use client';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //ts comments stop errors that didn't effect compliation or function
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import Button from '@/components/buttons/Button';
@@ -15,7 +15,10 @@ import Button from '@/components/buttons/Button';
 import { cols } from '@/app/components/patientColumns';
 import Table from '@/app/components/table';
 
-import { getAllPatientData, signOutAUser} from "../../../../backend/database/backend";
+import {
+  getAllPatientData,
+  signOutAUser,
+} from '../../../../backend/database/backend';
 
 export default function MainPage() {
   // const [patientSelected] = useState(false);
@@ -37,14 +40,14 @@ export default function MainPage() {
   if (typeof document !== 'undefined') {
     document.addEventListener(`click`, handle);
   }
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handle(evt: { target: any }) {
     // only do something if a checkbox was clicked
     if (evt.target.type === `checkbox`) {
       const isChecked = evt.target.checked;
       const selectedRow = evt.target.closest(`tr`);
-  
+
       /* @ts-ignore */
       const tds = Array.from(selectedRow.cells).map((td) => td.textContent);
       // reset checkboxes, row coloring and disabled state
@@ -52,21 +55,21 @@ export default function MainPage() {
         /* @ts-ignore */
         cb.checked = cb !== evt.target ? false : isChecked;
         const row = cb.closest(`tr`);
-  
+
         /* @ts-ignore */
         row.classList[isChecked && row === selectedRow ? `add` : `remove`](
-          'selected'
+          'selected',
         );
       });
       return tds;
     }
   }
 
-  //get patient data from database 
+  //get patient data from database
   function allPatientData() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const items: any[] = [];
-    const patientDataTable = document.getElementById("patientDataTable");
+    const patientDataTable = document.getElementById('patientDataTable');
     getAllPatientData()
       .then((patientData) => {
         for (let i = 0; i < patientData.length; i++) {
@@ -74,17 +77,19 @@ export default function MainPage() {
           items.push({
             PatientID: pd.patientID,
             MRN: pd.mrn,
-            Name: pd.firstName + " " + pd.lastName,
+            Name: pd.firstName + ' ' + pd.lastName,
             DOB: pd.dob,
             Gender: pd.gender,
             Contact: pd.contact,
             ReferringP: pd.refPhys,
             LastVisit: pd.lastVisit,
-            Selected: false
+            Selected: false,
           });
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        patientDataTable!.innerHTML = ReactDOMServer.renderToString(<Table data={items} columns={cols} />);
+        patientDataTable!.innerHTML = ReactDOMServer.renderToString(
+          <Table data={items} columns={cols} />,
+        );
       })
       .catch(() => {
         //error
@@ -93,13 +98,13 @@ export default function MainPage() {
 
   //signout current active user
   const onSignOut = () => {
-    const signOutTxt = document.getElementById("signOutSuccess");
+    const signOutTxt = document.getElementById('signOutSuccess');
 
     signOutAUser()
       .then((_userSignedOut) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         signOutTxt!.innerHTML = `Sign Out Successful! Goodbye!`;
-        window.location.href = "/"; // login page
+        window.location.href = '/'; // login page
       })
       .catch((_error) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -156,7 +161,10 @@ export default function MainPage() {
           >
             <h2 className='mb-5 text-indigo-500'>Recent Patients</h2>
             {/* display recent patients from database */}
-            <div className='flex items-center justify-center text-center' id='patientDataTable'>
+            <div
+              className='flex items-center justify-center text-center'
+              id='patientDataTable'
+            >
               <Table data={data()} columns={cols} />
             </div>
             <Button
@@ -204,4 +212,3 @@ export default function MainPage() {
     </main>
   );
 }
-

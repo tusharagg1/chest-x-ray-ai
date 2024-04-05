@@ -1,8 +1,8 @@
 /*
-* Author: Allison Cook
-* Date Created: January 2024
-* Purpose: Create column defintions used for table elements for predicted risk 
-*/
+ * Author: Allison Cook
+ * Date Created: January 2024
+ * Purpose: Create column defintions used for table elements for predicted risk
+ */
 type Item = {
   name: string;
   risk: number;

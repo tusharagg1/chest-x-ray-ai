@@ -1,8 +1,8 @@
 /*
-* Author: Allison Cook
-* Date Created: November 2023
-* Purpose: Display results of X-ray study (patient information, orginial x-ray images, heatmaps, and prediction results)
-*/
+ * Author: Allison Cook
+ * Date Created: November 2023
+ * Purpose: Display results of X-ray study (patient information, orginial x-ray images, heatmaps, and prediction results)
+ */
 
 'use client';
 import React, { useEffect, useState } from 'react';
@@ -111,7 +111,7 @@ export default function NewStudyPage() {
             });
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             patientDataTable!.innerHTML = ReactDOMServer.renderToString(
-              <Table data={patientData} columns={colsInfo}></Table>
+              <Table data={patientData} columns={colsInfo}></Table>,
             );
           })
           .catch(() => {
@@ -136,8 +136,8 @@ export default function NewStudyPage() {
     let StudyResults = response;
     if (!StudyResults) {
       // if no response from server, put mock response
-      if(id != 8){
-        setLoadingError(true)
+      if (id != 8) {
+        setLoadingError(true);
       }
       StudyResults = frontMockResponse();
     }
@@ -164,21 +164,21 @@ export default function NewStudyPage() {
 
     setpnRisk(
       (StudyResults['predictions']['Pneumonia'] * 100).toFixed(2).toString() +
-        '%'
+        '%',
     );
     setatRisk(
       (StudyResults['predictions']['Atelectasis'] * 100).toFixed(2).toString() +
-        '%'
+        '%',
     );
     setcaRisk(
       (StudyResults['predictions']['Cardiomegaly'] * 100)
         .toFixed(2)
-        .toString() + '%'
+        .toString() + '%',
     );
     setpeRisk(
       (StudyResults['predictions']['Pleural_Thickening'] * 100)
         .toFixed(2)
-        .toString() + '%'
+        .toString() + '%',
     );
 
     const predData = () => {
@@ -220,15 +220,15 @@ export default function NewStudyPage() {
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     resultImagesCarousel!.innerHTML = ReactDOMServer.renderToString(
-      <Carousel data={resultImages} />
+      <Carousel data={resultImages} />,
     );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     originalImagesCarousel!.innerHTML = ReactDOMServer.renderToString(
-      <Carousel data={originalImages} />
+      <Carousel data={originalImages} />,
     );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     predictions!.innerHTML = ReactDOMServer.renderToString(
-      <SingleTable data={predData()} columns={cols} />
+      <SingleTable data={predData()} columns={cols} />,
     );
     setNotes(StudyResults['report']);
   };

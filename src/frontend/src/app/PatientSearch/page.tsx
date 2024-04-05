@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //ts comments stop errors that didn't effect compliation or function
 /*
-* Author: Allison Cook
-* Date Created: January 2024
-* Purpose: Displays search page to allow for a database search with results 
-*/
+ * Author: Allison Cook
+ * Date Created: January 2024
+ * Purpose: Displays search page to allow for a database search with results
+ */
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -38,7 +38,7 @@ export default function SearchPage() {
   function allPatientData() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const items: any[] = [];
-    const patientDataTable = document.getElementById("patientDataTable");
+    const patientDataTable = document.getElementById('patientDataTable');
     getAllPatientData()
       .then((patientData) => {
         for (let i = 0; i < patientData.length; i++) {
@@ -46,16 +46,16 @@ export default function SearchPage() {
           items.push({
             PatientID: pd.patientID,
             MRN: pd.mrn,
-            Name: pd.firstName + " " + pd.lastName,
+            Name: pd.firstName + ' ' + pd.lastName,
             DOB: pd.dob,
             Gender: pd.gender,
             Contact: pd.contact,
             ReferringP: pd.refPhys,
             LastVisit: pd.lastVisit,
-            Selected: false
+            Selected: false,
           });
         }
-        for (let i= 0; i < 2; i++){
+        for (let i = 0; i < 2; i++) {
           items.push({
             PatientID: null,
             MRN: null,
@@ -69,7 +69,9 @@ export default function SearchPage() {
           });
         }
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        patientDataTable!.innerHTML = ReactDOMServer.renderToString(<Table data={items} columns={cols} />);
+        patientDataTable!.innerHTML = ReactDOMServer.renderToString(
+          <Table data={items} columns={cols} />,
+        );
       })
       .catch(() => {
         //error
@@ -78,8 +80,8 @@ export default function SearchPage() {
 
   function handleSubmit() {
     //update the table with the matching records
-    if (orderType == 'Ascending'){
-      //normal fetch of records 
+    if (orderType == 'Ascending') {
+      //normal fetch of records
     }
   }
 
@@ -96,14 +98,14 @@ export default function SearchPage() {
   if (typeof document !== 'undefined') {
     document.addEventListener(`click`, handle);
   }
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handle(evt: { target: any }) {
     // only do something if a checkbox was clicked
     if (evt.target.type === `checkbox`) {
       const isChecked = evt.target.checked;
       const selectedRow = evt.target.closest(`tr`);
-  
+
       /* @ts-ignore */
       const tds = Array.from(selectedRow.cells).map((td) => td.textContent);
       // reset checkboxes, row coloring and disabled state
@@ -111,10 +113,10 @@ export default function SearchPage() {
         /* @ts-ignore */
         cb.checked = cb !== evt.target ? false : isChecked;
         const row = cb.closest(`tr`);
-  
+
         /* @ts-ignore */
         row.classList[isChecked && row === selectedRow ? `add` : `remove`](
-          'selected'
+          'selected',
         );
       });
       return tds;
@@ -281,24 +283,19 @@ export default function SearchPage() {
             </ol>
           </form>
           {/* display the records according to the search */}
-          <div className='flex items-center justify-center text-center' id='patientDataTable'>
+          <div
+            className='flex items-center justify-center text-center'
+            id='patientDataTable'
+          >
             <Table data={data()} columns={cols} />
           </div>
           <div className='mt-3 flex items-center px-2 text-center'>
             <div style={{ paddingRight: '35%' }}>
-              <Button
-                size='base'
-                variant='primary'
-                onClick={handleSubmit}
-              >
+              <Button size='base' variant='primary' onClick={handleSubmit}>
                 Search
               </Button>
             </div>
-            <Button
-              size='base'
-              variant='primary'
-              onClick={study}
-            >
+            <Button size='base' variant='primary' onClick={study}>
               X-ray Study
             </Button>
           </div>

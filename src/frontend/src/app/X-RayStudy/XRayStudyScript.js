@@ -1,8 +1,8 @@
 /*
-* Author: Allison Cook
-* Date Created: March 2024
-* Purpose: Create the post call to the ML model
-*/
+ * Author: Allison Cook
+ * Date Created: March 2024
+ * Purpose: Create the post call to the ML model
+ */
 /**
  * @description api call to model
  * @param {*} patientId

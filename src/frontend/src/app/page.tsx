@@ -1,8 +1,8 @@
 /*
-* Author: Allison Cook
-* Date Created: January 2024
-* Purpose: Display the login page when first accessing the webpage 
-*/
+ * Author: Allison Cook
+ * Date Created: January 2024
+ * Purpose: Display the login page when first accessing the webpage
+ */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 

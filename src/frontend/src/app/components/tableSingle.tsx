@@ -1,10 +1,10 @@
 /*
-* Author: Allison Cook
-* Date Created: March 2024
-* Purpose: Create exported table element to display custom table, no headers for small display on X-ray page
-*/
+ * Author: Allison Cook
+ * Date Created: March 2024
+ * Purpose: Create exported table element to display custom table, no headers for small display on X-ray page
+ */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-//ts comments stop errors that didn't effect compliation or function 
+//ts comments stop errors that didn't effect compliation or function
 //referenced: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
 type ColumnDefinitionType<T, K extends keyof T> = {
   key: K;

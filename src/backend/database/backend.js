@@ -4,9 +4,23 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 // import needed internally defined modules
-import { createNewUser, deleteAUser, signInUser, signOutUser } from './user-auth-mgmt';
-import { readUserData, writeUserData, deleteUserData, writePatientData, readPatientData,
-  deletePatientData, readAllPatientData, writeActivePatientID, readActivePatientID } from './database-ops';
+import {
+  createNewUser,
+  deleteAUser,
+  signInUser,
+  signOutUser,
+} from "./user-auth-mgmt";
+import {
+  readUserData,
+  writeUserData,
+  deleteUserData,
+  writePatientData,
+  readPatientData,
+  deletePatientData,
+  readAllPatientData,
+  writeActivePatientID,
+  readActivePatientID,
+} from "./database-ops";
 
 // necessary firebase configuration setup
 const firebaseConfig = {
@@ -17,8 +31,8 @@ const firebaseConfig = {
   storageBucket: "chest-x-ray-ai-f0b4a.appspot.com",
   messagingSenderId: "106488932425",
   appId: "1:106488932425:web:74c67977d47848d27f3798",
-  measurementId: "G-085B846RRX"
-}
+  measurementId: "G-085B846RRX",
+};
 
 // necessary constants for various firebase functionalities (i.e. auth, database)
 const app = initializeApp(firebaseConfig);
@@ -26,11 +40,29 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 // create a new user
-export function createANewUser(userName, email, password, firstName, lastName, medInsts, isAdminUser) {
+export function createANewUser(
+  userName,
+  email,
+  password,
+  firstName,
+  lastName,
+  medInsts,
+  isAdminUser,
+) {
   return new Promise((resolve, reject) => {
     createNewUser(auth, email, password)
       .then((userId) => {
-        writeUserData(db, userId, userName, email, password, firstName, lastName, medInsts, isAdminUser)
+        writeUserData(
+          db,
+          userId,
+          userName,
+          email,
+          password,
+          firstName,
+          lastName,
+          medInsts,
+          isAdminUser,
+        )
           .then((_userDataWritten) => {
             resolve(userId);
           })
@@ -77,8 +109,7 @@ export function signInAUser(email, password) {
         const userData = readUserData(db, userId);
         if (userData !== null) {
           resolve(userData);
-        }
-        else {
+        } else {
           reject(null);
         }
       })
@@ -137,9 +168,30 @@ export function getCurrentUserAfterInitAuth() {
 }
 
 // create a patient's data
-export function createANewPatient(patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit) {
+export function createANewPatient(
+  patientId,
+  mrn,
+  firstName,
+  lastName,
+  dob,
+  gender,
+  contact,
+  refPhys,
+  lastVisit,
+) {
   return new Promise((resolve, reject) => {
-    writePatientData(db, patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit)
+    writePatientData(
+      db,
+      patientId,
+      mrn,
+      firstName,
+      lastName,
+      dob,
+      gender,
+      contact,
+      refPhys,
+      lastVisit,
+    )
       .then((_patientDataWritten) => {
         resolve(patientId);
       })
@@ -169,8 +221,7 @@ export function getAPatientsData(patientId) {
       .then((patientData) => {
         if (patientData) {
           resolve(patientData);
-        }
-        else {
+        } else {
           reject(null);
         }
       })
@@ -204,8 +255,7 @@ export function setActivePatientID(patientId) {
       .then((setSuccess) => {
         if (setSuccess) {
           resolve(true);
-        }
-        else {
+        } else {
           reject(false);
         }
       })
@@ -223,8 +273,7 @@ export function getActivePatientId() {
       .then((patientID) => {
         if (patientID) {
           resolve(patientID);
-        }
-        else {
+        } else {
           reject(null);
         }
       })

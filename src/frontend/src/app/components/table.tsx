@@ -1,8 +1,8 @@
 /*
-* Author: Allison Cook
-* Date Created: January 2024
-* Purpose: Create exported table element to display custom table 
-*/
+ * Author: Allison Cook
+ * Date Created: January 2024
+ * Purpose: Create exported table element to display custom table
+ */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //ts comments stop errors that didn't effect compliation or function
 //referenced: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
