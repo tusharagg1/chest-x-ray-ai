@@ -1,5 +1,11 @@
-//cite: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
-
+/*
+* Author: Allison Cook
+* Date Created: January 2024
+* Purpose: Create exported table element, that is smaller for X-ray study page
+*/
+//referenced: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//ts comments stop errors that didn't effect compliation or function 
 type ColumnDefinitionType<T, K extends keyof T> = {
   key: K;
   header: string;
@@ -81,6 +87,7 @@ const TableRows = <T, K extends keyof T>({
         {columns.map((column, index2) => {
             return (
               <td key={`cell-${index2}`} style={Sstyle}>
+                {/* @ts-ignore */}
                 {row[column.key]}
               </td>
             );

@@ -1,3 +1,8 @@
+/*
+* Author: Template
+* Date Created: October 2023
+* Purpose: Create application default layout
+*/
 import { Metadata } from 'next';
 import * as React from 'react';
 
