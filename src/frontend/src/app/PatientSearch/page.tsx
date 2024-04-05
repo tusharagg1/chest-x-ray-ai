@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//ts comments stop errors that didn't effect compliation or function
 /*
 * Author: Allison Cook
 * Date Created: January 2024
