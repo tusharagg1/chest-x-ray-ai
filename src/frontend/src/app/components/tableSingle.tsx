@@ -1,4 +1,11 @@
-//cite: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
+/*
+ * Author: Allison Cook
+ * Date Created: March 2024
+ * Purpose: Create exported table element to display custom table, no headers for small display on X-ray page
+ */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//ts comments stop errors that didn't effect compliation or function
+//referenced: https://www.bekk.christmas/post/2020/22/create-a-generic-table-with-react-and-typescript
 type ColumnDefinitionType<T, K extends keyof T> = {
   key: K;
   header: string;
@@ -15,13 +22,13 @@ const Tstyle = {
   height: '50%',
 } as const;
 
+// creating final table element
 const SingleTable = <T, K extends keyof T>({
   data,
   columns,
 }: TableProps<T, K>): JSX.Element => {
   return (
     <table style={Tstyle}>
-      {/* <TableHeader columns={columns} /> */}
       <TableRows data={data} columns={columns} />
     </table>
   );
@@ -32,6 +39,7 @@ type TableRowsProps<T, K extends keyof T> = {
   columns: Array<ColumnDefinitionType<T, K>>;
 };
 
+// row style
 const Sstyle = {
   borderTop: '1px solid gray',
   borderBottom: '1px solid gray',
@@ -40,6 +48,7 @@ const Sstyle = {
   paddingLeft: '3%',
 };
 
+// building of the table rows using the data given
 const TableRows = <T, K extends keyof T>({
   data,
   columns,
@@ -50,6 +59,7 @@ const TableRows = <T, K extends keyof T>({
         {columns.map((column, index2) => {
           return (
             <td key={`cell-${index2}`} style={Sstyle}>
+              {/* @ts-ignore */}
               {row[column.key]}
             </td>
           );

@@ -1,4 +1,4 @@
-# AI for chest X-ray read  
+# AI for chest X-ray read
 
 
 **Developer Names:**  

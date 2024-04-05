@@ -1,3 +1,5 @@
+## image processing for effective storage and communication with frontend
+
 import pydicom
 import numpy as np
 import pydicom
@@ -43,46 +45,34 @@ def lin_stretch_img(img, low_prc, high_prc, do_ignore_minmax=True):
     return stretch_img
 
 
+# returns raw image data from dicom bytes
 def getimgdata(dcmdata):
-
     ds = pydicom.dcmread(dcmdata, force=True)
-    img = ds.pixel_array  # get image array
+    img = ds.pixel_array
+    img = lin_stretch_img(img, 1, 99)
 
-    img = lin_stretch_img(img, 1, 99)  # Apply "linear stretching"
-    # (lower percentile 1 goes to 0, and percentile 99 to 255).
-
-    #cv2.imwrite('img.png', img)
     return img
 
 
 # returns filenames in a directory that have given extension (example: ".dcm")
-def getfilenames(file_list, extension = '.dcm'):
+def getfilenames(file_list, extension=".dcm"):
     return [filename for filename in file_list if filename.endswith(extension)]
 
 
-# function to return encoded png files
+# function to return base64 encoded png files
+# arg: raw img data
 def getencodedimg(img_array):
     img = Image.fromarray(img_array)
     img_bytes_io = io.BytesIO()
-    img.save(img_bytes_io, format='JPEG')
+
+    # compressed to jpeg as the xrays are high resolution
+    img.save(img_bytes_io, format="JPEG")
     img_bytes_io.seek(0)
     image_data = img_bytes_io.getvalue()
-    base64_image = base64.b64encode(image_data).decode('utf-8')
+    base64_image = base64.b64encode(image_data).decode("utf-8")
     return base64_image
-    #img = getimgdata(raw_imgs)
-    #cv2.imwrite(raw_imgs, img)
 
 
+# wrapper function to return encoded xray images
 def get_xraypngs(raw_imgs):
     return [getencodedimg(img_array) for img_array in raw_imgs]
-
-'''
-# saves a jpg conversion of all dcm files in given dir.
-def convertall(dcmdir):
-
-    dcmfiles = getfilenames(dcmdir, ".dcm")
-    for img in dcmfiles:
-        dcmpath = os.path.join(dcmdir, img)
-        target = os.path.join(dcmdir, img[:-3] + "jpg")
-        convertdcmtojpg(dcmpath, target)
-'''

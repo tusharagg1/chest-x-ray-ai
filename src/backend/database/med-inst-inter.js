@@ -4,7 +4,7 @@ var med_inst_inter = (function () {
 
   return {
     // list public functions here
-  }
+  };
 })();
 
 // export the module

@@ -1,16 +1,22 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//ts comments stop errors that didn't effect compliation or function
+/*
+ * Author: Allison Cook
+ * Date Created: January 2024
+ * Purpose: Displays search page to allow for a database search with results
+ */
 'use client';
 
-//import Button from "@/components/buttons/Button";
 import React, { useEffect, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
 
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
 
-// import { Patient } from '../components/patientColumns';
 import { cols } from '@/app/components/patientColumns';
 import Table from '@/app/components/table';
+
 import { getAllPatientData } from '../../../../backend/database/backend';
-import ReactDOMServer from 'react-dom/server';
 
 export default function SearchPage() {
   const [searchKey, setSearchKey] = useState('');
@@ -30,25 +36,26 @@ export default function SearchPage() {
   }, []);
 
   function allPatientData() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const items: any[] = [];
-    const patientDataTable = document.getElementById("patientDataTable");
+    const patientDataTable = document.getElementById('patientDataTable');
     getAllPatientData()
       .then((patientData) => {
         for (let i = 0; i < patientData.length; i++) {
-          let pd = patientData[i];
+          const pd = patientData[i];
           items.push({
             PatientID: pd.patientID,
             MRN: pd.mrn,
-            Name: pd.firstName + " " + pd.lastName,
+            Name: pd.firstName + ' ' + pd.lastName,
             DOB: pd.dob,
             Gender: pd.gender,
             Contact: pd.contact,
             ReferringP: pd.refPhys,
             LastVisit: pd.lastVisit,
-            Selected: false
+            Selected: false,
           });
         }
-        for (let i= 0; i < 2; i++){
+        for (let i = 0; i < 2; i++) {
           items.push({
             PatientID: null,
             MRN: null,
@@ -61,16 +68,21 @@ export default function SearchPage() {
             Selected: false,
           });
         }
-        patientDataTable!.innerHTML = ReactDOMServer.renderToString(<Table data={items} columns={cols} />);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        patientDataTable!.innerHTML = ReactDOMServer.renderToString(
+          <Table data={items} columns={cols} />,
+        );
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        //error
       });
   }
 
   function handleSubmit() {
     //update the table with the matching records
-    //backend calls here
+    if (orderType == 'Ascending') {
+      //normal fetch of records
+    }
   }
 
   function study() {
@@ -81,6 +93,34 @@ export default function SearchPage() {
   function handleInputChange(value: string) {
     setCheckBox(value);
     setSearchKeyType(value);
+  }
+
+  if (typeof document !== 'undefined') {
+    document.addEventListener(`click`, handle);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function handle(evt: { target: any }) {
+    // only do something if a checkbox was clicked
+    if (evt.target.type === `checkbox`) {
+      const isChecked = evt.target.checked;
+      const selectedRow = evt.target.closest(`tr`);
+
+      /* @ts-ignore */
+      const tds = Array.from(selectedRow.cells).map((td) => td.textContent);
+      // reset checkboxes, row coloring and disabled state
+      document.querySelectorAll(`input[type='checkbox']`).forEach((cb) => {
+        /* @ts-ignore */
+        cb.checked = cb !== evt.target ? false : isChecked;
+        const row = cb.closest(`tr`);
+
+        /* @ts-ignore */
+        row.classList[isChecked && row === selectedRow ? `add` : `remove`](
+          'selected',
+        );
+      });
+      return tds;
+    }
   }
 
   function handleOrderInputChange(value: string) {
@@ -136,8 +176,9 @@ export default function SearchPage() {
       <div className='layout relative flex flex-col items-center gap-5 py-2 text-center'>
         <div
           className='gap-2 bg-gray-100 p-5 px-5'
-          style={{ width: '90%', height: '80vh', zIndex: 5 }}
+          style={{ width: '95%', height: '80vh', zIndex: 5 }}
         >
+          {/* Ability to change sorting and search feild of the database records to be displayed*/}
           <form
             method='post'
             onSubmit={handleSubmit}
@@ -241,26 +282,20 @@ export default function SearchPage() {
               </div>
             </ol>
           </form>
-          <div className='flex items-center justify-center text-center' id='patientDataTable'>
+          {/* display the records according to the search */}
+          <div
+            className='flex items-center justify-center text-center'
+            id='patientDataTable'
+          >
             <Table data={data()} columns={cols} />
           </div>
           <div className='mt-3 flex items-center px-2 text-center'>
             <div style={{ paddingRight: '35%' }}>
-              <Button
-                size='base'
-                variant='primary'
-                // type='submit'
-                onClick={handleSubmit}
-              >
+              <Button size='base' variant='primary' onClick={handleSubmit}>
                 Search
               </Button>
             </div>
-            <Button
-              size='base'
-              variant='primary'
-              // type='submit'
-              onClick={study}
-            >
+            <Button size='base' variant='primary' onClick={study}>
               X-ray Study
             </Button>
           </div>
@@ -271,7 +306,7 @@ export default function SearchPage() {
             paddingTop: '2%',
             position: 'absolute',
             zIndex: 3,
-            width: '93%',
+            width: '97%',
             height: '100%',
           }}
         >
@@ -283,7 +318,4 @@ export default function SearchPage() {
       </div>
     </main>
   );
-}
-function componentDidMount() {
-  throw new Error('Function not implemented.');
 }

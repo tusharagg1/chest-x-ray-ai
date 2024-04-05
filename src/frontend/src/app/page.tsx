@@ -1,3 +1,8 @@
+/*
+ * Author: Allison Cook
+ * Date Created: January 2024
+ * Purpose: Display the login page when first accessing the webpage
+ */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
@@ -22,13 +27,6 @@ export default function loginPage() {
    */
   function handleSubmit() {
     setLoading(true);
-
-    // setEmail(
-    //   (document.getElementById('userName_email') as HTMLInputElement).value
-    // );
-    // setPassword(
-    //   (document.getElementById('password') as HTMLInputElement).value
-    // );
     const signInTxt = document.getElementById('signInSuccess');
 
     //password validation
@@ -44,6 +42,7 @@ export default function loginPage() {
       setPasswordError(false);
     }
 
+    //email validation
     if (email == '') {
       setEmailError(true);
       setEmailErrorMessage('Please enter your email');
@@ -54,12 +53,12 @@ export default function loginPage() {
 
     signInAUser(email, password)
       .then((userData) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         signInTxt!.innerHTML = `Sign In Successful! Welcome ${userData.userName}!`;
-        // setTimeout(() => {}, 1000);
         window.location.href = '/Main';
       })
       .catch(() => {
-        // console.log(error);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         signInTxt!.innerHTML = 'Sign In Failed! Error in User Sign In!';
       });
   }
@@ -95,6 +94,7 @@ export default function loginPage() {
             <p className='text-gray-500'>Sign in to your account</p>
             <form method='post' className='mt-3'>
               <ol>
+                {/* login input form */}
                 <div>
                   <label
                     className='text-gray-500 '
@@ -152,9 +152,6 @@ export default function loginPage() {
                 </div>
               </ol>
             </form>
-            <UnderlineLink href='/X-RayStudy' className='text-sm text-gray-500'>
-              Forgot password
-            </UnderlineLink>
 
             {emailError && <p className='text-red-500'>{emailErrorMessage}</p>}
             {passwordError && (

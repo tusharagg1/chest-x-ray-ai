@@ -1,8 +1,8 @@
 ## Description
 
-Please include a summary of the changes and attach the related issue link (**please remove this**). 
+Please include a summary of the changes and attach the related issue link (**please remove this**).
 
-**Summary**: 
+**Summary**:
 
 **Issue Link**: #<issue_number>
 
@@ -12,10 +12,10 @@ Please mention the verification/testing used for this PR, which helps others to 
 
 ## Type of action
 
-- [ ] Bug fix 
+- [ ] Bug fix
 - [ ] New feature
 - [ ] Requires a documentation update
-- [ ] Others: 
+- [ ] Others:
 
 ## Checklist
 
@@ -32,4 +32,4 @@ Provide screenshots or videos of the changes made if any.
 
 # Action Required
 
-Please mention the further steps needed to do if necessary  (**please remove this**).
+Please mention the further steps needed to do if necessary (**please remove this**).

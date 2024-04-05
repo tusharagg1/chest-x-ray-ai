@@ -1,4 +1,9 @@
-// cite https://www.youtube.com/watch?v=QpsGo8kZiTo&ab_channel=CodeComplete
+/*
+ * Author: Allison Cook
+ * Date Created: March 2024
+ * Purpose: Create the carousel container for the X-ray images
+ */
+// inspiration from https://www.youtube.com/watch?v=QpsGo8kZiTo&ab_channel=CodeComplete
 import React, { useState } from 'react';
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from 'react-icons/bs';
 
@@ -14,9 +19,11 @@ export const Carousel = ({ data }) => {
 
   return (
     <div
+      //creating container element
       className='relative flex justify-center'
       style={{ alignItems: 'center', width: '80%', height: '100%' }}
     >
+      {/* creating arrow element */}
       <BsArrowLeftCircleFill
         onClick={prevSlide}
         className='absolute'
@@ -30,6 +37,7 @@ export const Carousel = ({ data }) => {
       />
       {data.map((item, idx) => {
         return (
+          //creating image elements
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={item.src}
@@ -43,6 +51,7 @@ export const Carousel = ({ data }) => {
           />
         );
       })}
+      {/* creating the right arrow element*/}
       <BsArrowRightCircleFill
         onClick={nextSlide}
         className='absolute'
@@ -59,6 +68,7 @@ export const Carousel = ({ data }) => {
           return (
             <button
               key={idx}
+              //creating the style to show and hide images as the arrow are pressed
               style={
                 slide === idx
                   ? {

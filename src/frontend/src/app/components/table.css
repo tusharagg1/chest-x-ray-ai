@@ -1,3 +1,8 @@
+/*
+* Author: Allison Cook
+* Date Created: March 2024
+* Purpose: Create style for change of table row selection
+*/
 tr.selected {
-    background-color: #e0e7ff;
+  background-color: #e0e7ff;
 }

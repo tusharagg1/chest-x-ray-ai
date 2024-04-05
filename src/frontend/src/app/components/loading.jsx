@@ -1,7 +1,13 @@
+/*
+ * Author: Allison Cook
+ * Date Created: March 2024
+ * Purpose: Create the loading object and container to be used on the loading of the X-ray page
+ */
 import './loading.css';
 
 const Loading = () => {
   return (
+    // creating the loading element container
     <div
       style={{
         position: 'fixed',

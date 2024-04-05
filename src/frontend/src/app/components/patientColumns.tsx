@@ -1,3 +1,9 @@
+/*
+ * Author: Allison Cook
+ * Date Created: January 2024
+ * Purpose: Create type and column defintions used for table elements for patient information
+ */
+
 type Patient = {
   PatientID: number | null;
   MRN: number | null;
