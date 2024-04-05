@@ -1,5 +1,6 @@
 # Design Documentation
 
-The folders and files for this folder are as follows:
-
-Describe ...
+The folders for this folder are as follows:  
+`SoftArchitecture` - Module Guide  
+`SoftDetailedDes` - Module Interface Specification  
+`SystDesign` - System Design
