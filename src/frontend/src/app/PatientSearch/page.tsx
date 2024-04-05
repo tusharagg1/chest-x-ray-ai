@@ -91,6 +91,34 @@ export default function SearchPage() {
     setSearchKeyType(value);
   }
 
+  if (typeof document !== 'undefined') {
+    document.addEventListener(`click`, handle);
+  }
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function handle(evt: { target: any }) {
+    // only do something if a checkbox was clicked
+    if (evt.target.type === `checkbox`) {
+      const isChecked = evt.target.checked;
+      const selectedRow = evt.target.closest(`tr`);
+  
+      /* @ts-ignore */
+      const tds = Array.from(selectedRow.cells).map((td) => td.textContent);
+      // reset checkboxes, row coloring and disabled state
+      document.querySelectorAll(`input[type='checkbox']`).forEach((cb) => {
+        /* @ts-ignore */
+        cb.checked = cb !== evt.target ? false : isChecked;
+        const row = cb.closest(`tr`);
+  
+        /* @ts-ignore */
+        row.classList[isChecked && row === selectedRow ? `add` : `remove`](
+          'selected'
+        );
+      });
+      return tds;
+    }
+  }
+
   function handleOrderInputChange(value: string) {
     setCheckBox2(value);
     setOrderType(value);

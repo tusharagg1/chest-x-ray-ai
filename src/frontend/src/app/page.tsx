@@ -4,35 +4,27 @@
 * Purpose: Display the login page when first accessing the webpage 
 */
 /* eslint-disable react-hooks/rules-of-hooks */
-
-// desigate this as a client-side web page
 'use client';
 
-// import externally defined libraries
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-// import internally defined components
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
 
-// import internally defined backend functions
 import { signInAUser } from '../../../backend/database/backend';
 
-// define the login page
 export default function loginPage() {
-  // define email related state variables
-  const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  // define password related state variables
-  const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  // define login button loading state variable
   const [loading, setLoading] = useState(false);
-
-  // validates the email and password, calls the apis to sign in the user
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  /**
+   * @description Validates the email and password, calls the apis
+   */
   function handleSubmit() {
     setLoading(true);
     const signInTxt = document.getElementById('signInSuccess');
@@ -59,16 +51,6 @@ export default function loginPage() {
       setEmailError(false);
     }
 
-    // password validation
-    if (password == '') {
-      setPasswordError(true);
-      setPasswordErrorMessage('Please enter your password');
-      return;
-    } else {
-      setPasswordError(false);
-    }
-
-    // attempt login with email and password
     signInAUser(email, password)
       .then((userData) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -81,27 +63,24 @@ export default function loginPage() {
       });
   }
 
-  // render the login page
   return (
     <main
       className='min-h-screen bg-indigo-100'
       style={{
         backgroundImage:
-          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))'
+          'linear-gradient(to bottom right, rgb(224, 231, 255), rgb(165, 180, 252))',
       }}
     >
       <section>
-        <div
-          className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 py-2 text-center'
-        >
+        <div className='layout relative flex min-h-screen flex-col items-center justify-center gap-5 py-2 text-center'>
           <h1 className='text-indigo-500'>X-Ray Assist</h1>
           <div className='bg-gray-500'>
             <Image
-              // className='flex'
+              //className='flex'
               src='/images/loginImage.png'
               alt='x-ray results'
               sizes='100vw'
-              // fill
+              //fill
               style={{ width: '100%', height: 'auto' }}
               width={500}
               height={500}
@@ -118,7 +97,7 @@ export default function loginPage() {
                 {/* login input form */}
                 <div>
                   <label
-                    className='text-gray-500'
+                    className='text-gray-500 '
                     style={{ textAlign: 'left', paddingRight: '55%' }}
                   >
                     Email
@@ -129,13 +108,12 @@ export default function loginPage() {
                       background: 'url("/images/person.png") no-repeat left',
                       paddingLeft: '10%',
                       backgroundColor: 'rgb(229, 231, 235)',
-                      width: '65%'
+                      width: '65%',
                     }}
                     type='email'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder='Email'
-                    required
                   />
                 </div>
                 <div>
@@ -170,18 +148,11 @@ export default function loginPage() {
                   </Button>
                 </div>
                 <div>
-                  <label id='loginSuccess'></label>
+                  <label id='signInSuccess'></label>
                 </div>
               </ol>
             </form>
-            <UnderlineLink
-              href='/RecoverPassword'
-              className='text-sm text-gray-500'
-            >
-              Forgot your password?
-              <br></br>
-              Click here to recover it.
-            </UnderlineLink>
+
             {emailError && <p className='text-red-500'>{emailErrorMessage}</p>}
             {passwordError && (
               <p className='text-red-500'>{passwordErrorMessage}</p>
@@ -194,24 +165,22 @@ export default function loginPage() {
               position: 'absolute',
               zIndex: 1,
               width: '42%',
-              height: '74%'
+              height: '74%',
             }}
           >
             <br></br>
             <br></br>
-            <br></br>
             <div
-              className='bg-indigo-500'
-              style={{ width: '100%', height: '63%' }}
-            >
-            </div>
+              className='bg-indigo-500 '
+              style={{ width: '100%', height: '60%' }}
+            ></div>
           </div>
           <div className='text-gray-500' style={{ zIndex: 2 }}>
             <p>
               Don't have an account?
               <br></br>
               <UnderlineLink href='/SignUp' className='text-sm text-gray-500'>
-                Click here to create one.
+                Create one.
               </UnderlineLink>
             </p>
           </div>
