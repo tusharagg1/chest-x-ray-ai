@@ -1,6 +1,6 @@
-# AI for chest X-ray read  
+# AI for chest X-ray read
 
-Developer Names: Allison Cook, Ibrahim Issa, Mohaansh Pranjal, Nathaniel Hu, Tushar Aggarwal  
+Developer Names: Allison Cook, Ibrahim Issa, Mohaansh Pranjal, Nathaniel Hu, Tushar Aggarwal
 
 Date of project start: 9/22/2021
 

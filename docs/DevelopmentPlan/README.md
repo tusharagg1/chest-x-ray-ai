@@ -9,4 +9,3 @@ The folders and files for this folder are as follows:
 - Makefile: used to generate PDF LaTeX document and clean up other PDF LaTeX document generation files
 
 - README.md: this file, describes the folders and files of this folder
-

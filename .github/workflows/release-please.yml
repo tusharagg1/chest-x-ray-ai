@@ -1,5 +1,6 @@
 name: release-please
-on: workflow_dispatch
+on:
+  workflow_dispatch
   # # !STARTERCONF Choose your preferred event
   # # !Option 1: Manual Trigger from GitHub
   # workflow_dispatch:
