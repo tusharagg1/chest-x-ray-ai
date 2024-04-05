@@ -1,5 +1,14 @@
+/*
+  Module Name: UserAuthMgmt
+  Author(s): Nathaniel Hu
+  Date Modified: 2024-04-03
+  Description: Contains user authentication and management functionality to
+               create, delete, sign in, and sign out users
+*/
+
 // import needed externally defined modules
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, deleteUser } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  deleteUser } from "firebase/auth";
 
 // create a new user
 export function createNewUser(auth, email, password) {
@@ -28,13 +37,15 @@ export function deleteAUser(auth, email) {
     else if (user.email !== email) {
       reject(false);
     }
-    deleteUser(user)
-      .then(() => {
-        resolve(true);
-      })
-      .catch((error) => {
-        reject(error);
-      });
+    else {
+      deleteUser(user)
+        .then(() => {
+          resolve(true);
+        })
+        .catch((_error) => {
+          reject(false);
+        });
+    }
   });
 }
 

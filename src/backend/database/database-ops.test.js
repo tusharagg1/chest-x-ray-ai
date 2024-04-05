@@ -8,7 +8,7 @@
 // import database-ops module for testing
 const { writeUserData, readUserData, deleteUserData, writePatientData,
   readPatientData, deletePatientData, readAllPatientData, writeActivePatientID,
-readActivePatientID } = require('./database-ops');
+  readActivePatientID } = require('./database-ops');
 
 // import user-auth-mgmt module functions for testing
 const { createNewUser, deleteAUser } = require('./user-auth-mgmt');
