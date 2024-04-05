@@ -1,9 +1,9 @@
 # Next.js + Tailwind CSS + TypeScript
 
-
 ## Features
 
 This repository is battery packed with:
+
 - ⚡️ Next.js 13
 - ⚛️ React 18
 - ✨ TypeScript
@@ -18,7 +18,6 @@ This repository is battery packed with:
 - 👀 Open Graph Helper Function — Awesome open graph generated using [og](https://github.com/theodorusclarence/og), fork it and deploy!
 - 🗺 Site Map — Automatically generate sitemap.xml
 - 📦 Expansion Pack — Easily install common libraries, additional components, and configs.
-
 
 ## Getting Started
 

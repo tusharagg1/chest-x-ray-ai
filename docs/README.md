@@ -10,4 +10,4 @@
 `SRS` - Software Requirements Specification  
 `VnVPlan` - Verification and Validation Plan  
 `VnVReport` - Verification and Validation Report  
-`projMngmnt` - Team Contribution Reports  
+`projMngmnt` - Team Contribution Reports
