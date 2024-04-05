@@ -3,9 +3,9 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 
-\title{Problem Statement and Goals\\Software Engineering}
+\title{Problem Statement and Goals \\\progname}
 
-\author{Team 17, Team RAdiAIdance\\Allison Cook\\Ibrahim Issa\\Mohaansh Pranjal\\Nathaniel Hu\\Tushar Aggarwal}
+\author{\authname}
 
 \date{}
 
@@ -28,7 +28,7 @@
 09/24/2023 & Tushar Aggarwal & Final review of entire document, corrected spelling errors, formatting \\
 09/25/2023 & Mohaansh Pranjal & Revised Outputs and Environment subsections \\
 09/25/2023 & Nathaniel Hu & Transferred Problem Statement and Goals document text from collaborative document into this LaTeX document; Did some finishing touches \\
-... & ... & ...\\
+03/31/2024 & Ibrahim Issa & Updated and finalized document\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -69,11 +69,14 @@ The high-level \textbf{inputs and outputs} of this problem are described as foll
 Inputs:
 \begin{itemize}
 \item Chest X-ray \textbf{image samples}
+\item Patient Information
 \end{itemize}
 
 \noindent Outputs:
 \begin{itemize}
-\item \textbf{Diagnosis and identification of detected diseases} in the image samples
+\item Diagnosis Report
+\item Disease Prediction
+\item Heatmaps
 \end{itemize} 
 
 \subsection{Stakeholders}
@@ -115,7 +118,7 @@ The \textbf{goals} of this project's proposed solution are described in detail b
 
 \begin{itemize}
 \begin{item}
-\textbf{Accurate image detection}: Given an X-ray image, the application should \textbf{accurately detect} normality or abnormality with a \textbf{certain range of precision}.
+\textbf{Accurate image detection}: Given an X-ray image, the application should \textbf{accurately detect} normality or abnormality with a \textbf{certain range of precision}. To "accurately detect," we aim to minimize the rate of false negatives to increase the ability to detect an abnormality while ensuring the rate of false positives falls within a reasonable range. 
 \end{item}
 \begin{item}
 \textbf{Intuitive user interface}: The user interface should \textbf{facilitate interaction} with the user and should allow the user to \textbf{easily input} an x-ray image and \textbf{output} the diagnostic report.
@@ -139,6 +142,7 @@ The \textbf{stretch goals} of this project's proposed solution are described in 
 \begin{item}
 \textbf{NLP Report}: Given an X-ray image, generate a \textbf{structured or free-form} radiology report of the diagnostic findings using \textbf{NLP}.
 \end{item}
+\item \textbf{More Diseases:} Support more disease classifications than the four currently supported.
 \end{itemize}
 
 \end{document}

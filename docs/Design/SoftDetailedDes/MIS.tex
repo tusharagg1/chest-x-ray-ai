@@ -51,7 +51,7 @@ urlcolor=cyan          % color of external links
 \section{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
 \midrule
 01/11/2024 & 0.0 & Initial Document \\
 01/12/2024 & 0.1 & Started adding MIS for Module sections \\
@@ -61,6 +61,7 @@ urlcolor=cyan          % color of external links
   section; Continued adding MIS for Module sections \\
 01/17/2024 & 0.4 & Completed the Symbols, Abbreviations and Acronyms and
   Introduction sections; Finished adding in MIS for Module sections \\
+04/04/2024 & 0.5 & updated MIS for backend ML modules according to changes during implementation \\
 \bottomrule
 \end{tabularx}
 
@@ -124,6 +125,9 @@ Module Guide. The full documentation and implementation can be found at
 
 \section{Notation}
 
+%\wss{You should describe your notation.  You can use what is below as
+%  a starting point.}
+
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
 \cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
@@ -141,6 +145,8 @@ The following table summarizes the primitive data types used by \progname.
 \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
 \midrule
 character & char & a single symbol or digit\\
+string & str & an array of characters \\
+boolean & bool & True or False \\
 integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
@@ -170,28 +176,30 @@ The following table is taken directly from the Module Guide document for this pr
     {Hardware-Hiding Module} & MedInstInter \\
     \midrule
 
-    \multirow{8}{0.3\textwidth}{Behaviour-Hiding Module} & ChestXRayRead \\
+    \multirow{8}{0.3\textwidth}{Behaviour-Hiding Module} & ConvertDCM \\
     & ResultsGen \\
-    & RepCompGen \\
+    & ChestXrayRead \\
+    & ReportGen \\
     & DatabaseOps \\
     & UserAuthMgmt \\
+    & AppGUI \\
     & Login \\ 
     & PerfScan \\
     & ViewResults \\
+    & GenHeatmaps  \\
+    & MLEndpoint  \\
     \midrule
 
     \multirow{5}{0.3\textwidth}{Software Decision Module} & AIModel \\
-    & NLPModel \\
     & Backend \\
     & AppController \\
-    & AppGUI \\
     \bottomrule
 
   \end{tabular}
   \caption{Module Hierarchy}
   \label{TblMH}
 \end{table}
-
+ 
 ~\newpage
 
 \section{MIS of Medical Institution Interface Module} \label{mMedInstInter}
@@ -210,7 +218,7 @@ N/A
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-  \begin{tabular}{p{3cm} p{4cm} p{4cm} p{3cm}}
+  \begin{tabular}{p{3cm} p{4cm} p{4cm} p{5cm}}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
@@ -223,23 +231,27 @@ N/A
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 \begin{itemize}
-  \item connectedInsts: Set(str) - maintains a set of connected institution IDs.
+    \item connectedInsts: Set(str) - maintains a set of connected institution IDs.
 \end{itemize}
+% \wss{Not all modules will have state variables.  State variables give the module
+%   a memory.}
 
 \subsubsection{Environment Variables}
-
 \begin{itemize}
   \item InstsITSys: Set(str) - the set of external IT systems the application
     interfaces with to retrieve/exchange information.
 \end{itemize}
+% \wss{This section is not necessary for all modules.  Its purpose is to capture
+%   when the module has external interaction with the environment, such as for a
+%   device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
 \begin{itemize}
-  \item Patient data is stored in the medical institution's database, and the
-    software intends to interface with their server to access that information.
+  \item Patient data is stored in the medical institution's database, and the software intends to interface with their server to access that information.
 \end{itemize}
+% \wss{Try to minimize assumptions and anticipate programmer errors via
+%   exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Access Routine Semantics}
 
@@ -263,23 +275,38 @@ N/A
     exception:
     \begin{itemize}
       \item Throws `InvalidCredentialsException' if the provided credentials are invalid.
-      \item Throws `InstNotFoundException' if the specified 'instID' does not exist.
+      \item Throws `InstNotFoundException' if the specified `instID' does not exist.
     \end{itemize}
   \end{item}
 \end{itemize}
 
+% \wss{A module without environment variables or state variables is unlikely to
+%   have a state transition.  In this case a state transition can only occur if
+%   the module is changing the state of another module.}
+
+% \wss{Modules rarely have both a transition and an output.  In most cases you
+%   will have one or the other.}
+
 \subsubsection{Local Functions}
 N/A
+% \wss{As appropriate} \wss{These functions are for the purpose of specification.
+%   They are not necessarily something that is going to be implemented
+%   explicitly.  Even if they are implemented, they are not exported; they only
+%   have local scope.}
 
 \newpage
 
-\section{MIS of Chest X-Ray Read Module} \label{mChXRR}
+\section{MIS of Chest X-Ray Read Module} \label{mChXRR} 
 
 \subsection{Module}
 ChestXRayRead
 
 \subsection{Uses}
-N/A
+MLEndpoint
+% \begin{itemize}
+ % \item Take chest X-ray as input in DICOM format, and extracts jpeg image to process in the model.
+  %\item Process X-ray image using the ML model.
+%\end{itemize}
 
 \subsection{Syntax}
 
@@ -289,12 +316,12 @@ N/A
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-  \begin{tabular}{p{3cm} p{4cm} p{4cm} p{3cm}}
+  \begin{tabular}{p{3cm} p{4cm} p{4cm} p{5cm}}
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    processImg & img: JPEG image & procImg: Processed Image &
-      InvalidImageFormatException \\
+    initapp & None & bucket: firebase bucket & InvalidAuthException \\
+    getDCMfiles & patientdir: directory for x-rays, bucket: firebase bucket & dcmfiles: array of DCM file data as byte-like objects & TypeException: invalid file format read \\
     \hline
   \end{tabular}
 \end{center}
@@ -308,30 +335,50 @@ N/A
 N/A
 
 \subsubsection{Assumptions}
-N/A
+Auth key for firbase authentication is stored as a seperate file that is accessed using its path.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent processImg():
+\noindent initapp():
 \begin{itemize}
   \begin{item}
     transition:
     \begin{itemize}
-      \item Initiates the AIModel module to process the provided `img'.
+      \item Initiates the firebase bucket object to read chest x-ray files.
     \end{itemize}
   \end{item}
   \begin{item}
     output:
     \begin{itemize}
-      \item `procImg' contains the processed information and findings from the
-        chest X-ray analysis.
+      \item A bucket object for the bucket storing the x-ray files for all patients.
     \end{itemize}
   \end{item}
   \begin{item}
     exception:
     \begin{itemize}
-      \item Throws `InvalidImageFormatException' if the provided `image' is
-        not a JPEG or JPG image. 
+      \item Throws `InvalidAuthException' if authorization fails.
+    \end{itemize}
+  \end{item}
+\end{itemize}
+
+\noindent getDCMfiles():
+\begin{itemize}
+  \begin{item}
+    transition:
+    \begin{itemize}
+      \item Reads DICOM files for a patient from the bucket to eventually pass to the ML model for processing.
+    \end{itemize}
+  \end{item}
+  \begin{item}
+    output:
+    \begin{itemize}
+      \item A list of x-ray images read from the DICOM files stored as bytes.
+    \end{itemize}
+  \end{item}
+  \begin{item}
+    exception:
+    \begin{itemize}
+      \item Throws `TypeException' if it reads a file of the wrong type.
     \end{itemize}
   \end{item}
 \end{itemize}
@@ -341,18 +388,21 @@ N/A
 
 \newpage
 
-\section{MIS of Results Generation Module} \label{mResGen}
+\section{MIS of Results Generation Module} \label{mResGen} 
 
 \subsection{Module}
 ResultsGen
 
 \subsection{Uses}
-N/A
+\begin{itemize}
+    \item AIModel
+    \item GenHeatmaps
+\end{itemize}
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+diseases: list of disease names that are checked
 
 \subsubsection{Exported Access Programs}
 
@@ -361,7 +411,7 @@ N/A
     \hline
     \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
     \hline
-    generateResults & procImg: Processed Image & classification: Disease
+    scanallxrays & procImgs: list of Raw Processed xray Image data & classification: Disease
       Classification & - \\
     \hline
   \end{tabular}
@@ -376,24 +426,25 @@ N/A
 N/A
 
 \subsubsection{Assumptions}
-N/A
+\begin{itemize}
+      \item The input list has one or more chest xray images.
+      \item the images are stored as arrays of raw data (pixels in PNG format)
+\end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent generateResults():
+\noindent scanallxrays():
 \begin{itemize}
   \begin{item}
     transition:
     \begin{itemize}
-      \item Utilizes the AIModel module to interpret the processed image and
-        generate a disease classification. 
+      \item generates prediction values for chest x-ray images. If more than one exists, the average value is taken for each disease. 
     \end{itemize}
   \end{item}
   \begin{item}
     output:
     \begin{itemize}
-      \item `classification' contains the generated disease classification for
-        each disease.
+      \item 'classification' contains the generated disease prediction value for each disease.
     \end{itemize}
   \end{item}
   \begin{item}
@@ -402,17 +453,21 @@ N/A
 \end{itemize}
 
 \subsubsection{Local Functions}
-N/A
+\begin{itemize}
+    \item getprediction: generates prediction values for a single image.
+\end{itemize}
 
 \newpage
 
-\section{MIS of Report Component Generation Module} \label{mRepCompGen}
+\section{MIS of Report Generation Module} \label{mRepCompGen} 
 
 \subsection{Module}
-RepCompGen
+ReportGen
 
 \subsection{Uses}
-N/A
+\begin{itemize}
+    \item AIModel
+\end{itemize}
 
 \subsection{Syntax}
 
@@ -423,12 +478,11 @@ N/A
 
 \begin{center}
     \begin{tabular}{p{3cm} p{3.5cm} p{5cm} p{3cm}}
-      \hline
-      \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-      \hline
-      generateReport & diagnosis: Disease Diagnosis & report: Radiology Report
-        & - \\
-      \hline
+    \hline
+    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+    \hline
+    generateReport & diagnosis: Disease Diagnosis & report: Radiology Report & - \\
+    \hline
     \end{tabular}
 \end{center}
 
@@ -441,24 +495,17 @@ N/A
 N/A
 
 \subsubsection{Assumptions}
+N/A
 
 \subsubsection{Access Routine Semantics}
 
 \noindent generateReport():
 \begin{itemize}
-  \begin{item}
-    transition: N/A
-  \end{item}
-  \begin{item}
-    output:
-    \begin{itemize}
-      \item `report' contains the generated radiology report based on the
-        provided disease diagnosis.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    exception: N/A
-  \end{item}
+\item transition: N/A 
+\item output: \begin{itemize}
+    \item 'report' contains the generated summary report based on the provided disease diagnosis.
+\end{itemize}
+\item exception: N/A
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -466,7 +513,7 @@ N/A
 
 \newpage
 
-\section{MIS of Database Operations Module} \label{mDatabaseOps}
+\section{MIS of Database Operations Module} \label{Module} 
 
 \subsection{Module}
 DatabaseOps
@@ -478,92 +525,63 @@ N/A
 
 \subsubsection{Exported Constants}
 N/A
-
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-  \begin{tabular}{p{3cm} p{5cm} p{4cm} p{5cm}}
-    \hline
-    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-    \hline
-    storeReport & report: Radiology Report, patientID: str & success: bool &
-      ReportStorageException \\
-    retrieveReport & patientID: str & report: Radiology Report &
-      ReportRetrievalException \\
-    \hline
-  \end{tabular}
+\begin{tabular}{p{3cm} p{5cm} p{4cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+storeReport & report: Radiology Report, patientID: str & success: bool & ReportStorageException \\
+retrieveReport & patientID: str & report: Radiology Report & ReportRetrievalException \\
+\hline
+\end{tabular}
 \end{center}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 \begin{itemize}
-    \item `connectDatabase: bool' indicates whether the module is currently connected to the database.
+    \item 'connectDatabase: bool' indicates whether the module is currently connected to the database.
 \end{itemize}
 
 \subsubsection{Environment Variables}
 N/A
-
 \subsubsection{Assumptions}
 N/A
-
 \subsubsection{Access Routine Semantics}
 
 \noindent storeReport():
 \begin{itemize}
-  \begin{item}
-    transition:
-    \begin{itemize}
-      \item Stores the provided `report' in the database associated with the
-        specified `patientID'.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    output:
-    \begin{itemize}
-      \item `success' is set to True if the storing operation is successful,
-        False otherwise.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    exception:
-    \begin{itemize}
-      \item Throws `ReportStorageException' if there is an issue storing the
-        report.
-    \end{itemize}
-  \end{item}
+\item transition: \begin{itemize}
+    \item Stores the provided 'report' in the database associated with the specified 'patientID'.
+\end{itemize}
+\item output: \begin{itemize}
+    \item 'success' is set to True if the storing operation is successful, False otherwise.
+\end{itemize}
+\item exception: \begin{itemize}
+    \item Throws 'ReportStorageException' if there is an issue storing the report.
+\end{itemize}
 \end{itemize}
 
 \noindent retrieveReport():
 \begin{itemize}
-  \begin{item}
-    transition:
-    \begin{itemize}
-      \item Retrieves the radiology report associated with the specified
-        `patientID' from the database.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    output:
-    \begin{itemize}
-      \item `report' contains the retrieved radiology report.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    exception:
-    \begin{itemize}
-      \item Throws `ReportRetrievalException' if there is an issue retrieving the report.
-    \end{itemize}
-  \end{item}
+\item transition: \begin{itemize}
+    \item Retrieves the radiology report associated with the specified 'patientID' from the database.
+\end{itemize} 
+\item output: \begin{itemize}
+    \item 'report' contains the retrieved radiology report.
+\end{itemize}
+\item exception: \begin{itemize}
+    \item Throws 'ReportRetrievalException' if there is an issue retrieving the report.
+\end{itemize}
 \end{itemize}
 
 \subsubsection{Local Functions}
 N/A
-
 \newpage
 
 \section{MIS of User Authentication/Management Module} \label{mUserAuthMgmt}
-
 \subsection{Module}
 UserAuthMgmt
 
@@ -574,129 +592,80 @@ N/A
 
 \subsubsection{Exported Constants}
 N/A
-
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-  \begin{tabular}{p{4cm} p{5cm} p{3cm} p{5cm}}
-    \hline
-    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-    \hline
-    authenticateUser & username: str, password: str & status: bool &
-      InvalidCredentialsException, UserNotFoundException \\
-    createUserAccount & username: str, password: str & success: bool &
-      UserCreationException \\
-    deleteUserAccount & username: str, password: str & success: bool &
-      UserDeletionException \\
-    checkAuthentication & username: str & isAuthorized: bool & - \\
-    \hline
-  \end{tabular}
+\begin{tabular}{p{4cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+authenticateUser & username: str, password: str & status: bool & InvalidCredentialsException, UserNotFoundException \\
+createUserAccount & username: str, password: str & success: bool & UserCreationException \\
+deleteUserAccount & username: str, password: str & success: bool & UserDeletionException \\
+checkAuthentication & username: str & isAuthorized: bool & - \\
+\hline
+\end{tabular}
 \end{center}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 N/A
-
 \subsubsection{Environment Variables}
 N/A
-
 \subsubsection{Assumptions}
 N/A
-
 \subsubsection{Access Routine Semantics}
 
 \noindent authenticateUser():
 \begin{itemize}
-  \begin{item}
-    transition:
-    \begin{itemize}
-      \item Verifies the provided `username' and `password' for authentication.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    output:
-    \begin{itemize}
-      \item `status' is set to True if authentication is successful, False
-        otherwise.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    exception:
-    \begin{itemize}
-      \item Throws `InvalidCredentialsException' if the provided credentials
-        are invalid.
-      \item Throws `UserNotFoundException' if the specified user is not found.
-    \end{itemize}
-  \end{item}
+\item transition: \begin{itemize}
+    \item Verifies the provided 'username' and 'password' for authentication.
+\end{itemize}
+\item output: \begin{itemize}
+    \item 'status' is set to True if authentication is successful, False otherwise.
+\end{itemize} 
+\item exception: \begin{itemize}
+    \item Throws 'InvalidCredentialsException' if the provided credentials are invalid.
+    \item Throws 'UserNotFoundException' if the specified user is not found.
+\end{itemize}
 \end{itemize}
 
 \noindent createUserAccount():
 \begin{itemize}
-  \begin{item}
-    transition:
-    \begin{itemize}
-      \item Creates a user account with the provided `username' and `password'.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    output:
-    \begin{itemize}
-      \item `success' is set to True if the account creation is successful,
-        False otherwise.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    exception:
-    \begin{itemize}
-      \item Throws `UserCreationException' if there is an issue creating the
-        user account.
-    \end{itemize}
-  \end{item}
+\item transition: \begin{itemize}
+    \item Creates a user account with the provided 'username' and 'password'.
+\end{itemize}
+\item output: \begin{itemize}
+    \item 'success' is set to True if the account creation is successful, False otherwise.
+\end{itemize}
+\item exception: \begin{itemize}
+    \item Throws 'UserCreationException' if there is an issue creating the user account.
+\end{itemize}
 \end{itemize}
 
 \noindent deleteUserAccount():
-  \begin{itemize}
-    \begin{item}
-      transition:
-      \begin{itemize}
-        \item Deletes the user account associated with the specified `username'.
-      \end{itemize}
-    \end{item}
-    \begin{item}
-      output:
-      \begin{itemize}
-        \item `success' is set to True if the account deletion is successful,
-          False otherwise.
-      \end{itemize}
-    \end{item}
-    \begin{item}
-      exception:
-      \begin{itemize}
-        \item Throws `UserDeletionException' if there is an issue deleting the
-          user account.
-      \end{itemize}
-    \end{item}
+\begin{itemize}
+\item transition: \begin{itemize}
+    \item Deletes the user account associated with the specified 'username'.
+\end{itemize}
+\item output: \begin{itemize}
+    \item 'success' is set to True if the account deletion is successful, False otherwise.
+\end{itemize} 
+\item exception: \begin{itemize}
+    \item Throws 'UserDeletionException' if there is an issue deleting the user account.
+\end{itemize}
 \end{itemize}
 
 \noindent checkAuthentication():
 \begin{itemize}
-  \begin{item}
-    transition:
-    \begin{itemize}
-      \item Checks whether the specified `username' is currently authorized.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    output:
-    \begin{itemize}
-      \item `isAuthorized' is set to True if the user is authorized, False
-        otherwise.
-    \end{itemize}
-  \end{item}
-  \begin{item}
-    exception: N/A
-  \end{item}
+\item transition: \begin{itemize}
+    \item Checks whether the specified 'username' is currently authorized.
+\end{itemize} 
+\item output: \begin{itemize}
+    \item 'isAuthorized' is set to True if the user is authorized, False otherwise.
+\end{itemize}
+\item exception: N/A
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -704,85 +673,75 @@ N/A
 
 \newpage
 
-\section{MIS of App GUI Module} \label{mAppGUI}
-
+\section{MIS of App GUI Module} \label{Module} 
 \subsection{Module}
 AppGUI
-
 \subsection{Uses}
-
 \begin{itemize}
-  \item Login
-  \item PerfScan
-  \item ViewResults
+    \item Login
+    \item PerfScan
+    \item ViewResults
 \end{itemize}
-
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 N/A
-
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-  \begin{tabular}{p{4cm} p{3cm} p{3cm} p{3cm}}
-    \hline
-    \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-    \hline
-    displayLoginPage & - & - & - \\
-    displayScanPage & - & - & - \\
-    displayResultsPage & - & - & - \\
-    \hline
-  \end{tabular}
+\begin{tabular}{p{4cm} p{3cm} p{3cm} p{3cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+displayLoginPage & - & - & - \\
+displayScanPage & - & - & - \\
+displayResultsPage & - & - & - \\
+\hline
+\end{tabular}
 \end{center}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 N/A
-
 \subsubsection{Environment Variables}
 N/A
-
 \subsubsection{Assumptions}
 N/A
-
 \subsubsection{Access Routine Semantics}
 
 \noindent displayLoginPage():
 \begin{itemize}
-  \item transition: Navigates to and displays the login page for the
-    application.
-  \item output: N/A 
-  \item exception: N/A
+\item transition: Navigates to and displays the login page for the application.
+\item output: N/A 
+\item exception: N/A
 \end{itemize}
 
 \noindent displayScanPage():
 \begin{itemize}
-  \item transition: Navigates to and displays the page for inputting an x-ray
-    image for scanning.
-  \item output: N/A
-  \item exception: N/A
+\item transition: Navigates to and displays the page for inputting an x-ray image for scanning.
+\item output: N/A
+\item exception: N/A
 \end{itemize}
 
 \noindent displayResultsPage():
 \begin{itemize}
-  \item transition: Navigates to and displays the page for viewing scan
-    results and reports.
-  \item output: N/A 
-  \item exception: N/A
+\item transition: Navigates to and displays the page for viewing scan results and reports.
+\item output: N/A 
+\item exception: N/A
 \end{itemize}
 
 \subsubsection{Local Functions}
 N/A
-
 \newpage
 
 \section{MIS of Login Module} \label{Module} 
 \subsection{Module}
 Login
 \subsection{Uses}
-N/A
+\begin{itemize}
+    \item UserAuthMgmt
+\end{itemize}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -843,7 +802,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-initiateScan & img: X-Ray Image & - & InvalidImageFormatException \\
+initiateScan & patient: selected patient & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -853,7 +812,9 @@ initiateScan & img: X-Ray Image & - & InvalidImageFormatException \\
 \subsubsection{State Variables}
 N/A
 \subsubsection{Environment Variables}
-N/A
+\begin{itemize}
+    \item patientID: $\mathbb{Z}$
+\end{itemize}
 \subsubsection{Assumptions}
 N/A
 \subsubsection{Access Routine Semantics}
@@ -861,12 +822,10 @@ N/A
 \noindent initiateScan():
 \begin{itemize}
 \item transition: \begin{itemize}
-    \item Receives the input 'img' from the user to initiate the scanning process.
+    \item Receives the patient ID from the user to initiate the scanning process for that patient.
 \end{itemize}
 \item output: N/A 
-\item exception: \begin{itemize}
-    \item Throws 'InvalidImageFormatException' if a non-JPEG/JPG image is used as input.
-\end{itemize}
+\item exception: N/A
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -877,7 +836,9 @@ N/A
 \subsection{Module}
 ViewResults
 \subsection{Uses}
-N/A
+\begin{itemize}
+    \item PerfScan
+\end{itemize}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -897,7 +858,9 @@ displayReport & report: Radiology Report & - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-N/A
+\begin{itemize}
+    \item 'loading: bool' indicates if the backend has received the scan information to be displayed
+\end{itemize}
 \subsubsection{Environment Variables}
 N/A
 \subsubsection{Assumptions}
@@ -914,7 +877,14 @@ N/A
 \end{itemize}
 
 \subsubsection{Local Functions}
-N/A
+\noindent displayLoading():
+\begin{itemize}
+\item transition: \begin{itemize}
+    \item Sets the display page to the loading screen, until loading is set to false
+\end{itemize}
+\item output: N/A
+\item exception: N/A
+\end{itemize}
 \newpage
 
 \section{MIS of AI Model Module} \label{Module} 
@@ -922,8 +892,7 @@ N/A
 AIModel
 \subsection{Uses}
 \begin{itemize}
-    \item ChestXRayRead
-    \item ResultGen
+    \item MLEndpoint
 \end{itemize}
 \subsection{Syntax}
 
@@ -936,8 +905,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-processImg & img: JPEG image & procImg: Processed Image & InvalidImageFormatException \\
-generateResults & procImg: Processed Image & classification: Disease Classification & - \\
+getresponse & imgs: DICOM images & response: to send as JSON to be displayed & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -952,41 +920,147 @@ N/A
 N/A
 \subsubsection{Access Routine Semantics}
 
-\noindent processImg():
+\noindent getresponse():
 \begin{itemize}
 \item transition: \begin{itemize}
-    \item Uses the trained model to process the given 'img'.
+    \item uses the getresults, heatmapgen and reportgen modules to get predictions, heatmaps and report.
 \end{itemize}
 \item output: \begin{itemize}
-    \item 'procImg' contains the processed information and findings from the chest X-ray analysis.
+    \item 'resp' contains the diagnostic results wrapped as a JSON object.
 \end{itemize}
-\item exception: \begin{itemize}
-    \item Throws ’InvalidImageFormatException’ if the provided ’image’ is not a JPEG or JPG image.
-\end{itemize} 
+\item exception: N/A 
 \end{itemize}
 
-\noindent generateResults():
+\subsubsection{Local Functions}
+\begin{itemize}
+    \item getrawimgs(): uses convertDCM module to convert DICOM image data to raw image pixel arrays.
+\end{itemize}
+\newpage
+
+\section{MIS of Convert DCM Model Module} \label{Module} 
+\subsection{Module}
+convertDCM
+\subsection{Uses}
+\begin{itemize}
+    \item AIModel
+\end{itemize}
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+N/A
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{4cm} p{4cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getimgdata & DICOM file data & raw image (PNG) data & InvalidFormatException \\
+getxraypngs & list of raw image (PNG) data & list of encoded xray images & InvalidFormatException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+N/A
+\subsubsection{Environment Variables}
+N/A
+\subsubsection{Assumptions}
+N/A
+\subsubsection{Access Routine Semantics}
+
+\noindent getimgdata():
 \begin{itemize}
 \item transition: \begin{itemize}
-    \item Uses the trained model to interpret the processed image and generate a disease classification.
+    \item converts DICOM image data (bytes) to image array (PNG pixels).
 \end{itemize}
 \item output: \begin{itemize}
-    \item 'classification' contains the generated disease classification for each disease.
+    \item raw image data as array of pixels.
+\end{itemize}
+\item exception: \begin{itemize}
+    \item Throws 'InvalidFormatException' if the provided xray image is in an invalid format.
+\end{itemize}
+\end{itemize}
+
+\noindent getxraypngs():
+\begin{itemize}
+\item transition: \begin{itemize}
+    \item stores list of raw image data (pixels) as a list of encoded byte array of pixels in PNG format.
+\end{itemize}
+\item output: \begin{itemize}
+    \item list of images as encoded array of bytes (PNG format).
+\end{itemize}
+\item exception: \begin{itemize}
+    \item Throws 'InvalidFormatException' if the provided images are in an invalid format.
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Local Functions}
+\begin{itemize}
+    \item linstretchimg(): applies linear stretch in order to enhance the quality while converting DICOM files to a PNG format.
+    \item getencodedimg(): used to convert a single image as raw pixel data to encoded array of bytes in PNG format.
+\end{itemize}
+\newpage
+
+\section{MIS of Generate Heatmaps Module} \label{Module} 
+\subsection{Module}
+GenHeatmaps
+\subsection{Uses}
+\begin{itemize}
+    \item AIModel
+\end{itemize}
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+N/A
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{4cm} p{4cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+genheatmappatient & List of Raw image data & heatmap image data & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+N/A
+\subsubsection{Environment Variables}
+N/A
+\subsubsection{Assumptions}
+N/A
+\subsubsection{Access Routine Semantics}
+
+\noindent genheatmappatient():
+\begin{itemize}
+\item transition: \begin{itemize}
+    \item generates heatmaps for each disease and x-ray image for the patient
+\end{itemize}
+\item output: \begin{itemize}
+    \item list of heatmap images stored as encoded array of bytes (PNG format).
 \end{itemize}
 \item exception: N/A
 \end{itemize}
 
 \subsubsection{Local Functions}
-N/A
+\begin{itemize}
+    \item genheatmap(img): used to generate heatmaps for all diseases for a single xray image.
+\end{itemize}
 \newpage
 
-\section{MIS of NLP Model Module} \label{Module} 
+
+
+\section{MIS of ML Endpoint Module} \label{Module} 
 \subsection{Module}
-NLPModel
+MLEndpoint
 \subsection{Uses}
-\begin{itemize}
-    \item RepCompGen
-\end{itemize}
+N/A
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -998,7 +1072,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-generateReport & report: Radiology Report & nlp: NLP Report & InvalidReportFormatException \\
+processfileendpoint & Directory name containing x-rays of the patient & response containing diagnosis, heatmaps and x-ray images to be displayed & InvalidRequestException \\
 \hline
 \end{tabular}
 \end{center}
@@ -1013,22 +1087,25 @@ N/A
 N/A
 \subsubsection{Access Routine Semantics}
 
-\noindent generateReport():
+\noindent processfileendpoint():
 \begin{itemize}
 \item transition: \begin{itemize}
-    \item Uses the RepCompGen module to generate a radiology report.
+    \item uses ChestXRayRead to read xray images and AIModel to generate response containing diagnosis data
 \end{itemize}
 \item output: \begin{itemize}
-    \item 'nlp' contains the generated NLP report.
+    \item response containing prediction values, heatmaps, summary report and x-ray image data for that patient
 \end{itemize}
 \item exception: \begin{itemize}
-    \item Throws 'InvalidReportFormatException' if the provided 'report' is in an invalid format.
+    \item throws 'InvalidRequestException' if the request has an invalid body or the xray files are not found.
 \end{itemize}
 \end{itemize}
 
 \subsubsection{Local Functions}
-N/A
+\begin{itemize}
+    \item mockresponse(): used for testing purposes to return a mock response to be sent to front end
+\end{itemize}
 \newpage
+
 
 \section{MIS of Backend Module} \label{Module} 
 \subsection{Module}
@@ -1177,5 +1254,7 @@ N/A
 \newpage
 
 \section{Appendix} \label{Appendix}
+
+
 
 \end{document}

@@ -46,6 +46,8 @@
 03/05/2024 & 0.3 & Worked on Functional Requirements Evaluation, Nonfunctional Requirements Evaluation, Completed Changes due to Testing \\
 03/06/2024 & 0.4 & Completed Functional Requirements Evaluation, Nonfunctional Requirements Evaluation, Unit Testing, Trace to Requirements, Reflection \\
 03/06/2024 & 0.5 & Completed Trace to Modules, Code Coverage Metrics; formatting and final review \\
+04/02/2024 & 1.0 & Updated changes due to testing to reference changed requirements, minor grammar fixes, update of hyperlinks\\ 
+04/03/2024 & 1.1 & Report was revised and improved. \\
 \bottomrule
 \end{tabularx}
 
@@ -78,6 +80,8 @@ The following table, Table \ref{tab:symbsAbbrevsAcros}, includes the definitions
         SRS & Software Requirements Specification \\
         T & Test \\
         TC & Test Case \\
+        FRTC & Functional Requirements Test Case \\
+        NFRTC & Nonfunctional Requirements Test Case \\
         VnV & Verification and Validation \\
         \bottomrule
     \end{tabular}\\
@@ -95,35 +99,35 @@ The following table, Table \ref{tab:symbsAbbrevsAcros}, includes the definitions
 \newpage
 
 \pagenumbering{arabic}
-
-This document intends to describe in detail the testing performed and the subsequent results in the verification and validation process of (NAME). In detail, the document outlines the evaluation of Functional system tests, Non Functional tests, and Unit tests. The Functional and Non Functional tests and their connection to the requirements can be found in the VnV Plan. As well, the unit tests are based on the individual modules that can be found in the MIS.  
+This document intends to describe in detail the testing performed and the subsequent results in the verification and validation process of X-ray Assist. In detail, the document outlines the evaluation of Functional system tests, Non Functional tests, and Unit tests. The Functional and Non Functional tests and their connection to the requirements can be found in the \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}. As well, the unit tests are based on the individual modules that can be found in the \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}.  
 
 \section{Functional Requirements Evaluation}
-The following are the test cases carried out as part of the functional requirements evaluation of the project software application. For each test case, the test case name, input, expected output, actual output, whether the actual output matched the expected output, and the relevant FR(s) are outlined in detail in this section. The test cases are organized into subsections based on what overarching functionality is being tested (i.e. handling input data, display, classification of diseases, access of database and authorization).
+The following are the test cases carried out as part of the functional requirements evaluation. This section outlines in detail the test case name, input, expected output, actual output, whether the actual output matched the expected output, and the relevant FR(s) for each test case. The test cases are organized into subsections based on the overarching functionality being tested (e.g., handling input data, display, classification of diseases, access to the database, and authorization).
 
 \subsection{Handling Input Data}
-In this subsection, the test cases evaluating the software application for its input data handling functionalities are outlined in detail alongside the testing results. \\
+This subsection outlines the test cases evaluating the software application for its input data handling functionalities alongside the testing results. \\
+
+%Commented out old tests that are no longer relevant to the system now that DICOM files are not required input from the user
+% \begin{mdframed}[linewidth=0.5mm]
+%   \textbf{Test Case Name:} DICOM Input Acceptance (TC.1) \par
+%   \textbf{Input:} A sample chest X-ray image in DICOM format. \par
+%   \textbf{Expected Output:} The DICOM input is accepted and converted into a JPEG successfully, with no error messages or system anomalies. \par
+%   \textbf{Actual Output:} The given DICOM image is converted to JPEG format. \par
+%   \textbf{Expected and Actual Output Match:} True \par
+%   \textbf{Relevant Functional Requirement(s):} FR.1, FR.7
+% \end{mdframed}
+
+% \begin{mdframed}[linewidth=0.5mm]
+%   \textbf{Test Case Name:} Non-DICOM Input Rejection (TC.2) \par
+%   \textbf{Input:} A sample chest X-ray image in a format other than DICOM. \par
+%   \textbf{Expected Output:} The non-DICOM input is rejected, and an appropriate error message is returned. \par
+%   \textbf{Actual Output:} The image is rejected and an error message is returned. \par
+%   \textbf{Expected and Actual Output Match:} True \par
+%   \textbf{Relevant Functional Requirement(s):} FR.1
+% \end{mdframed}
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} DICOM Input Acceptance (TC.1) \par
-  \textbf{Input:} A sample chest X-ray image in DICOM format. \par
-  \textbf{Expected Output:} The DICOM input is accepted and converted into a JPEG successfully, with no error messages or system anomalies. \par
-  \textbf{Actual Output:} The given DICOM image is converted to JPEG format. \par
-  \textbf{Expected and Actual Output Match:} True \par
-  \textbf{Relevant Functional Requirement(s):} FR.1, FR.7
-\end{mdframed}
-
-\begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Non-DICOM Input Rejection (TC.2) \par
-  \textbf{Input:} A sample chest X-ray image in a format other than DICOM. \par
-  \textbf{Expected Output:} The non-DICOM input is rejected, and an appropriate error message is returned. \par
-  \textbf{Actual Output:} The image is rejected and an error message is returned. \par
-  \textbf{Expected and Actual Output Match:} True \par
-  \textbf{Relevant Functional Requirement(s):} FR.1
-\end{mdframed}
-
-\begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} DICOM conversion to JPEG (TC.3) \par
+  \textbf{Test Case Name:} DICOM conversion to JPEG (FRTC3) \par
   \textbf{Input:} A sample chest X-ray image DICOM format. \par
   \textbf{Expected Output:} The output is the same X-ray image in JPEG format. \par
   \textbf{Actual Output:} The given image in DICOM format is displayed as a JPEG image. \par
@@ -135,7 +139,7 @@ In this subsection, the test cases evaluating the software application for its i
 In this subsection, the test cases evaluating the software application for its display functionalities are outlined in detail alongside the testing results. \\
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Image Display Correctness (TC.4) \par
+  \textbf{Test Case Name:} Image Display Correctness (FRTC4) \par
   \textbf{Input:} Processed chest X-ray images with known medical conditions. \par
   \textbf{Expected Output:} The correct display of chest X-ray images on the user interface, and reflects the processed medical conditions accurately. \par
   \textbf{Actual Output:} The given chest X-ray image and the identified medical condition is correctly displayed. \par
@@ -144,7 +148,7 @@ In this subsection, the test cases evaluating the software application for its d
 \end{mdframed}
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Report and Terms Correctness (TC.5) \par
+  \textbf{Test Case Name:} Report and Terms Correctness (FRTC5) \par
   \textbf{Input:} Processed chest X-ray images with known medical conditions. \par
   \textbf{Expected Output:} The correct display of medical reports and associated terms on the user interface accurately reflects the processed information. \par
   \textbf{Actual Output:} The correct diagnosis report for the processed image is displayed. \par
@@ -154,13 +158,13 @@ In this subsection, the test cases evaluating the software application for its d
 
 \subsection{Classification of Diseases}
 \hypertarget{disClasCorPerf}
-In this subsection, the test cases evaluating the software application for its classification of disease functionalities are outlined in detail alongside the testing results. \\
+This subsection outlines the test cases evaluating the software application for its classification of disease functionalities in detail, along with the testing results. \\
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Disease Classification Correctness Performance (TC.6) \par
+  \textbf{Test Case Name:} Disease Classification Correctness Performance (FRTC6) \par
   \textbf{Input:} DICOM chest X-ray images, approximately 20\% of the dataset DATASET\_NAME will be reserved and used to run this test/experiment, with known medical conditions representing various diseases. \par
-  \textbf{Expected Output:} The AUC for the ROC curves for the classification of diseases based on the expected area under the ROC curves is given in Table 6 in the SRS. \par
-  \textbf{Actual Output:} The expected AUC of each disease classification matches the expected AUC given in Table 6 of the SRS. \par
+  \textbf{Expected Output:} The AUC for the ROC curves for the classification of diseases based on the expected area under the ROC curves is given in Table 6 in the \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/SRS/SRS.pdf}{SRS}. \par
+  \textbf{Actual Output:} The expected AUC of each disease classification matches the expected AUC given in Table 6 of the \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/SRS/SRS.pdf}{SRS}. \par
   \textbf{Expected and Actual Output Match:} True \par
   \textbf{Relevant Functional Requirement(s):} FR.6
 \end{mdframed}
@@ -169,7 +173,7 @@ In this subsection, the test cases evaluating the software application for its c
 In this subsection, the test cases evaluating the software application for its access to database functionalities are outlined in detail alongside the testing results. \\
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Database Search Functionality (TC.7) \par
+  \textbf{Test Case Name:} Database Search Functionality (FRTC7) \par
   \textbf{Input:} User-initiated search queries for patient records based on specified criteria such as patient ID (unique), name, date of X-ray, or medical condition(s). \par
   \textbf{Expected Output:} The accurate retrieval of patient records matching the specified search criteria, is displayed on the user interface. \par
   \textbf{Actual Output:} The requested patient data is accurately displayed to the user. \par
@@ -179,10 +183,10 @@ In this subsection, the test cases evaluating the software application for its a
 
 \subsection{Authorization}
 \hypertarget{Auth}
-In this subsection, the test cases evaluating the software application for its authorization functionalities are outlined in detail alongside the testing results. \\
+This subsection outlines the test cases evaluating the software application for its authorization functionalities alongside the testing results. \\
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Correct User Login (TC.8) \par
+  \textbf{Test Case Name:} Correct User Login (FRTC8) \par
   \textbf{Input:} User-initiated login attempts with valid credentials. \par
   \textbf{Expected Output:} The successful login of authorized users, granting them access to the system. \par
   \textbf{Actual Output:} The authorized user is able to log in with valid credentials and be granted access to the system. \par
@@ -191,7 +195,7 @@ In this subsection, the test cases evaluating the software application for its a
 \end{mdframed}
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Incorrect User Login (TC.9) \par
+  \textbf{Test Case Name:} Incorrect User Login (FRTC9) \par
   \textbf{Input:} User-initiated login attempts with invalid credentials. \par
   \textbf{Expected Output:} The rejection of login attempts with invalid credentials, accompanied by the appropriate error message. \par
   \textbf{Actual Output:} The user login attempts with invalid credentials are rejected, and the user is not granted access to the system. \par
@@ -200,7 +204,7 @@ In this subsection, the test cases evaluating the software application for its a
 \end{mdframed}
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Creation of New Authorized User (TC.10) \par
+  \textbf{Test Case Name:} Creation of New Authorized User (FRTC10) \par
   \textbf{Input:} User-initiated creation of a new authorized user account through the user interface. \par
   \textbf{Expected Output:} The expected result is the successful creation of a new authorized user account recorded and saved in the system. \par
   \textbf{Actual Output:} The new authorized user account is created successfully and saved in the system. \par
@@ -209,22 +213,22 @@ In this subsection, the test cases evaluating the software application for its a
 \end{mdframed}
 
 \section{Nonfunctional Requirements Evaluation}
-The following are the test cases carried out as part of the nonfunctional requirements evaluation of the project software application. For each test case, the test case name, input, expected output, actual output, whether the actual output matched the expected output, and the relevant NFR(s) are outlined in detail in this section. The test cases are organized into subsections based on what overarching property is being tested (i.e. usability, performance and security).
+The following are the test cases carried out as part of the nonfunctional requirements evaluation. This section outlines in detail the test case name, input, expected output, actual output, whether the actual output matched the expected output, and the relevant NFR(s) for each test case. The test cases are organized into subsections based on the overarching property being tested (e.g., usability, performance, and security).
 
 \subsection{Usability}
 In this subsection, the test cases evaluating the software application for its usability properties are outlined in detail alongside the testing results. \\
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Software Application Usability I (TC.16A) \par
+  \textbf{Test Case Name:} Software Application Usability I (NFRTC6A) \par
   \textbf{Input:} Usability testers will attempt to perform a given set of tasks (e.g. retrieving patient data) using the software application's GUI. \par
-  \textbf{Expected Output:} The usability testers will perform the tasks and complete a survey documenting their experiences and thoughts on the GUI's usability. \par
+  \textbf{Expected Output:} The usability testers will perform the tasks and complete a survey, see \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV plan} for the survey, documenting their experiences and thoughts on the GUI's usability. \par
   \textbf{Actual Output:} The testers submitted a survey on their experience using the GUI. \par
   \textbf{Expected and Actual Output Match:} True \par
   \textbf{Relevant Nonfunctional Requirement(s):} NF.A0, NF.C0, NF.EUR0, NF.LR0, NF.UPR0
 \end{mdframed}
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Software Application Usability II (TC.16B) \par
+  \textbf{Test Case Name:} Software Application Usability II (FRTC6B) \par
   \textbf{Input:} A given set of tasks (e.g. retrieving patient data) using the software application's GUI will be completed during a walk-through and demo with the supervisor and/or other peers. \par
   \textbf{Expected Output:} The supervisor and/or peers will give feedback documenting their thoughts on the GUI's usability. \par
   \textbf{Actual Output:} The supervisor was given a walkthrough and demo of the software application and gave verbal feedback to the team that was documented. See the Changes due to Testing section for more information on the exact feedback. \par
@@ -238,9 +242,9 @@ In this subsection, the test cases evaluating the software application for its p
 %(FAST VS RESPONSE TIME?)
 %(ADD FOR ML MODEL. ON A LARGE DATASET. METRIC - AREA UNDER ROC CURVE)
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} System Response Time (TC.12) \par
+  \textbf{Test Case Name:} System Response Time (NFRTC2) \par
   \textbf{Input:} Automated requests for all the various system functionalities, including image processing and database searches. Additionally, this includes website launch and load time. \par
-  \textbf{Expected Output:} The system provides responses within the defined acceptable time thresholds for each functionality as specified in section 3.3.1 of the SRS. \par
+  \textbf{Expected Output:} The system provides responses within the defined acceptable time thresholds for each functionality as specified in section 3.3.1 of the \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/SRS/SRS.pdf}{SRS}. \par
   \textbf{Actual Output:} The system responses are provided within the defined acceptable time thresholds for each functionality as specified.
   
   The average load time of the website from launch was 4 seconds. 
@@ -281,16 +285,16 @@ In this subsection, the test cases evaluating the software application for its p
 \end{mdframed}
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Accuracy of the ML Model (TC.13) \par
+  \textbf{Test Case Name:} Accuracy of the ML Model (NFRTC3) \par
   \textbf{Input:} See FR test case \hyperlink{disClasCorPerf}{Disease Classification Correctness Performance} for reference \par
   \textbf{Expected Output:} Likewise refer to \hyperlink{disClasCorPerf}{Disease Classification Correctness Performance} for more details. \par
-  \textbf{Actual Output:} AUC of each disease is accurate according to Table 6 in the SRS. \par
+  \textbf{Actual Output:} AUC of each disease is accurate according to Table 6 in the \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/SRS/SRS.pdf}{SRS}. \par
   \textbf{Expected and Actual Output Match:} True \par
   \textbf{Relevant Nonfunctional Requirement(s):} NF.PAR0
 \end{mdframed}
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Patient Data Collection (TC.14) \par
+  \textbf{Test Case Name:} Patient Data Collection (NFRTC4) \par
   \textbf{Input:} A New patient is added to the system. \par
   \textbf{Expected Output:} The system will retain the patient name, past diagnoses, assigned physician, past visit dates and other relevant data, while not retaining any unnecessary data. \par
   \textbf{Actual Output:} The system only retains the needed patient data to identify patients and link them to their chest X-ray images and scan results, medical history, assigned physician and other relevant data. \par
@@ -299,7 +303,7 @@ In this subsection, the test cases evaluating the software application for its p
 \end{mdframed}
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Capacity (TC.15) \par
+  \textbf{Test Case Name:} Capacity (NFRTC5) \par
   \textbf{Input:} Three sample chest X-ray images in DICOM format divided between three computers using the system. \par
   \textbf{Expected Output:} The correct display of chest X-ray images on the user interface, reflects all the processed medical conditions accurately for each upload. \par
   \textbf{Actual Output:} The images are correctly displayed on the user interface with all the processed information. \par
@@ -308,10 +312,10 @@ In this subsection, the test cases evaluating the software application for its p
 \end{mdframed}
 
 \subsection{Security}
-In this subsection, the test cases evaluating the software application for its security properties are outlined in detail alongside the testing results. \\
+This subsection outlines the test cases evaluating the software application for its security properties alongside the testing results. \\
 
 \begin{mdframed}[linewidth=0.5mm]
-  \textbf{Test Case Name:} Data Encryption/Secure Access (TC.11) \par
+  \textbf{Test Case Name:} Data Encryption/Secure Access (NFRTC7) \par
   \textbf{Input:} Software Application requests patient data as an authenticated user. \par
   \textbf{Expected Output:} The encrypted data (not plain text data) is returned only for an authenticated user. \par
   \textbf{Actual Output:} The data is returned only for an authenticated user (non-authenticated are denied access to the patient data). \par
@@ -320,14 +324,322 @@ In this subsection, the test cases evaluating the software application for its s
 \end{mdframed}
 
 Also, see \hyperlink{Auth}{Authorization} in the Functional Requirements Evaluation section for NF.AR0, NF.AR1, NF.PR0 and NF.PR1 as they all relate to limiting access to records for authorized individuals.
-  
-% \section{Comparison to Existing Implementation} 
 
-% This section will not be appropriate for every project.
 
 \section{Unit Testing}
 
-Unit testing was conducted on the different functions in each of the modules. The goal of these tests was to verify the correctness of independent units of code based on the separation of concerns in the system. The table below lists the functions tested in the corresponding modules, and the results of those tests.
+Unit testing was conducted on the different functions in each module. The goal of these tests was to validate the correctness of independent units of code based on the system's separation of concerns. The unit tests are organized by module, and include the name, input, expected and actual outputs, result and relevant test case(s).
+
+\subsection{DatabaseOps}
+The following are the unit tests defined (in the file \texttt{database-ops.test.js}) and run to validate the DatabaseOps module functions. Testing evaluated the module's database operations by simulating various database interactions, such as adding new patient records, querying existing data based on different criteria, and verifying the integrity and accuracy of the retrieved information.
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Write User Data Unauthenticated (BT18) \\
+  \textbf{Function(s) Tested:} writeUserData \\
+  \textbf{Input:} Database reference and new user data parameters (db, userId, userName, email, password, firstName, lastName, medInsts, isAdminUser) \\
+  \textbf{Expected Output:} Database data write attempt failed for new user data (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data write attempt failed for new user data (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC10, NFRTC7
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Read User Data Unauthenticated (BT19) \\
+  \textbf{Function(s) Tested:} readUserData \\
+  \textbf{Input:} Database reference and target user id (db, userId) \\
+  \textbf{Expected Output:} Database data read attempt failed for given user data (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data read attempt failed for given user data (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Delete User Data Unauthenticated (BT20) \\
+  \textbf{Function(s) Tested:} deleteUserData \\
+  \textbf{Input:} Database reference and target user id (db, userId) \\
+  \textbf{Expected Output:} Database data delete attempt failed for given user data (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data delete attempt failed for given user data (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Write Patient Data Unauthenticated (BT21) \\
+  \textbf{Function(s) Tested:} writePatientData \\
+  \textbf{Input:} Database reference and new patient data parameters (db, patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit) \\
+  \textbf{Expected Output:} Database data write attempt failed for new patient data (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data write attempt failed for new patient data (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Read Patient Data Unauthenticated (BT22) \\
+  \textbf{Function(s) Tested:} readPatientData \\
+  \textbf{Input:} Database reference and target patient id (db, patientId) \\
+  \textbf{Expected Output:} Database data read attempt failed for given patient data (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data read attempt failed for given patient data (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Delete Patient Data Unauthenticated (BT23) \\
+  \textbf{Function(s) Tested:} deletePatientData \\
+  \textbf{Input:} Database reference and target patient id (db, patientId) \\
+  \textbf{Expected Output:} Database data delete attempt failed for given patient data (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data delete attempt failed for given patient data (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Read All Patient Data Unauthenticated (BT24) \\
+  \textbf{Function(s) Tested:} readAllPatientData \\
+  \textbf{Input:} Database reference (db) \\
+  \textbf{Expected Output:} Database data read attempt failed for all patient data (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data read attempt failed for all patient data (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Write Active Patient ID Unauthenticated (BT25) \\
+  \textbf{Function(s) Tested:} writeActivePatientID \\
+  \textbf{Input:} Database reference and active patient id (db, patientId) \\
+  \textbf{Expected Output:} Database data write attempt failed for active patient id (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data write attempt failed for active patient id (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Read Active Patient ID Unauthenticated (BT26) \\
+  \textbf{Function(s) Tested:} readActivePatientID \\
+  \textbf{Input:} Database reference (db) \\
+  \textbf{Expected Output:} Database data read attempt failed for active patient id (unauthenticated attempt, permission denied) \\
+  \textbf{Actual Output:} Database data read attempt failed for active patient id (unauthenticated attempt, permission denied) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Read Non-Existent User Data Authenticated (BT27) \\
+  \textbf{Function(s) Tested:} readUserData \\
+  \textbf{Input:} Database reference and target user id (db, userId) \\
+  \textbf{Expected Output:} Database data read attempt failed for given user data (authenticated attempt, non-existent user data) \\
+  \textbf{Actual Output:} Database data read attempt failed for given user data (authenticated attempt, non-existent user data) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} None
+\end{mdframed}
+
+\subsection{UserAuthMgmt}
+The following are the unit tests defined (in the file \texttt{user-auth-mgmt.test.js}) and run to validate the UserAuthMgmt module functions. Testing will focus on the module's authentication functionalities, by simulating user login attempts with both valid and invalid credentials, ensuring that authorized users gain access while unauthorized attempts are appropriately rejected.
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Delete User Unauthenticated (BT28) \\
+  \textbf{Function(s) Tested:} deleteAUser \\
+  \textbf{Input:} Authenticator reference and target user email (auth, email) \\
+  \textbf{Expected Output:} Attempt to delete user from authentication failed (due to user not being logged in initially) \\
+  \textbf{Actual Output:} Attempt to delete user from authentication failed (due to user not being logged in initially) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Sign Out User Unauthenticated (BT29) \\
+  \textbf{Function(s) Tested:} signOutUser \\
+  \textbf{Input:} Authenticator reference and target user email (auth, email) \\
+  \textbf{Expected Output:} Attempt to sign out user from authentication failed (due to user not being logged in initially) \\
+  \textbf{Actual Output:} Attempt to sign out user from authentication failed (due to user not being logged in initially) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} NFRTC1
+\end{mdframed}
+
+\subsection{Backend}
+The following are the unit tests defined (in the file \texttt{backend.test.js}) and run to validate the Backend module functions. Testing was focused on the backend APIs, data processing logic, and interactions with external services or databases, to ensure seamless communication and proper functioning of the entire system.
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Create Staff User (BT01) \\
+  \textbf{Function(s) Tested:} createANewUser \\
+  \textbf{Input:} New staff user creation parameters (userName, email, password, firstName, lastName, medInsts, isAdmin) \\
+  \textbf{Expected Output:} New staff user created in the backend \\
+  \textbf{Actual Output:} New staff user created in the backend \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC10
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Sign In Staff User (BT02) \\
+  \textbf{Function(s) Tested:} signInAUser \\
+  \textbf{Input:} Staff user sign in parameters (email, password) \\
+  \textbf{Expected Output:} Staff user signed in and data returned \\
+  \textbf{Actual Output:} Staff user signed in and data returned \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC8
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Get Current User (BT03) \\
+  \textbf{Function(s) Tested:} signInAUser, getCurrentUser \\
+  \textbf{Input:} Staff user sign in parameters (email, password) \\
+  \textbf{Expected Output:} Staff user signed in and data returned \\
+  \textbf{Actual Output:} Staff user signed in and data returned \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC8
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Create Patient Record (BT04) \\
+  \textbf{Function(s) Tested:} createANewPatient \\
+  \textbf{Input:} New patient record creation parameters (patientId, mrn, firstName, lastName, dob, gender, contact, refPhys, lastVisit) \\
+  \textbf{Expected Output:} New patient record created in the backend \\
+  \textbf{Actual Output:} New patient record created in the backend \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} None
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Retrieve Patient Record (BT05) \\
+  \textbf{Function(s) Tested:} getAPatientsData \\
+  \textbf{Input:} Patient record retrieval parameters (patientId) \\
+  \textbf{Expected Output:} Patient record data returned \\
+  \textbf{Actual Output:} Patient record data returned \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC7
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Set Active Patient ID (BT06) \\
+  \textbf{Function(s) Tested:} setActivePatientId \\
+  \textbf{Input:} Patient record retrieval parameters (patientId) \\
+  \textbf{Expected Output:} Active patient ID set in backend \\
+  \textbf{Actual Output:} Active patient ID set in backend \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} None
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Retrieve Active Patient ID (BT07) \\
+  \textbf{Function(s) Tested:} getActivePatientId \\
+  \textbf{Input:} None \\
+  \textbf{Expected Output:} Active patient ID returned \\
+  \textbf{Actual Output:} Active patient ID returned \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC7
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Delete Patient Record (BT08) \\
+  \textbf{Function(s) Tested:} deleteAPatientsData \\
+  \textbf{Input:} Patient record deletion parameters (patientId) \\
+  \textbf{Expected Output:} Patient record data deleted in backend \\
+  \textbf{Actual Output:} Patient record data deleted in backend \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC7
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Retrieve Non-Existent Patient Record (BT09) \\
+  \textbf{Function(s) Tested:} getAPatientsData \\
+  \textbf{Input:} Patient record retrieval parameters (patientId) \\
+  \textbf{Expected Output:} Null error (since patient record is non-existent) \\
+  \textbf{Actual Output:} Null error (since patient record is non-existent) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC7
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Delete Non-Existent Patient Record (BT10) \\
+  \textbf{Function(s) Tested:} deleteAPatientsData \\
+  \textbf{Input:} Patient record deletion parameters (patientId) \\
+  \textbf{Expected Output:} No change in backend (patient record to delete is non-existent) \\
+  \textbf{Actual Output:} No change in backend (patient record to delete is non-existent) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC7
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Retrieve All Patient Records (BT11) \\
+  \textbf{Function(s) Tested:} getAllPatientData \\
+  \textbf{Input:} None \\
+  \textbf{Expected Output:} All patient record data returned \\
+  \textbf{Actual Output:} All patient record data returned \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC7
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Sign Out Staff User (BT12) \\
+  \textbf{Function(s) Tested:} signOutAUser \\
+  \textbf{Input:} None \\
+  \textbf{Expected Output:} Current staff user signed out \\
+  \textbf{Actual Output:} Current staff user signed out \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} None
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Sign In Staff User with Invalid Email (BT13) \\
+  \textbf{Function(s) Tested:} signInAUser \\
+  \textbf{Input:} Staff user sign in parameters, but invalid email (email, password) \\
+  \textbf{Expected Output:} Null error (staff user login failed, due to invalid email) \\
+  \textbf{Actual Output:} Null error (staff user login failed, due to invalid email) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC9
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Sign In Staff User with Incorrect Password (BT14) \\
+  \textbf{Function(s) Tested:} signInAUser \\
+  \textbf{Input:} Staff user sign in parameters, but incorrect password (email, password) \\
+  \textbf{Expected Output:} Null error (staff user login failed, due to incorrect password) \\
+  \textbf{Actual Output:} Null error (staff user login failed, due to incorrect password) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} FRTC9
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Delete Staff User (BT15) \\
+  \textbf{Function(s) Tested:} deleteUser \\
+  \textbf{Input:} Staff user deletion parameters (email, password) \\
+  \textbf{Expected Output:} Staff user deleted in the backend \\
+  \textbf{Actual Output:} Staff user deleted in the backend \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} None
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Create Staff User with Invalid Email (BT16) \\
+  \textbf{Function(s) Tested:} createANewUser \\
+  \textbf{Input:} New staff user creation parameters, but invalid email (userName, email, password, firstName, lastName, medInsts, isAdmin) \\
+  \textbf{Expected Output:} Null error (new staff user creation failed, since email is invalid) \\
+  \textbf{Actual Output:} Null error (new staff user creation failed, since email is invalid) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} None
+\end{mdframed}
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:} Delete Staff User with Invalid Email (BT17) \\
+  \textbf{Function(s) Tested:} deleteUser \\
+  \textbf{Input:} Staff user deletion parameters, but invalid email (email, password) \\
+  \textbf{Expected Output:} Null error (staff user deletion failed, due to invalid email) \\
+  \textbf{Actual Output:} Null error (staff user deletion failed, due to invalid email) \\
+  \textbf{Result:} Passed \\
+  \textbf{Relevant Test Case(s):} None
+\end{mdframed}
+
+The table below lists the functions tested in the corresponding modules, and the results of those tests.
+
+\begin{mdframed}[linewidth=0.5mm]
+  \textbf{Unit Test Name:}  (BT) \\
+  \textbf{Function(s) Tested:}  \\
+  \textbf{Input:}  \\
+  \textbf{Expected Output:}  \\
+  \textbf{Actual Output:}  \\
+  \textbf{Result:} Passed/Failed \\
+  \textbf{Relevant Test Case(s):} TC.
+\end{mdframed}
 
 \begin{table}[H]
   \centering
@@ -347,21 +659,6 @@ Unit testing was conducted on the different functions in each of the modules. Th
     \hline
     AIModel & processImage & Passed \\
             & predictions & Passed \\ 
-    \hline
-    Backend & createANewUser & Passed \\
-            & loginAUser & Passed \\
-            & logoutAUser & Passed \\
-            & deleteAUser & Passed \\
-    \hline
-    DatabaseOps & writeUserData & Passed \\
-                & readUserData & Passed \\
-                & createNewUserData & Passed \\
-                & deleteUserData & Passed \\
-    \hline
-    UserAuthMgmt & createNewUser & Passed \\
-                 & loginUser & Passed \\
-                 & logoutUser & Passed \\
-                 & deleteUser & Passed \\
     \hline
     AppGUI & displayLoginPage & passed \\
             & displayScanPage & passed \\
@@ -387,10 +684,10 @@ Overall, unit testing serves as a fundamental component of our software developm
 During the testing phase, several important changes were identified and implemented based on feedback from users and supervisors, particularly following the Rev 0 demo. These changes were aimed at enhancing the functionality, usability, and overall effectiveness of the software application. Here are the key changes:
 \begin{itemize}
     \item \textbf{Integration of NLP Report Generation:}  Initially, generating NLP reports from chest X-ray images was a stretch goal. However, based on feedback and the importance of this functionality, it was elevated to one of the project's main goals. \\
-    A new feature was introduced to generate NLP reports from chest X-ray images. This involved developing a separate ML model dedicated to producing textual reports, distinct from the model used for disease identification. By including this capability, the application can provide comprehensive diagnostic insights in textual format, enhancing its utility for healthcare professionals.
-    \item \textbf{Modification of Image Upload Process:} Based on feedback and usability considerations, the process for uploading images or DICOM files was restructured. Instead of uploading images/DICOM files directly, it was decided to assume that the files had already been uploaded to the server. As a result, the user interface was modified to automatically populate relevant patient data and linked images/DICOM files when selecting a patient. This modification aimed to simplify the user experience and improve efficiency by eliminating redundant steps.
-    \item \textbf{Store Results in Database:} To ensure comprehensive record-keeping and facilitate future reference, consideration was given to storing diagnostic results in the database. While this change was optional, it aimed to provide a centralized repository for patient data and corresponding analyses, enhancing data management capabilities and enabling further analysis and reporting.
-    \item \textbf{Usability:} A majority of feedback received during our walk-through and revision 0 demo focused on the redundancy of information that needed to be uploaded to utilize the application. We've decided to update the UI to allow for the users to select from existing patients to conduct a study and allow new X-ray images the be the only new information required to conduct new studies. 
+    A new feature was introduced to generate NLP reports from chest X-ray images. This involved developing a separate ML model dedicated to producing textual reports, distinct from the model used for disease identification. By including this capability, the application can provide comprehensive diagnostic insights in textual format, enhancing its utility for healthcare professionals. This change affects FR4 to include the generated report along with the other results. 
+    \item \textbf{Modification of Image Upload Process:} Based on feedback and usability considerations, the process for uploading images or DICOM files was restructured. Instead of uploading images/DICOM files directly, it was decided to assume that the files had already been uploaded to the server. As a result, the user interface was modified to automatically populate relevant patient data and linked images/DICOM files when selecting a patient. This modification aimed to simplify the user experience and improve efficiency by eliminating redundant steps. This removes the initial functional requirements FR1 FR2, which focused on accepting and rejecting the correct file input from the user of the system. 
+    \item \textbf{Store Results in Database:} To ensure comprehensive record-keeping and facilitate future reference, consideration was given to storing diagnostic results in the database. While this change was optional, it aimed to provide a centralized repository for patient data and corresponding analyses, enhancing data management capabilities and enabling further analysis and reporting. This adds to our functional requirements, FR?, which now describes the need for connection to the medical institutions system. 
+    \item \textbf{Usability:} A majority of feedback received during our walk-through and revision 0 demo focused on the redundancy of information that needed to be uploaded to utilize the application. We've decided to update the UI to allow for the users to select from existing patients to conduct a study and allow new X-ray images the be the only new information required to conduct new studies. The non-functional requirements were uncharged, the design was changed to better follow the look and feel requirements while limiting the unnecessary double interactions. 
 \end{itemize}
 
 \section{Automated Testing}
@@ -599,6 +896,10 @@ In this section, the traceability matrices linking the software modules to the t
         \hline
         M14 & & X & & & X & X \\
         \hline
+        M15 & & X & & & X & X \\
+        \hline
+        M16 & & X & & & X & X \\
+        \hline
     \end{tabular}
     \caption{Traceability Matrix for Software Modules II}
 \end{table}
@@ -616,13 +917,13 @@ In this section, the code coverage metrics are summarized for each software modu
         \hline
         M1: AIModel & 100 & 100 & 100 \\
         \hline
-        M2: ChestXRayRead & 100 & 100 & 100 \\
+        M2: ConvertDCM & 100 & 100 & 100 \\
         \hline
         M3: ResultGen & 100 & 100 & 100 \\
         \hline
-        M4: NLPModel & 100 & 100 & 100 \\
+        M4: ChestXrayRead & 100 & 100 & 100 \\
         \hline
-        M5: RepCompGen & 100 & 100 & 100 \\
+        M5: ReportGen & 100 & 100 & 100 \\
         \hline
         M6: Backend & 100 & 100 & 100 \\
         \hline
@@ -641,6 +942,10 @@ In this section, the code coverage metrics are summarized for each software modu
         M13: PerfScan & 100 & 100 & 100 \\
         \hline
         M14: ViewResults & 100 & 100 & 100 \\
+        \hline
+        M15: GenHeatmaps & 100 & 100 & 100 \\
+        \hline
+        M16: MLEndpoint & 100 & 100 & 100 \\
         \hline
     \end{tabular}
     \caption{Code Coverage Metrics}

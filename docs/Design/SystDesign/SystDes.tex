@@ -49,6 +49,7 @@
 01/13/2024 & 0.0 & Initial draft of all sections\\
 01/15/2024 & 0.1 & Edits to the component diagram and the connections\\
 01/17/2024 & 0.2 & Final edits and check for grammar and clarity \\
+04/04/2024 & 0.3 & Updated module overview (sec 6.1) according to updated modules for ML model after implementation \\
 \bottomrule
 \end{tabularx}
 
@@ -61,7 +62,7 @@ This section records information for easy reference.
 \subsection{Abbreviations and Acronyms}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
-    \toprule		
+    \toprule        
     \textbf{symbol} & \textbf{description}\\
     \midrule 
     \progname & Explanation of program name\\
@@ -124,20 +125,22 @@ The diagram below outlines where our system interacts with the surrounding envir
 \subsection{Normal Behaviour}
 The system is to be used through a web-application that requires a computer and stable access to the internet. This allows for the system to be used within any existing enterprise systems within hospitals, offices, and labs without the need to understand and integrate into each individual use.
 \begin{enumerate}
-    \item \bf{Chest X-Ray Read Module}: Reads the JPEG of the X-ray, after conversion from DICOM.
+    \item \bf{Chest X-Ray Read Module}: Reads the xray images from database as DICOM files
     \item \bf{Results Generation Module}: Generates a disease risk classification for the X-ray input.
-    \item \bf{Report Component Generation Module}: Generates a brief diagnosis report for the X-ray input.
+    \item \bf{Report Generation Module}: Generates a brief summary report for the predictions.
     \item \bf{Database Operations Module}: Contains database management functions for the patient database.
     \item \bf{User Authentication/Management Module}: Responsible for authorizing user login credentials.
     \item \bf{App GUI Module}: The graphical user interface of the system.
     \item \bf{Login Module}: Login page UI view.
     \item \bf{Perform Scan Module}: UI view for submitting X-ray input to the system to perform a diagnosis.
     \item \bf{View Results Module}: View for the results of the scan and disease report.
-    \item \bf{AI Model Module}: AI model for identifying diseases in the X-ray input.
-    \item \bf{NLP Model Module}: Model for generating a breif diagnosis report using NLP.
+    \item \bf{AI Model Module}: Putting together the diagnosis, heatmaps and summary report.
+    \item \bf{Convert DCM Module}: Converts dicom xray images to png format and converts images to encoded byte arrays to send to front end.
     \item \bf{Backend Module}: Module that interfaces with DICOM server containing patient data.
     \item \bf{App Controller Module}: Controller for interacting with the different models and views.
     \item \bf{Medical Institution Interface Module}: Allows information upload, for DICOM files, between application and the medical institutions' IT system.
+    \item \bf{Generate Heatmaps Module}: Generating heatmaps for each disease for all x-ray images of that patient.
+    \item \bf{ML Endpoint Module}: Receiving a specific patient and returning diagnosis data for that patient.
 \end{enumerate}
 
 \subsection{Undesired Event Handling}
@@ -180,7 +183,7 @@ The \hyperlink{A}{appendix} contains all the current web page designs.
 \section{Timeline}
 \begin{table}
     \begin{tabular}{l l l} 
-    \toprule		
+    \toprule        
     \textbf{Deliverable} & \textbf{Assigned to} & \textbf{Deadline}\\
     \midrule 
     \textbf{Model Module} & \\
@@ -218,8 +221,8 @@ The \hyperlink{A}{appendix} contains all the current web page designs.
     \label{table:Timeline}
 \end{table}
 
-% \bibliographystyle {plainnat}
-% \bibliography{../../../refs/References}
+\bibliographystyle {plainnat}
+\bibliography{../../../refs/References}
 
 \newpage{}
 

@@ -44,6 +44,8 @@
 October 16th, 2023 & Allison, Tushar & Added Introduction, Scope \& Purpose of HA, System Boundaries \& Components, Critical Assumptions\\
 October 18th, 2023 & Allison, Ibrahim, Mohaansh, Nathaniel, Tushar & Switch to Overleaf LateX, Added FMEA Table, Safety \& Security requirements, updated Critical Assumptions\\
 October 20th, 2023 & Ibrahim, Mohaansh, Tushar & Added Safety \& Security Requirements, Out-of-Scope Hazards and descriptions, Roadmap\\
+November 9th, 2023 & Allison & Update of FMEA table to include data collection \\
+March 28th, 2024 & Mohaansh & Updated critical assumptions; added causes of failure in FMEA table and removed data collection (commented for retrievability); removed image upload case by user from FMEA table\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -80,7 +82,7 @@ This document aims to outline the possible hazards and the associated hazard con
 \section{Scope and Purpose of Hazard Analysis}
 The purpose of the hazard analysis is to identify the possible hazards associated with the system, the potential effects, and how to reduce the risk within the system through preventative design and actions. In our project, hazards can be linked to patient information being collected incorrectly, data leaks in patient records, issues with authorization, false positives or false negatives outputs in disease detection, and more as outlined below.
 
-The scope of hazard analysis in the project focuses on ensuring the safety, effectiveness, and reliability of the AI-based diagnostic system for chest X-ray images. It extends to the entire ecosystem of the AI system, including the machine learning algorithms, user interface, data management, and the interaction between healthcare professionals, patients, and the AI system.
+\noindent The scope of hazard analysis in the project focuses on ensuring the safety, effectiveness, and reliability of the AI-based diagnostic system for chest X-ray images. It extends to the entire ecosystem of the AI system, including the machine learning algorithms, user interface, data management, and the interaction between healthcare professionals, patients, and the AI system.
 
 \section{System Boundaries and Components}
 The system will involve the following components/functions: 
@@ -93,7 +95,7 @@ The system will involve the following components/functions:
     \end{itemize}
     \item \textbf{Backend}
     \begin{itemize}
-        \item An AI Model for identifying the anomalies related to the selected diseases
+        \item An endpoint for processing related to the AI Model for identifying the anomalies related to the selected diseases
         \item Databases that will hold X-ray images and store patients' records
         \item The host support system (i.e., Medical Institution/Diagnostic Centre IT Systems)
     \end{itemize}
@@ -104,10 +106,10 @@ The system will involve the following components/functions:
 \section{Critical Assumptions}
 The following are the critical assumptions for the project:
 \begin{enumerate}
-    \item The hospital/work location will have a secure database where the generated diagnostic notes document will be stored after generation, a copy of the document will not be stored within the system, only the final diagnoses of the AI.
-    \item Data stored by the AI model to continue training during operation will have minimum identifying demographic information of the patient, to limit unnecessary data stored within the system.
+    \item The hospital/work location will have a secure database where the xray data and the personal details of the patient will be stored for access in the diagnoses and summary report.
+    \item The system is assumed to have a stable internet connection to be used as intended.
     \item The chest X-ray images provided will be of sufficient quality for the AI system to accurately detect abnormalities.
-    \item  The system is assumed to be available for use at all times, with minimal downtime.
+    \item  Frontend and backend servers are available for use continuously unless there are any disruptions in connection, or are made unavailable for maintenance purposes.
     \item  The system will be accessed by trained healthcare professionals and will have a certain level of competency in interpreting the diagnostic findings.
 \end{enumerate}
 
@@ -128,9 +130,9 @@ The following is a detailed breakdown of the possible failure modes and effects 
         \cline{3-3}\cline{8-10}
         & & unauthorized third party able to login & & & & & Include safeguards to prevent unauthorized parties from logging in & AR0, AR1, PR0, PR1 & H1.2 \\
         \hline
-        Web Interface - Image Upload & Fails to upload chest x-ray image & user cannot upload chest x-ray image to web app & image upload error in web application & Manual testing & & Low & Include alternative methods to upload chest x-ray images & & H2 \\
+        Web Interface - Image Load & Fails to load chest x-ray image and heatmaps & user cannot view chest x-ray images and heatmaps & error in encoding/decoding image data or bad response from backend & Manual testing & & Low & Include alternative methods to upload chest x-ray images & & H2 \\
         \hline
-        \multirow{2}{1in}{Web Interface - Display Diagnostic Findings} & Fails to show diagnostic findings & user cannot view diagnostic findings of chest x-ray analysis & \multirow{2}{1.5in}{data access error in web application} & \multirow{2}{0.6in}{Manual testing} & & \multirow{2}{0.3in}{Low} & Include alternate methods for users to view diagnostic findings & AR1 & H3.1 \\
+        \multirow{2}{1in}{Web Interface - Display Diagnostic Findings} & Fails to show diagnostic findings & user cannot view diagnostic findings for the considered diseases & \multirow{2}{1.5in}{error in sending results from backend, or error in parsing response} & \multirow{2}{0.6in}{Manual testing} & & \multirow{2}{0.3in}{Low} & Include alternate methods for users to view diagnostic findings & AR1 & H3.1 \\
         \cline{2-3}\cline{8-10}
         & Shows diagnostic findings by mistake & unauthorized user can view diagnostic findings of chest x-ray analysis & & & & & Include alternative methods to authenticate user & AR1 & H3.2 \\
         \hline
@@ -144,13 +146,19 @@ The following is a detailed breakdown of the possible failure modes and effects 
         \cline{2-8}\cline{10-10}
         & Data corruption & Loss of patient images and records & Database server corruption & Data integrity checks & Regular data backups & Data loss leak & Implement data integrity checks & & H6.2 \\
         \hline
-        Data Access & Data transfer failure & Inability to retrieve patient data & Network communication issues & Automated data transfer checks & Redundant data transfer paths & Data retrieval risk & Implement data transfer redundancy & & H7 \\
+        Data Access & Data transfer failure & Inability to retrieve patient data & Network communication issues; Wrong encoding and decoding for xrays and heatmaps & Automated data transfer checks & Redundant data transfer paths & Data retrieval risk & Implement data transfer redundancy & & H7 \\
         \hline
-        \multirow{2}{1in}{Data Security} & Cyberattacks & Unauthorized access to patient data & Weak security measures & \multirow{2}{0.6in}{Intrusion detection} & Enhanced cybersecurity measures & \multirow{2}{0.2in}{Data breach risk} & Enhance cybersecurity & \multirow{2}{0.2in}{AR0, IR0, PR0, PR1, SR2} & H8.1 \\
+        \multirow{2}{1in}{Data Security} & Cyberattacks & Unauthorized access to patient data & Weak security measures: Exposed access tokens & \multirow{2}{0.6in}{Intrusion detection} & Enhanced cybersecurity measures & \multirow{2}{0.2in}{Data breach risk} & Enhance cybersecurity & \multirow{2}{0.2in}{AR0, IR0, PR0, PR1, SR2} & H8.1 \\
         \cline{2-4}\cline{6-6}\cline{8-8}\cline{10-10}
-        & Unauthorized access & Data breach and patient privacy & Weak access control measures & & Enhanced access controls & & Enhanced access control & & H8.2 \\
-        \hline
-        \multirow{2}{1in}{Backend Server} & Network failure & Disruption of connection to database & Network connectivity issues & \multirow{2}{0.6in}{Real-time monitoring} & Redundant network connections & \multirow{2}{0.2in}{Operational disruption} & Implement network redundancy & & H9.1 \\
+        & Unauthorized access & Data breach and patient privacy & Weak access control measures or error in assigning admin privileges & & Enhanced access controls & & Enhanced access control & & H8.2 \\
+        
+        % data collection seems to be not applicable: patient data is not managed by us; model training is also a stretch goal now
+        
+        %\hline
+        %\multirow{2}{1in}{Data Collection} & Misrepresentation of all patients or limited variety & Some patients may be more likely to get a false positive or a false negative & The patient's demographic data (gender, age, and medical history) was not represented in the data used to train and test the model & Monitoring of range of data used & & Low & Randomization of data used, the use of multiple data sets to ensure most demographic data is used. & & H10 \\
+        
+        \hline 
+        \multirow{2}{1in}{Backend Server} & Network failure & Disruption of connection to database & Network connectivity issues; Response to front-end has the wrong format/attributes & \multirow{2}{0.6in}{Real-time monitoring} & Redundant network connections & \multirow{2}{0.2in}{Operational disruption} & Implement network redundancy & & H9.1 \\
         \cline{2-4}\cline{6-6}\cline{8-8}\cline{10-10}
         & Server downtime & Unable to access to patient data & Server hardware failure & & Redundant server systems & & Implement server redundancy & & H9.2 \\
         \bottomrule

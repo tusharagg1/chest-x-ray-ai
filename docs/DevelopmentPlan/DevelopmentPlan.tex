@@ -4,9 +4,9 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 
-\title{Development Plan\\Software Engineering}
+\title{Development Plan \\\progname}
 
-\author{Team 17, Team RAdiAIdance\\Allison Cook\\Ibrahim Issa\\Mohaansh Pranjal\\Nathaniel Hu\\Tushar Aggarwal}
+\author{\authname}
 
 \date{}
 
@@ -29,7 +29,7 @@
 09/25/2023 & Mohaansh Pranjal & Modified/Added to Team Communication Plan and Proof of Concept Demonstration Plan subsections \\
 09/25/2023 & Allison Cook & Second review of entire document \\
 09/25/2023 & Nathaniel Hu & Transferred Development Plan document text from collaborative document into this LaTeX document; Did some finishing touches \\
-... & ... & ...\\
+04/04/2024 & Mohaansh Pranjal & Updates to team responsibilities according to implementation, and correcting scheduling \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -223,11 +223,11 @@ For more information on the scribe role, please see the ``Team Meeting Plan'' se
 
 \noindent \textbf{Responsibilities}
 \begin{itemize}
-\item Allison Cook – Backend, Frontend 
-\item Ibrahim Issa – Computer Vision/AI, Backend, Frontend 
-\item Mohaansh Pranjal – Backend, Frontend 
-\item Nathaniel Hu – Backend, Frontend 
-\item Tushar Aggarwal – AI, Backend, Frontend
+\item Allison Cook – Frontend 
+\item Ibrahim Issa – Computer Vision/AI, Backend
+\item Mohaansh Pranjal – Backend, AI Model 
+\item Nathaniel Hu – Database, Frontend integration
+\item Tushar Aggarwal – AI Model, Backend
 \end{itemize}
 
 \noindent It should be noted that the roles and responsibilities specified above are subject to change at the discretion of the team.
@@ -285,8 +285,8 @@ When developing the new feature(s), be sure to:
 \item Have the changes reviewed and approved by 1-2 other team members (ideally the relevant project area expert/main driver).
 \item Merge the changes into the development branch after the approval(s) have been made.
 \item Periodically perform regression testing on the changes merged into the development branch. Create issues for all bugs found in a similar process to that outlined in step 1.
-\item Repeat steps 2 – 8 for all bugs discovered during regression testing from step 9.
-\item Repeat regression testing to ensure all discovered bugs from step 9 have been resolved, and that no new bugs have been introduced.
+\item Repeat step 1 for all bugs discovered during regression testing.
+\item Repeat regression testing to ensure all discovered bugs have been resolved, and that no new bugs have been introduced.
 \item Changes merged into the development branch will be merged into the main branch periodically, ideally after the regression testing has been completed and all discovered bugs have been addressed and retested.
 \end{enumerate}
 \end{item}
@@ -316,7 +316,7 @@ The following technologies will be used by the team during the software developm
 \item \textbf{Frontend Languages}: JavaScript, CSS
 \item \textbf{Backend Languages}: Python
 \item \textbf{Frontend Libraries}: React, Tailwind CSS
-\item \textbf{Backend Libraries}: PyTorch, OpenCV, pandas
+\item \textbf{Backend Libraries}: PyTorch, OpenCV, flask, BytesIO, firebase\_admin
 \item \textbf{Unit Testing}: Jest, Pytest
 \item \textbf{Code Coverage}: Istanbul, Coverage.py
 \item \textbf{Linters}: Prettier, ESLint, Flake8, Black
@@ -428,21 +428,21 @@ The following schedule provides a general idea of the project timeline that the 
 \textbf{Final Demonstration, Revision 1} – Due: March 18th – 29th, 2024
 \begin{itemize}
 \item Start By: February 18th, 2024
-\item Complete By: March 14th, 2024
+\item Complete By: March 24th, 2024
 \end{itemize}
 \end{item}
 \begin{item}
-\textbf{EXPO Demonstration} – Due: April TBD
+\textbf{EXPO Demonstration} – Due: April 9th, 2024
 \begin{itemize}
-\item Start By: February 18th, 2023
-\item Complete By: March 31st, 2023
+\item Start By: February 18th, 2024
+\item Complete By: April 1st, 2024
 \end{itemize}
 \end{item}
 \begin{item}
-\textbf{Final Documentation, Revision 1} – Due: April 4th, 2023
+\textbf{Final Documentation, Revision 1} – Due: April 4th, 2024
 \begin{itemize}
-\item Start By: February 3rd, 2023
-\item Complete By: March 31st, 2023
+\item Start By: February 3rd, 2024
+\item Complete By: March 31st, 2024
 \end{itemize}
 \end{item}
 \end{itemize}
