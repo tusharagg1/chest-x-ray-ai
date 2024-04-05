@@ -3,7 +3,7 @@ Flask==3.0.2
 Flask_Cors==4.0.0
 matplotlib==3.8.2
 numpy==1.26.4
-Pillow==10.1.0
+Pillow==10.2.0
 Pillow==10.2.0
 pydicom==2.4.4
 scikit-image==0.22.0

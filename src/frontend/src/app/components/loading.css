@@ -1,5 +1,11 @@
-/* cite https://www.educative.io/answers/how-to-create-a-custom-loading-screen-with-css-in-react */
+/*
+* Author: Allison Cook
+* Date Created: March 2024
+* Purpose: Create style for loading animation
+*/
+/* referenced: https://www.educative.io/answers/how-to-create-a-custom-loading-screen-with-css-in-react */
 
+/* style of the loading item */
 .loading-spinner {
   border: 7px solid #f3f3f3;
   border-top: 7px solid #818cf8;
@@ -9,6 +15,7 @@
   animation: spin 1.5s linear infinite;
 }
 
+/* spin the loading animation */
 @keyframes spin {
   0% {
     transform: rotate(0deg);

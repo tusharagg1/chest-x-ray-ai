@@ -1,3 +1,8 @@
+/*
+* Author: Template
+* Date Created: October 2023
+* Purpose: create error page
+*/
 'use client'; // Error components must be Client Components
 
 import * as React from 'react';

@@ -1,11 +1,8 @@
 /*
-  Web Page Name: Login
-  Author(s): Allison Cook, Nathaniel Hu
-  Last Modified Date: 2024-03-30
-  Purpose: Allows user to login to app, or navigate to sign up page if user does
-           not already have an account.
+* Author: Allison Cook
+* Date Created: January 2024
+* Purpose: Display the login page when first accessing the webpage 
 */
-
 /* eslint-disable react-hooks/rules-of-hooks */
 
 // desigate this as a client-side web page
@@ -37,10 +34,23 @@ export default function loginPage() {
 
   // validates the email and password, calls the apis to sign in the user
   function handleSubmit() {
-    // get the login success text element
-    const loginTxt = document.getElementById('loginSuccess');
+    setLoading(true);
+    const signInTxt = document.getElementById('signInSuccess');
 
-    // email validation
+    //password validation
+    if (password == '') {
+      setPasswordError(true);
+      setPasswordErrorMessage('Please enter your password');
+      return;
+    } else if (password.length < 4) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Password must be at least 8 characters');
+      return;
+    } else {
+      setPasswordError(false);
+    }
+
+    //email validation
     if (email == '') {
       setEmailError(true);
       setEmailErrorMessage('Please enter your email');
@@ -60,18 +70,14 @@ export default function loginPage() {
 
     // attempt login with email and password
     signInAUser(email, password)
-      .then((user) => {
-        // set loading to true
-        setLoading(true);
-        // display success message, redirect to main page on successful login
-        loginTxt!.innerHTML = `Sign In Successful! Welcome ${user.userName}!`;
-        setTimeout(() => {}, 1000);
+      .then((userData) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        signInTxt!.innerHTML = `Sign In Successful! Welcome ${userData.userName}!`;
         window.location.href = '/Main';
       })
-      .catch((error) => {
-        // log error, display failure message if login attempt fails
-        console.log(error);
-        loginTxt!.innerHTML = 'Sign In Failed! Error in User Sign In!';
+      .catch(() => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        signInTxt!.innerHTML = 'Sign In Failed! Error in User Sign In!';
       });
   }
 
@@ -109,6 +115,7 @@ export default function loginPage() {
             <p className='text-gray-500'>Sign in to your account</p>
             <form method='post' className='mt-3'>
               <ol>
+                {/* login input form */}
                 <div>
                   <label
                     className='text-gray-500'

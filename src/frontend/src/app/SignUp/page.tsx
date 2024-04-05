@@ -1,21 +1,17 @@
-/* 
-  Web Page Name: SignUp
-  Authors: Allison Cook, Nathaniel Hu
-  Last Modified Date: 2024-03-30
-  Purpose: Allows user to sign up for an account, or navigate to login page if
-           user already has an account.
+/*
+* Author: Allison Cook
+* Date Created: March 2024
+* Purpose: Display the account creation page
 */
-
-// designate this as a client-side web page
 'use client';
-
-// import externally defined libraries
-import React, { useState } from 'react';
 import Image from 'next/image';
+import React, { useState } from 'react';
 
 // import internally defined components
 import Button from '@/components/buttons/Button';
 import UnderlineLink from '@/components/links/UnderlineLink';
+
+import { createANewUser } from '../../../../backend/database/backend';
 
 // import internally defined backend functions
 import { createANewUser } from '../../../../backend/database/backend';
@@ -78,23 +74,29 @@ export default function SignUpPage() {
 
   // define function to handle user sign up attempt
   const onSignUp = () => {
-    // log email, password, and other user input fields for sign up attempt
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('First Name:', firstName);
-    console.log('Last Name:', lastName);
-    console.log('Associated Medical Institution(s):', medInsts);
-    console.log('Admin Status:', isAdmin);
-
-    // get the sign up success text element
+    setEmail((document.getElementById('email') as HTMLInputElement).value);
+    setPassword(
+      (document.getElementById('password') as HTMLInputElement).value
+    );
+    const firstName = (document.getElementById('firstName') as HTMLInputElement)
+      .value;
+    const lastName = (document.getElementById('lastName') as HTMLInputElement)
+      .value;
+    const userName = firstName + lastName;
+    const medInsts = 'MedInsts';
+    const isAdmin = false;
     const signUpTxt = document.getElementById('signUpSuccess');
 
     // verify user email and password field inputs
     function verifyFields() {
-      return !emailError && !passwordError;
+      if (email === '') {
+        setEmailError(true);
+      } else {
+        setEmailError(false);
+      }
+      return !emailError;
     }
 
-    // attempt to create a new user with verified user input fields
     if (verifyFields()) {
       createANewUser(
         firstName + lastName,
@@ -106,23 +108,18 @@ export default function SignUpPage() {
         isAdmin
       )
         .then((_userId) => {
-          // set loading to true
-          setLoading(true);
-          // show success message, redirect to main page on successful sign up
-          signUpTxt!.innerHTML = 'Sign Up Successful! Welcome! '
-            + `${firstName} ${lastName}!`;
-          setTimeout(() => {}, 1000);
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          signUpTxt!.innerHTML = 'Sign Up Successful! Welcome!';
           window.location.href = '/Main';
         })
-        .catch((error) => {
-          // log error, display failure message if sign up attempt fails
-          console.log(error);
+        .catch((_error) => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           signUpTxt!.innerHTML = 'Sign Up Failed! Error in User Creation!';
         });
-    }
-    else {
-      // display failure message if sign up attempt fails due to invalid inputs
-      signUpTxt!.innerHTML = 'Sign Up Failed! Invalid Email or Password!';
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      signUpTxt!.innerHTML =
+        'Sign Up Failed! Invalid Username/Email or Password!';
     }
   };
 
@@ -154,6 +151,7 @@ export default function SignUpPage() {
             className='gap-2 bg-white py-5'
             style={{ width: '35%', height: '50%', zIndex: 5 }}
           >
+            {/* input form with elements to create a new user */}
             <form className='mt-3'>
               <label
                 className='text-gray-500 '
