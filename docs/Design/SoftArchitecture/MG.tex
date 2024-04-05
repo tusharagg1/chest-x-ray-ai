@@ -57,6 +57,7 @@
 01/15/2024 & 0.4 & Made small edits to Table 1 in Module Hierarchy section and
   Table 4 in Traceability Matrix section; Initial Draft of Module
   Decomposition section completed \\
+04/02/2024 & 0.5 & Updated modules regarding ML model according to the implementation, and subsequent changes in traceability \\
 \bottomrule
 \end{tabularx}
 
@@ -70,7 +71,7 @@ This section records information for easy reference.
 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
-  \toprule		
+  \toprule    
   \textbf{symbol} & \textbf{description} \\
   \midrule 
   AC & Anticipated Change \\
@@ -95,7 +96,7 @@ This section records information for easy reference.
   & in this document \\
   UC & Unlikely Change \\
   \bottomrule
-\end{tabular}\\
+\end{tabular} \\
 
 \newpage
 
@@ -130,7 +131,7 @@ Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
 \end{itemize}
 
 After completing the first stage of the design, the Software Requirements
-Specification (SRS), the Module Guide (MG) is developed~\citep{ParnasEtAl1984}. The MG
+Specification \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/SRS/SRS.pdf}{(SRS)}, the Module Guide \href{https://github.com/tusharagg1/chest-x-ray-ai/blob/main/docs/Design/SoftArchitecture/MG.pdf}{(MG)} is developed~\citep{ParnasEtAl1984}. The MG
 specifies the modular structure of the system and is intended to allow both
 designers and maintainers to easily identify the parts of the software.  The
 potential readers of this document are as follows:
@@ -184,15 +185,13 @@ change.
     performing the chest x-ray scan/read.
   \end{item}
   \begin{item}[\refstepcounter{acnum} \actheacnum \label{acRadReport}:]
-    The output radiology report generated using NLP (progressing from report
-    components to more complete report).
+    The output radiology report (progressing from summary report to more complete report using NLP).
   \end{item}
   \begin{item}[\refstepcounter{acnum} \actheacnum \label{acAppGUI}:]
     The various application pages/GUI (page layout changes/redesign, etc.).
   \end{item}
   \begin{item}[\refstepcounter{acnum} \actheacnum \label{acMedInstInterf}:]
-    The module for interfacing with the IT system(s) of the medical
-    institution(s) using this application.
+    The module for interfacing with the IT system(s) of the medical institution(s) using this application.
   \end{item}
 \end{description}
 
@@ -224,7 +223,7 @@ decisions will be changed.
     The input format of the chest x-ray data (DICOM) into the application.
   \end{item}
   \begin{item}[\refstepcounter{ucnum} \uctheucnum \label{ucModelLib}:]
-    The input format of the chest x-ray image (JPG or JPEG) into the AI/ML
+    The input format of the chest x-ray image (encoded PNG array) into the AI/ML
     model for performing the chest x-ray scan/read.
   \end{item}
 \end{description}
@@ -239,10 +238,10 @@ actually be implemented.
 \begin{multicols}{2}
 \begin{description}
   \item [\refstepcounter{mnum} \mthemnum \label{mAIModel}:] AIModel Module
-  \item [\refstepcounter{mnum} \mthemnum \label{mChXRR}:] ChestXRayRead Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mChXRR}:] ConvertDCM Module
   \item [\refstepcounter{mnum} \mthemnum \label{mResGen}:] ResultsGen Module
-  \item [\refstepcounter{mnum} \mthemnum \label{mNLPModel}:] NLPModel Module
-  \item [\refstepcounter{mnum} \mthemnum \label{mRepCompGen}:] RepCompGen Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mNLPModel}:] ChestXrayRead Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mRepCompGen}:] ReportGen Module
   \item [\refstepcounter{mnum} \mthemnum \label{mBackend}:] Backend Module
   \item [\refstepcounter{mnum} \mthemnum \label{mDatabaseOps}:] DatabaseOps Module
   \item [\refstepcounter{mnum} \mthemnum \label{mUserAuthMgmt}:] UserAuthMgmt Module
@@ -252,6 +251,8 @@ actually be implemented.
   \item [\refstepcounter{mnum} \mthemnum \label{mLogin}:] Login Module
   \item [\refstepcounter{mnum} \mthemnum \label{mPerfScan}:] PerfScan Module
   \item [\refstepcounter{mnum} \mthemnum \label{mViewResults}:] ViewResults Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mHeatmaps}:] GenHeatmaps Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mEndpoint}:] MLEndpoint Module
 \end{description}
 \end{multicols}
 
@@ -265,21 +266,23 @@ actually be implemented.
     {Hardware-Hiding Module} & MedInstInter \\
     \midrule
 
-    \multirow{8}{0.3\textwidth}{Behaviour-Hiding Module} & ChestXRayRead \\
+    \multirow{8}{0.3\textwidth}{Behaviour-Hiding Module} & ConvertDCM \\
     & ResultsGen \\
-    & RepCompGen \\
+    & ChestXrayRead \\
+    & ReportGen \\
     & DatabaseOps \\
     & UserAuthMgmt \\
+    & AppGUI \\
     & Login \\ 
     & PerfScan \\
     & ViewResults \\
+    & GenHeatmaps  \\
+    & MLEndpoint  \\
     \midrule
 
-    \multirow{5}{0.3\textwidth}{Software Decision Module} & AIModel \\
-    & NLPModel \\
+    \multirow{4}{0.3\textwidth}{Software Decision Module} & AIModel \\
     & Backend \\
     & AppController \\
-    & AppGUI \\
     \bottomrule
 
   \end{tabular}
@@ -298,9 +301,9 @@ below in Table \ref{TblMMH}.
     \textbf{Level 1} & \textbf{Level 2} \\
     \midrule
 
-    \multirow{6}{0.3\textwidth}{Model Module} & ChestXRayRead \\
+    \multirow{6}{0.3\textwidth}{Model Module} & ConvertDCM \\
     & ResultsGen \\
-    & RepCompGen \\
+    & ReportGen \\
     & DatabaseOps \\
     & UserAuthMgmt \\
     & MedInstInter \\
@@ -312,7 +315,7 @@ below in Table \ref{TblMMH}.
     \midrule
 
     \multirow{5}{0.3\textwidth}{Controller Module} & AIModel \\
-    & NLPModel \\
+    & MLEndpoint \\
     & Backend \\
     & AppController \\
     & AppGUI \\
@@ -359,61 +362,54 @@ to be implemented.
 \subsubsection{MedInstInter Module (\mref{mMedInstInter})}
 
 \begin{description}
-\item[Secrets:] The data structures and algorithms used to interface with
-  the IT system(s) of the medical institution(s).
-\item[Services:] Serves as an interface to transfer information between the
-  medical institution(s)' IT system(s) and the application.
-\item[Implemented By:] [Your Program Name Here]
+  \item[Secrets:] The data structures and algorithms used to interface with
+    the IT system(s) of the medical institution(s).
+  \item[Services:] Serves as an interface to transfer information between the
+    medical institution(s)' IT system(s) and the application.
+  \item[Implemented By:] [Your Program Name Here]
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
 
 \begin{description}
-\item[Secrets:] The contents of the required behaviours.
-\item[Services:] Includes programs that provide externally visible behaviour
-  of the system as specified in the software requirements specification (SRS)
+\item[Secrets:]The contents of the required behaviours.
+\item[Services:]Includes programs that provide externally visible behaviour of
+  the system as specified in the software requirements specification (SRS)
   documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in
-  this module will need to change if there are changes in the SRS.
+  hardware-hiding module and the software decision module. The programs in this
+  module will need to change if there are changes in the SRS.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{ChestXRayRead Module (\mref{mChXRR})}
+\subsubsection{ConvertDCM Module (\mref{mChXRR})}
 
 \begin{description}
 \item[Secrets:] The chest x-ray reader data structure(s) and algorithm(s)
-  used to scan a chest x-ray image and look for/detect the possible presence
-  of certain diseases/infections (after converting from DICOM to JPEG).
-\item[Services:] Reads/scans the chest x-ray image, performs some analysis and
-  returns the processed disease/infection probability data.
-\item[Implemented By:] [Your Program Name Here]
+  used to read a chest x-ray image and convert it to an encoded PNG format that can be read by the ML model.
+\item[Services:] Reads the DICOM chest x-ray image, performs some image processing and
+  returns the image data.
+\item[Implemented By:] convertDCM
 \item[Type of Module:] Library
 \end{description}
 
 \subsubsection{ResultsGen Module (\mref{mResGen})}
 
 \begin{description}
-\item[Secrets:] The data structure(s) and algorithm(s) used to further
-  process, interpret and store the results generated from scanning the chest
-  x-ray image.
-\item[Services:] Process ChestXRayRead Module output, interpret the processed
-  disease/infection probability data and return generated results for use in
-  generating the radiology report (components).
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] Library, Abstract Object
+\item[Secrets:] The data structure(s) and algorithm(s) used to generate prediction values for each disease by reading the chest x-ray image.
+\item[Services:] Process ConvertDCM Module output, run the ML model to generate disease/infection findings and return generated results for use in generating the radiology report (summary).
+\item[Implemented By:] runPredModel
+\item[Type of Module:] Library
 \end{description}
 
-\subsubsection{RepCompGen Module (\mref{mRepCompGen})}
+\subsubsection{ReportGen Module (\mref{mRepCompGen})}
 
 \begin{description}
-\item[Secrets:] The data structure(s) and algorithm(s) (including NLP) used to
-  generate the radiology report (components) using the chest x-ray read/scan
-  results.
-\item[Services:] Take the AIModel Module output and generate the radiology
+\item[Secrets:] The generation of a brief summary based on the prediction values generated by the ML model.
+\item[Services:] Take the ResultsGen Module output and generate a brief
   report (components) documenting the results/predictions from analyzing the
   chest x-ray image using natural language.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] Library, Abstract Object
+\item[Implemented By:] reportsummary
+\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{DatabaseOps Module (\mref{mDatabaseOps})}
@@ -455,7 +451,7 @@ to be implemented.
 \begin{description}
 \item[Secrets:] The data structure(s) and algorithm(s) used to show and make
   functional the chest x-ray read/scan functionality for users.
-\item[Services:] Displays portal for users to submit chest x-ray images for
+\item[Services:] Displays portal for users to select patients (chest x-rays) to
   read/scan to get disease/infection predictions.
 \item[Implemented By:] [Your Program Name Here]
 \item[Type of Module:] Library, Abstract Object
@@ -470,6 +466,33 @@ to be implemented.
   for a given patient to the user (i.e. displays the latest radiology report).
 \item[Implemented By:] [Your Program Name Here]
 \item[Type of Module:] Library, Abstract Object
+\end{description}
+
+\subsubsection{ChestXrayRead Module (\mref{mNLPModel})}
+
+\begin{description}
+\item[Secrets:] Authorization credentials and interfacing functions to access X-ray images (stored in DICOM format) from the database.
+\item[Services:] Provides X-ray images for a patient as DICOM data from the database
+\item[Implemented By:] fbinterface
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{GenHeatmaps Module (\mref{mHeatmaps})}
+
+\begin{description}
+\item[Secrets:] The algorithms and functions that generate heatmaps using the ML model, for each disease for all Xray images of a patient.
+\item[Services:] Provides heatmaps for the X-ray images for a patient as image data.
+\item[Implemented By:] heatmaps
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{MLEndpoint Module (\mref{mEndpoint})}
+
+\begin{description}
+\item[Secrets:] An HTTP endpoint route that recieves a request for a patient and sends a response with the diagnosis data.
+\item[Services:] Accepts a post request for a specefic patient and sends a response with prediction values, summary report, and image data for the heatmaps and xrays to be displayed for that patient.
+\item[Implemented By:] endpoint
+\item[Type of Module:] Library
 \end{description}
 
 \subsection{Software Decision Module}
@@ -489,28 +512,17 @@ to be implemented.
 
 \begin{description}
 \item[Secrets:] The data structure(s) and algorithm(s) used (including in
-  Modules \mref{mChXRR} ChestXRayRead and \mref{mResGen} ResultsGen) to
+  Modules \mref{mChXRR} ConvertDCM and \mref{mResGen} ResultsGen) to
   read/scan chest x-ray images and interpret the disease/infection probability
   results. The ROC values used to interpret the disease/infection probability
   results and give predictions.
 \item[Services:] Reads/scans chest x-ray images, interpret the data and return
   disease/infection predictions.
-\item[Implemented By:] [Your Program Name Here]
+\item[Implemented By:] diagnosis
 \item[Type of Module:] Library, Abstract Object
 \end{description}
 
-\subsubsection{NLP Module (\mref{mNLPModel})}
 
-\begin{description}
-\item[Secrets:] The data structure(s) and algorithm(s) used (including in
-  Module \mref{mRepCompGen} RepCompGen) to generate a natural language
-  radiology report to document the results and predictions of the chest x-ray
-  read/scan.
-\item[Services:] Generates the readiology report documenting the results and
-  predictions of the chest x-ray read/scan using natural language.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] Library, Abstract Object
-\end{description}
 
 \subsubsection{Backend Module (\mref{mBackend})}
 
@@ -567,12 +579,12 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules} \\
 \midrule
-FR1 & \mref{mChXRR}, \mref{mPerfScan} \\
-FR2 & \mref{mChXRR}, \mref{mPerfScan} \\
-FR3 & \mref{mResGen}, \mref{mViewResults} \\
-FR4 & \mref{mResGen}, \mref{mDatabaseOps}, \mref{mViewResults} \\
-FR5 & \mref{mDatabaseOps}, \mref{mAppGUI} \\
-FR6 & \mref{mAIModel} \\
+FR1 & \mref{mChXRR}, \mref{mPerfScan}, \mref{mNLPModel} \\
+FR2 & \mref{mChXRR}, \mref{mPerfScan}, \mref{mNLPModel} \\
+FR3 & \mref{mChXRR}, \mref{mViewResults} \\
+FR4 & \mref{mResGen}, \mref{mDatabaseOps}, \mref{mViewResults}, \mref{mEndpoint}, \mref{mRepCompGen} \\
+FR5 & \mref{mChXRR}, \mref{mHeatmaps} \\
+FR6 & \mref{mAIModel}, \mref{mResGen} \\
 FR7 & \mref{mMedInstInter}, \mref{mAppController}, \mref{mAppGUI} \\
 FR8 & \mref{mChXRR} \\
 FR9 & \mref{mBackend}, \mref{mDatabaseOps} \\
@@ -590,12 +602,13 @@ FR11 & \mref{mAppController}, \mref{mAppGUI}, \mref{mViewResults} \\
 \toprule
 \textbf{AC} & \textbf{Modules} \\
 \midrule
-\acref{acHardware} & \mref{mAIModel}, \mref{mChXRR}, \mref{mResGen},
-  \mref{mNLPModel}, \mref{mRepCompGen}, \mref{mBackend}, \mref{mDatabaseOps},
-  \mref{mUserAuthMgmt}, \mref{mMedInstInter}, \mref{mAppController},
-  \mref{mAppGUI}, \mref{mLogin}, \mref{mPerfScan}, \mref{mViewResults} \\
-\acref{acDiseases} & \mref{mAIModel} \\
-\acref{acRadReport} & \mref{mNLPModel} \\
+\acref{acHardware} & \mref{mMedInstInter}, \mref{mAppController} \\
+%\mref{mAIModel}, \mref{mChXRR}, \mref{mResGen},
+  %\mref{mNLPModel}, \mref{mRepCompGen}, \mref{mBackend}, \mref{mDatabaseOps},
+  %\mref{mUserAuthMgmt}, \mref{mMedInstInter}, \mref{mAppController},
+  %\mref{mAppGUI}, \mref{mLogin}, \mref{mPerfScan}, \mref{mViewResults}, \mref{mHeatmaps}, %\mref{mEndpoint} \\
+\acref{acDiseases} & \mref{mAIModel}, \mref{mResGen} \\
+\acref{acRadReport} & \mref{mRepCompGen} \\
 \acref{acAppGUI} & \mref{mAppGUI} \\
 \acref{acMedInstInterf} & \mref{mMedInstInter} \\
 \bottomrule
@@ -619,10 +632,12 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=1.0\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
+%you can view and edit the above diagram here:
+%https://drive.google.com/file/d/10Na3_Qa8TYa_tibah2onqimla9arj-GP/view?usp=sharing
 
 %\section*{References}
 
