@@ -1,5 +1,4 @@
 # EXPO Poster
 
-The folders and files for this folder are as follows:
-
-- 
+The folders for this folder are as follows:  
+`Poster` - PDF file for the project poster used in the McMaster Capstone EXPO.
