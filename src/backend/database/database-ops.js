@@ -202,6 +202,8 @@ export async function writeActivePatientID(db, patientId) {
     const writeActivePatientIDRef = ref(db, "activePatient");
     set(writeActivePatientIDRef, {
       patientID: patientId,
+    }).then(() => {
+      resolve(true);
     }).catch((_error) => {
       reject(false);
     });
