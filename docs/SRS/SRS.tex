@@ -64,6 +64,7 @@ October 6th, 2023 & Allison, Ibrahim, Mohaansh, Nathaniel, Tushar & Edits to SRS
 October 6th, 2023 & Ibrahim & added functional requirements \\
 October 6th, 2023 & Mohaansh & improved Functional Requirements \\
 October 20th, 2023 & Mohaansh, Tushar & Further improvements \\
+March 29th, 2024 & Mohaansh & Added data model and dictionary, updated FR5, added PUC5, updated interfacing reqs \\
 
 \bottomrule
 \end{tabularx}
@@ -101,10 +102,10 @@ This subsection outlines the various stakeholders of this project's proposed sol
 The following are the clients of the project's proposed solution:
 \begin{itemize}
     \item \textbf{Doctors}: want the tedious work of analyzing chest x-rays, performing diagnostics and writing radiology reports to be semi-/fully-automated
-    \item \textbf{Patients}: wants chest x-ray results faster with the same accuracy
+    \item \textbf{Patients}: wants chest x-ray results faster with the same accuracy. They are secondary stakeholders as they do not directly use the system.
     \item \textbf{Diagnostics Teams}: wants to maximize the number of chest X-rays performed and processed for patients
 \end{itemize}
-These are the people expected to be the primary users of the project's proposed solution. They are expected to use this proposed solution primarily in their daily work as medical professionals, or benefit from it (i.e. the patients).
+These are the people expected to be affected by the project's proposed solution. They are expected to use this proposed solution primarily in their daily work as medical professionals, or benefit from it (i.e. the patients).
 
 \subsubsection{Customer}
 The customers of the project's proposed solution are described as follows:
@@ -202,8 +203,8 @@ The following are constraints placed on the project’s proposed solution. Each 
     \begin{item}
         The product shall operate as a web application
         \begin{description} 
-            \item[Rationale:] This will permit the users at different hospitals to use the system without any change to their institutional system
-            \item[Fit Criterion:] The product will contain the necessary back-end, front-end code, and database to run as a web application
+            \item[Rationale:] This will permit the users at different hospitals to use the system without any change to their institutional system, as a web interface shall be platform/OS independent
+            \item[Fit Criterion:] The product will contain the necessary back-end, front-end code, and database to run as a web application, and can be accessed in a browser using a URL.
         \end{description}
     \end{item}
 \end{enumerate}
@@ -373,9 +374,9 @@ The following Tables \ref{tab:workPartitioningEvents} and \ref{tab:workPartition
         \hline
         1 & Login User & user's login credentials & user's login credentials authenticated \\
         \hline
-        2 & Request Patient Data & request for patient data/chest x-ray images & requested patient data/ chest x-ray images \\
+        2 & Request Patient Data & request for patient data & requested patient data/ chest x-ray images \\
         \hline
-        3 & Request Radiology Analysis & request for radiology analysis of patient chest x-ray images & radiology report (elements) of the radiology analysis of the patient's chest x-ray images \\
+        3 & Request Radiology Analysis & request for radiology analysis of patient chest x-rays, and the xray images to be displayed & radiology report (elements) of the radiology analysis of the patient's chest x-ray images, heatmaps, and xray images \\
         \hline
         4 & Access/View Radiology Analysis & request to access/ view the radiology results report (elements) & radiology results report (elements) are shown to the user \\
         \hline
@@ -395,7 +396,7 @@ The following Tables \ref{tab:workPartitioningEvents} and \ref{tab:workPartition
         \hline
         1 & user enters in login credentials into web app, and web app authenticates the login credentials \\
         \hline
-        2 & user requests patient data/chest x-ray images (from medical institution/diagnostic centre IT systems) \\
+        2 & user requests patient data (from medical institution/diagnostic centre IT systems) \\
         \hline
         3 & user requests radiology analysis of patient chest x-ray images \\
         \hline
@@ -418,14 +419,26 @@ The following is a Business Use Case Scenario specified for the project's propos
 \subsection{Business Data Model and Data Dictionary}
 \subsubsection{Business Data Model}
 The following points detail the business data model of the project's proposed solution:
-\begin{itemize}
-    \item \textbf{N/A}: this subsection was not filled out, as the details of the business data model will be decided on later in the design and implementation process of the project's proposed solution.
-\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.60]{businessdatamodel.png}
+    \caption{Business Data Model}
+    \label{fig:contextDiagram}
+\end{figure}
 
 \subsubsection{Data Dictionary}
 The following points detail the data dictionary of the project's proposed solution:
 \begin{itemize}
-    \item \textbf{N/A}: this subsection was not filled out, as the details of the data dictionary items will be decided on later in the design and implementation process of the project's proposed solution.
+    \item \textbf{Patient}: contains all the relevant personal details of the patient, accessed via the database of patients.
+    \item \textbf{Diagnosis}:
+        \begin{itemize}
+            \item \textbf{Xray images}: contains all xray images of a patient
+            \item \textbf{heatmaps}: contains attention maps for all xrays of the patient, giving details for all diseases checked.
+            \item \textbf{Predictions}: contains disease prediction values for the patient
+            \item \textbf{Summary}: contains summary of the diagnostic results.
+        \end{itemize}
+    \item \textbf{Predictions}: contains all prediction/risk values for the diseases considered
+    \item \textbf{User(Radiologist/Physician)}: contains authentication details and access level for the users that can access the system.
 \end{itemize}
 
 \subsection{The Scope of the Product}
@@ -450,6 +463,8 @@ The following table, Table \ref{table:productUseCase}, summarizes the product us
     PUC3 & Convert results into a structured set of findings on the x-ray. \\
     \hline
     PUC4 & Display diagnostic findings on the user interface \\
+    \hline
+    PUC5 & Generate heatmaps for the x-rays. \\
     \hline
     \end{tabularx}
 \end{table}
@@ -489,6 +504,14 @@ The following are the individual product use cases (PUCs), with a description, l
             \item[Postcondition(s):] diagnostic report is displayed on the user interface
         \end{description}
     \end{item}
+    \begin{item}
+        \begin{description}
+            \item[Description:] The system generates heatmaps showing each of the diseases for all xrays of the patient.
+            \item[Actors:] vision module, chest x-ray image
+            \item[Precondition(s):] valid chest x-ray image input is provided
+            \item[Postcondition(s):] processed image with heatmaps generated
+        \end{description}
+    \end{item}
 \end{enumerate}
 
 \subsubsection{Traceability Matrix}
@@ -497,25 +520,25 @@ The following Table \ref{tab:traceabilityMatrix} shows the traceability of each 
     \centering
     \caption{Traceability Matrix}
     \label{tab:traceabilityMatrix}
-    \begin{tabular}{|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|c|}
         \hline
-        \diagbox{FR}{PUC} & PUC1 & PUC2 & PUC3 & PUC4 \\
+        \diagbox{FR}{PUC} & PUC1 & PUC2 & PUC3 & PUC4 & PUC5\\
         \hline
-        FR1 & X & & & \\
+        FR1 & X & & & & \\
         \hline
-        FR2 & & X & & \\
+        FR2 & & X & & & \\
         \hline
-        FR3 & & & X & X \\
+        FR3 & & & X & X & \\
         \hline
-        FR4 & & & & X \\
+        FR4 & & & X & X & X\\
         \hline
-        FR5 & X & X & & \\
+        FR5 & & & & & X\\
         \hline
-        FR6 & & & & X \\
+        FR6 & & & & X & \\
         \hline
-        FR7 & X & & & \\
+        FR7 & X & & & & \\
         \hline
-        FR8 & X & & & \\
+        FR8 & X & & & & \\
         \hline
     \end{tabular}
 \end{table}
@@ -553,23 +576,23 @@ The following are the functional requirements defined for this project's propose
     \end{item}
     \begin{item}
         \begin{description}
-            \item[Description:] The system shall generate and display a structured set of findings and demographic information about the patient.
+            \item[Description:] The system shall generate and display a structured set of findings, heatmaps and demographic information about the patient.
             \item[Rationale:] Displaying a report would help understand the findings of the chest x-ray.
             \item[Fit Criterion:] The system can successfully label the x-rays with the correct diseases normalcy 90\% of the time.
-            \item[Use Case(s):] PUC3, PUC4
+            \item[Use Case(s):] PUC3, PUC4, PUC5
         \end{description}
     \end{item}
     \begin{item}
         \begin{description}
-            \item[Description:] The system shall be able to fetch patients’ records on retrieval request by the user.
-            \item[Rationale:] Generated reports and findings need to be accessed in the future when required.
-            \item[Fit Criterion:] The system can display the past findings stored in the database.
-            \item[Use Case(s):] PUC4
+            \item[Description:] The system shall generate heatmaps for each xray image examined, for the 4 diseases (Pneumonia, Atelectasis, Cardiomegaly, Pleural Effusion)
+            \item[Rationale:] Assists in pinpointing the parts where attention is required in order to confirm the diagnosis.
+            \item[Fit Criterion:] The system can display the heatmaps in the patient's diagnosis.
+            \item[Use Case(s):] PUC5
         \end{description}
     \end{item}
     \begin{item}
         \begin{description}
-            \item[Description:] \hypertarget{FR5}{The system shall detect and classify the following diseases/infections to a certain accuracy: Pneumonia, Atelectasis, Cardiomegaly, Pleural Effusion}
+            \item[Description:] \hypertarget{FR6}{The system shall detect and classify the following diseases/infections to a certain accuracy: Pneumonia, Atelectasis, Cardiomegaly, Pleural Effusion}
             \item[Rationale:] Users need information on whether a chest x-ray image depicts any diseases or not.
             \item[Fit Criterion:] The area under the ROC curve for each disease after testing the model is greater than the recommended threshold for accurate results (Refer to Table 6). 
             \item[Use Case(s):] PUC1, PUC2
@@ -598,8 +621,8 @@ The following are the functional requirements defined for this project's propose
         \begin{description}
             % build a database - link records to individuals to images
             % database will have patients records and links to images
-            \item[Description:] The system shall have a backend database that stores the patient records linked to their diagnostic findings.
-            \item[Rationale:] The information should be stored for future access by users.
+            \item[Description:] The system shall have a backend database that stores the patient records linked to their xray images.
+            \item[Rationale:] The information should be stored for access by users.
             \item[Fit Criterion:] User data is stored in a backend database, and can be updated and accessed.
             \item[Use Case(s):] PUC4
         \end{description}
@@ -713,13 +736,14 @@ This subsection details the usability and humanity requirements of the project's
 \end{description}
 
 \subsubsection{Personalization and Internationalization Requirements}
-\begin{description}
-    \item[NF-PIR0] The interface shall have both official languages of Canada, English and French.
-    \begin{description}
-        \item[Rationale:] In Canada, people should be able to work in their preferred official language, as per the Official Languages Act(\cite{OLA}).
-        \item[Fit Criterion:] The core services shall be available in English and French
-    \end{description}
-\end{description}
+\textit{NA}
+%\begin{description}
+%    \item[NF-PIR0] The interface shall have both official languages of Canada, English and French.
+%    \begin{description}
+%        \item[Rationale:] In Canada, people should be able to work in their preferred official language, as per the Official Languages Act(\cite{OLA}).
+%        \item[Fit Criterion:] The core services shall be available in English and French
+%    \end{description}
+%\end{description}
 
 \subsubsection{Learning Requirements}
 \begin{description}
@@ -751,7 +775,7 @@ This subsection details the performance requirements of the project's proposed s
     \item[NF-SLR0] The system shall return a report generated from an input within a reasonable amount of time. 
     \begin{description}
         \item[Rationale:] The system should be comparable to the time radiologists and residents need to examine a chest X-ray.  
-        \item[Fit Criterion:] A report is generated within 5 minutes.
+        \item[Fit Criterion:] A report is generated within 2 minutes.
     \end{description}
 \end{description}
 
@@ -766,7 +790,7 @@ This subsection details the performance requirements of the project's proposed s
 
 \subsubsection{Precision or Accuracy Requirements}
 \begin{description}
-    \item[NF-PAR0] See \hyperlink{FR5}{FR\#5}.
+    \item[NF-PAR0] See \hyperlink{FR6}{FR\#6}.
 \end{description}
 
 \subsubsection{Robustness or Fault-Tolerance Requirements}
@@ -813,10 +837,10 @@ This subsection details the operational and environmental requirements for this 
 
 \subsubsection{Requirements for Interfacing with Adjacent Systems}
 \begin{description}
-    \item[NF-RIAS0] The system will require access to the host computer's files for image upload. 
+    \item[NF-RIAS0] The system will require access to the institution's DICOM server to access x-ray images. 
     \begin{description}
-        \item[Rationale:] The system requires chest X-ray images to identify any abnormalities in the X-ray, so the system must interface with their computer to facilitate this upload.  
-        \item[Fit Criterion:] The user will be able to upload an image from their computer to the system
+        \item[Rationale:] The system requires chest X-ray images to identify any abnormalities in the X-ray, so the system must interface with their server to facilitate diagnosis.  
+        \item[Fit Criterion:] The user system be able to pull DICOM x-ray data from a remote server and have required authorization for access.
     \end{description}
 \end{description}
 
@@ -919,7 +943,7 @@ This subsection details the cultural requirements for this project's proposed so
 
 \subsubsection{Cultural Requirements}
 \begin{description}
-    \item[NF-CR0] The system can be used by anyone.
+    \item[NF-CR0] The system can be used by anyone with access credentials.
         \begin{description}
         \item[Rationale:] There are many different people living and working in Canada, they should all be able to use the system. 
         \item[Fit Criterion:] All users find the system intuitive and can understand the system after the first use. 
