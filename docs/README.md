@@ -1,7 +1,7 @@
 # Documentation folders
 
 **The folders and files for this folder are as follows:**  
-`Design` - Module Guide, Module Interface Specification, System Design  
+`Design` - Design  
 `DevelopmentPlan` - Development Plan  
 `Hazard Analysis` - Hazard Analysis  
 `Presentations` - Presentations  
