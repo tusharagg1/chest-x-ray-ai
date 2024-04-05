@@ -1,11 +1,5 @@
 # Software Requirements Specification (SRS)
 
-<The SRS is for a single product, not a family of products. A Commonality Analysis is
-more appropriate for a family of products.>
+The folders and files for this folder are as follows:  
+`SRS.pdf` - This document uses the Volere SRS template and contains the various requirements for the project.
 
-<The template in this folder is suited to Scientific Computing (also known as
-Research Software) projects>
-
-The folders and files for this folder are as follows:
-
-Describe ...
