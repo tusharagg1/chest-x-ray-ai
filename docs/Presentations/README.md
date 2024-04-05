@@ -1,5 +1,4 @@
 # Presentations about your software
 
-The folders and files for this folder are as follows:
-
-- <fill in details>
+The folders for this folder are as follows:  
+`EXPO` - This folder contains the poster used for the McMaster Capstone EXPO.
