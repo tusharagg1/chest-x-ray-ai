@@ -1,3 +1,11 @@
+/*
+  Module Name: UserAuthMgmt
+  Author(s): Nathaniel Hu
+  Date Modified: 2024-04-03
+  Description: Contains user authentication and management functionality to
+               create, delete, sign in, and sign out users
+*/
+
 // import needed externally defined modules
 import {
   createUserWithEmailAndPassword,
@@ -30,14 +38,15 @@ export function deleteAUser(auth, email) {
       reject(null);
     } else if (user.email !== email) {
       reject(false);
+    } else {
+      deleteUser(user)
+        .then(() => {
+          resolve(true);
+        })
+        .catch((_error) => {
+          reject(false);
+        });
     }
-    deleteUser(user)
-      .then(() => {
-        resolve(true);
-      })
-      .catch((error) => {
-        reject(error);
-      });
   });
 }
 

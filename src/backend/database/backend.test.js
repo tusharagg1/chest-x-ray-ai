@@ -1,3 +1,10 @@
+/*
+  Module Tested: Backend
+  Author(s): Nathaniel Hu
+  Last Modified Date: 2024-04-03
+  Description: Contains unit tests defined for testing the Backend module
+*/
+
 // import backend module for testing
 const {
   createANewUser,
@@ -9,14 +16,12 @@ const {
   getAPatientsData,
   deleteAPatientsData,
   getAllPatientData,
-  setActivePatientID,
+  setActivePatientId,
   getActivePatientId,
 } = require("./backend");
 
-// define backend module unit tests here
-
-// creates new staff user
-test("Create Staff User 099", async () => {
+// BT01. Create a new Staff User
+test("BT01. Create Staff User", async () => {
   await createANewUser(
     "StaffUser99",
     "staff.user99@mailsac.com",
@@ -32,8 +37,8 @@ test("Create Staff User 099", async () => {
     .catch((error) => console.log(error));
 });
 
-// signs in new staff user
-test("Sign In Staff User 099", async () => {
+// BT02. Sign In a new Staff User
+test("BT02. Sign In Staff User", async () => {
   await signInAUser("staff.user99@mailsac.com", "atom!@#")
     .then((user) => {
       expect(user).not.toBeNull();
@@ -46,21 +51,26 @@ test("Sign In Staff User 099", async () => {
     .catch((error) => console.log(error));
 });
 
-// gets current user
-test("Get Current User", async () => {
+// BT03. Get the Current User
+test("BT03. Get Current User", async () => {
   await signInAUser("staff.user99@mailsac.com", "atom!@#")
     .then(() => {
       getCurrentUser()
-        .then((userData) => {
-          expect(userData).not.toBeNull();
+        .then((user) => {
+          expect(user).not.toBeNull();
+          expect(user.userName).toBe("StaffUser99");
+          expect(user.email).toBe("staff.user99@mailsac.com");
+          expect(user.password).toBe("atom!@#");
+          expect(user.firstName).toBe("Staff");
+          expect(user.lastName).toBe("User99");
         })
         .catch((error) => console.log(error));
     })
     .catch((error) => console.log(error));
 });
 
-// creates a new patient
-test("Create New Patient 99", async () => {
+// BT04. Create a new Patient Record
+test("BT04. Create Patient Record", async () => {
   await createANewPatient(
     99,
     99,
@@ -78,8 +88,8 @@ test("Create New Patient 99", async () => {
     .catch((error) => console.log(error));
 });
 
-// retrieves a patient's data
-test("Retrieve Patient 99 Data", async () => {
+// BT05. Retrieve Patient Record
+test("BT05. Retrieve Patient Record", async () => {
   await getAPatientsData(99)
     .then((patient) => {
       expect(patient).not.toBeNull();
@@ -95,17 +105,17 @@ test("Retrieve Patient 99 Data", async () => {
     .catch((error) => console.log(error));
 });
 
-// set active patient id
-test("Set Active Patient ID", async () => {
-  await setActivePatientID(99)
+// BT06. Set Active Patient ID
+test("BT06. Set Active Patient ID", async () => {
+  await setActivePatientId(99)
     .then((result) => {
       expect(result).toBe(true);
     })
     .catch((error) => console.log(error));
 });
 
-// retrieve active patient id
-test("Retrieve Active Patient ID", async () => {
+// BT07. Retrieve Active Patient ID
+test("BT07. Retrieve Active Patient ID", async () => {
   await getActivePatientId()
     .then((patientId) => {
       expect(patientId).toBe(99);
@@ -113,8 +123,8 @@ test("Retrieve Active Patient ID", async () => {
     .catch((error) => console.log(error));
 });
 
-// deletes a patient's data
-test("Delete Patient 99 Data", async () => {
+// BT08. Delete Patient Record
+test("BT08. Delete Patient Record", async () => {
   await deleteAPatientsData(99)
     .then((result) => {
       expect(result).toBe(true);
@@ -122,8 +132,8 @@ test("Delete Patient 99 Data", async () => {
     .catch((error) => console.log(error));
 });
 
-// attempts to retrieve non-existent patient's data
-test("Retrieve Non-Existent Patient Data", async () => {
+// BT09. Retrieve Non-Existent Patient Record
+test("BT09. Retrieve Non-Existent Patient Record", async () => {
   await getAPatientsData(99)
     .then((patient) => {
       expect(patient).toBeNull();
@@ -131,8 +141,8 @@ test("Retrieve Non-Existent Patient Data", async () => {
     .catch((error) => expect(error).toBeNull());
 });
 
-// attempts to delete non-existent patient's data
-test("Delete Non-Existent Patient Data", async () => {
+// BT10. Delete Non-Existent Patient Record
+test("BT10. Delete Non-Existent Patient Record", async () => {
   await deleteAPatientsData(999)
     .then((result) => {
       expect(result).toBe(true);
@@ -140,8 +150,8 @@ test("Delete Non-Existent Patient Data", async () => {
     .catch((error) => console.log(error));
 });
 
-// retrieves all patient data
-test("Retrieve All Patient Data", async () => {
+// BT11. Retrieve All Patient Records
+test("BT11. Retrieve All Patient Records", async () => {
   await getAllPatientData()
     .then((patients) => {
       expect(patients).not.toBeNull();
@@ -149,8 +159,8 @@ test("Retrieve All Patient Data", async () => {
     .catch((error) => console.log(error));
 });
 
-// signs out new staff user
-test("Sign Out Staff User 099", async () => {
+// BT12. Sign Out the new Staff User
+test("BT12. Sign Out Staff User", async () => {
   await signOutAUser()
     .then((result) => {
       expect(result).toBe(true);
@@ -158,8 +168,26 @@ test("Sign Out Staff User 099", async () => {
     .catch((error) => console.log(error));
 });
 
-// deletes new staff user
-test("Delete Staff User 099", async () => {
+// BT13. Sign In Staff User with Invalid Email
+test("BT13. Sign In Staff User with Invalid Email", async () => {
+  await signInAUser("staff.user99mailsac.com", "atom!@#")
+    .then((user) => {
+      expect(user).toBeNull();
+    })
+    .catch((error) => expect(error).toBeNull());
+});
+
+// BT14. Sign In Staff User with Incorrect Password
+test("BT14. Sign In Staff User with Incorrect Password", async () => {
+  await signInAUser("staff.user99@mailsac.com", "atom!@")
+    .then((user) => {
+      expect(user).toBeNull();
+    })
+    .catch((error) => expect(error).toBeNull());
+});
+
+// BT15. Delete new Staff User
+test("BT15. Delete Staff User", async () => {
   await deleteUser("staff.user99@mailsac.com", "atom!@#")
     .then((result) => {
       expect(result).toBe(true);
@@ -167,8 +195,8 @@ test("Delete Staff User 099", async () => {
     .catch((error) => console.log(error));
 });
 
-// attempts to create user with invalid email
-test("Create User with Invalid Email", async () => {
+// BT16. Create Staff User with Invalid Email
+test("BT16. Create Staff User with Invalid Email", async () => {
   await createANewUser(
     "StaffUser99",
     "staff.user99mailsac.com",
@@ -184,8 +212,8 @@ test("Create User with Invalid Email", async () => {
     .catch((error) => expect(error).toBeNull());
 });
 
-// attempts to delete user with invalid email
-test("Delete User with Invalid Email", async () => {
+// BT17. Delete Staff User with Invalid Email
+test("BT17. Delete Staff User with Invalid Email", async () => {
   await deleteUser("staff.user99mailsac.com", "atom!@#")
     .then((result) => {
       expect(result).toBeNull();

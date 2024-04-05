@@ -1,7 +1,13 @@
+/*
+  Module Name: Backend
+  Author(s): Nathaniel Hu
+  Last Modified Date: 2024-04-03
+  Description: Contains backend functionality to create and manage user accounts
+               and patient data
+*/
+
 // import needed externally defined modules
-import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getDatabase } from "firebase/database";
+import { onAuthStateChanged } from "firebase/auth";
 
 // import needed internally defined modules
 import {
@@ -22,22 +28,8 @@ import {
   readActivePatientID,
 } from "./database-ops";
 
-// necessary firebase configuration setup
-const firebaseConfig = {
-  apiKey: "AIzaSyB5RHIQl0a8nzZ2bMUwTMJ6XNYWciBaneM",
-  authDomain: "chest-x-ray-ai-f0b4a.firebaseapp.com",
-  databaseURL: "https://chest-x-ray-ai-f0b4a-default-rtdb.firebaseio.com",
-  projectId: "chest-x-ray-ai-f0b4a",
-  storageBucket: "chest-x-ray-ai-f0b4a.appspot.com",
-  messagingSenderId: "106488932425",
-  appId: "1:106488932425:web:74c67977d47848d27f3798",
-  measurementId: "G-085B846RRX",
-};
-
-// necessary constants for various firebase functionalities (i.e. auth, database)
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
+// import necessary firebase configuration setup
+import { auth, db } from "./backend-config";
 
 // create a new user
 export function createANewUser(
@@ -63,8 +55,12 @@ export function createANewUser(
           medInsts,
           isAdminUser,
         )
-          .then((_userDataWritten) => {
-            resolve(userId);
+          .then((userDataWritten) => {
+            if (userDataWritten) {
+              resolve(userId);
+            } else {
+              reject(null);
+            }
           })
           .catch((error) => {
             reject(error);
@@ -205,8 +201,12 @@ export function createANewPatient(
 export function deleteAPatientsData(patientId) {
   return new Promise((resolve, reject) => {
     deletePatientData(db, patientId)
-      .then((_deleteSuccess) => {
-        resolve(true);
+      .then((deleteSuccess) => {
+        if (deleteSuccess) {
+          resolve(true);
+        } else {
+          reject(false);
+        }
       })
       .catch((_error) => {
         reject(false);
@@ -249,7 +249,7 @@ export function getAllPatientData() {
 }
 
 // set active patient id
-export function setActivePatientID(patientId) {
+export function setActivePatientId(patientId) {
   return new Promise((resolve, reject) => {
     writeActivePatientID(db, patientId)
       .then((setSuccess) => {
@@ -282,8 +282,3 @@ export function getActivePatientId() {
       });
   });
 }
-
-// export all functions
-// module.exports = { createANewUser, deleteUser, signInAUser, signOutAUser, getCurrentUser,
-//   createANewPatient, getAPatientsData, deleteAPatientsData, getAllPatientData,
-//   setActivePatientID, getActivePatientId };
