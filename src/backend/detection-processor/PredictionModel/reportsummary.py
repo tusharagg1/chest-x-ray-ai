@@ -28,8 +28,10 @@ def genreport(preds):
         else:
             neg.append(disease)
 
-    report += f"Highest priority: further investigation of
-        {priority} recommended.\n\n"
+    report += (
+        f"Highest priority: further investigation of "
+        f"{priority} recommended.\n\n"
+    )
     if len(hi) > 0:
         hiS = ", ".join(hi)
         report += f"High risk of {hiS} was found\n"
